@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">GOGOT</string>
+    <string name="settings">настройки</string>
+    <string name="new_game">новая игра</string>
+</resources>
