@@ -118,11 +118,11 @@
                 {
                     "source": "D:\\study\\sem_3\\prog\\Android apps\\javakruta\\GOGOT\\app\\src\\main\\res\\values\\strings.xml",
                     "from": {
-                        "startLines": "1,3,2",
+                        "startLines": "1,2,3",
                         "startColumns": "4,4,4",
-                        "startOffsets": "17,109,61",
+                        "startOffsets": "17,61,110",
                         "endColumns": "42,47,46",
-                        "endOffsets": "55,152,103"
+                        "endOffsets": "55,104,152"
                     },
                     "to": {
                         "startLines": "377,378,380",

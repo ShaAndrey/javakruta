@@ -11,7 +11,7 @@
 9-->D:\study\sem_3\prog\Android apps\javakruta\GOGOT\app\src\main\AndroidManifest.xml
 10
 11    <application
-11-->D:\study\sem_3\prog\Android apps\javakruta\GOGOT\app\src\main\AndroidManifest.xml:5:5-19:19
+11-->D:\study\sem_3\prog\Android apps\javakruta\GOGOT\app\src\main\AndroidManifest.xml:5:5-20:19
 12        android:allowBackup="true"
 12-->D:\study\sem_3\prog\Android apps\javakruta\GOGOT\app\src\main\AndroidManifest.xml:6:9-35
 13        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
@@ -42,6 +42,9 @@
 25-->D:\study\sem_3\prog\Android apps\javakruta\GOGOT\app\src\main\AndroidManifest.xml:16:27-74
 26            </intent-filter>
 27        </activity>
-28    </application>
-29
-30</manifest>
+28        <activity android:name="com.example.gogot.GameActivity" />
+28-->D:\study\sem_3\prog\Android apps\javakruta\GOGOT\app\src\main\AndroidManifest.xml:19:9-59
+28-->D:\study\sem_3\prog\Android apps\javakruta\GOGOT\app\src\main\AndroidManifest.xml:19:19-47
+29    </application>
+30
+31</manifest>

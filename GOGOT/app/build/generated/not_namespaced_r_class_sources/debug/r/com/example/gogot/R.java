@@ -3585,16 +3585,17 @@ public final class R {
     public static final int abc_select_dialog_material=0x7f09001a;
     public static final int abc_tooltip=0x7f09001b;
     public static final int activity_main=0x7f09001c;
-    public static final int notification_action=0x7f09001d;
-    public static final int notification_action_tombstone=0x7f09001e;
-    public static final int notification_template_custom_big=0x7f09001f;
-    public static final int notification_template_icon_group=0x7f090020;
-    public static final int notification_template_part_chronometer=0x7f090021;
-    public static final int notification_template_part_time=0x7f090022;
-    public static final int select_dialog_item_material=0x7f090023;
-    public static final int select_dialog_multichoice_material=0x7f090024;
-    public static final int select_dialog_singlechoice_material=0x7f090025;
-    public static final int support_simple_spinner_dropdown_item=0x7f090026;
+    public static final int game_layout=0x7f09001d;
+    public static final int notification_action=0x7f09001e;
+    public static final int notification_action_tombstone=0x7f09001f;
+    public static final int notification_template_custom_big=0x7f090020;
+    public static final int notification_template_icon_group=0x7f090021;
+    public static final int notification_template_part_chronometer=0x7f090022;
+    public static final int notification_template_part_time=0x7f090023;
+    public static final int select_dialog_item_material=0x7f090024;
+    public static final int select_dialog_multichoice_material=0x7f090025;
+    public static final int select_dialog_singlechoice_material=0x7f090026;
+    public static final int support_simple_spinner_dropdown_item=0x7f090027;
   }
   public static final class mipmap {
     public static final int ic_launcher=0x7f0a0000;
