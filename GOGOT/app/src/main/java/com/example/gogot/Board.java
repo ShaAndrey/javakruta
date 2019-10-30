@@ -27,6 +27,10 @@ public class Board {
             gameBoard.add(new ArrayList<BoardCell>(m));
             for (int j = 0; j < m; ++j) {
                 gameBoard.get(i).add(cellsForShuffle.get(i * n + j));
+                if (cellsForShuffle.get(i * n + j).getState() == State.PLAYER) {
+                    playerRow = i;
+                    playerColumn = j;
+                }
             }
         }
     }
