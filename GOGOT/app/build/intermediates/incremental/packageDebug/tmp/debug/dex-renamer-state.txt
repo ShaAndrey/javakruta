@@ -1,4 +1,4 @@
-#Tue Oct 29 22:28:05 MSK 2019
+#Wed Oct 30 15:41:06 MSK 2019
 base.0=D\:\\study\\sem_3\\prog\\Android apps\\javakruta\\GOGOT\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\out\\classes.dex
 path.1=classes.dex
 renamed.1=classes2.dex

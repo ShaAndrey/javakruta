@@ -18,14 +18,18 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme" >
-        <activity android:name="com.example.gogot.MainActivity" >
+        <activity
+            android:name="com.example.gogot.MainActivity"
+            android:screenOrientation="sensorLandscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.gogot.GameActivity" />
+        <activity
+            android:name="com.example.gogot.GameActivity"
+            android:screenOrientation="sensorLandscape" />
     </application>
 
 </manifest>
