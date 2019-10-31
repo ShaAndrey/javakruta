@@ -5,13 +5,7 @@ import android.graphics.Point;
 
 class BoardCell {
     enum State {
-        NOTHING(0), PLAYER(1), DRAGON(2), OGRE(3), MINOTAUR(4), ELF(5), FAIRY(6), GNOME(7), GOBLIN(8);
-
-        private int code;
-
-        State(int state) {
-            this.code = state;
-        }
+        NOTHING, PLAYER, DRAGON, OGRE, MINOTAUR, ELF, FAIRY, GNOME, GOBLIN;
     }
 
     private State state;

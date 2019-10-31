@@ -11,10 +11,13 @@ import java.util.Iterator;
 
 public class Board {
     private BoardCell[][] gameBoard;
+    int height, width;
     private Point playerPosition;
 
     Board(int n, int m) {
         gameBoard = new BoardCell[n][m];
+        height = n;
+        width = m;
 
         HashSet<BoardCell> generatedCells = generateCells(n, m);
         Iterator<BoardCell> generatedCellsIterator = generatedCells.iterator();
@@ -32,11 +35,11 @@ public class Board {
         BoardCell.State[] states = BoardCell.State.values();
         HashSet<BoardCell> generatedCells = new HashSet<>();
         int totalCells = 0;
-        for (int i = 1; totalCells <= n * m; ++i) {
-            for (int j = 1; j <= i; ++j) {
-                generatedCells.add(new BoardCell(states[i], i, j));
+        for (int i = 0; totalCells < n * m; ++i) {
+            for (int j = 0; j <= i; ++j) {
+                generatedCells.add(new BoardCell(states[i + 1], i, j));
             }
-            totalCells += i;
+            totalCells += i + 1;
         }
         return generatedCells;
     }
@@ -46,23 +49,21 @@ public class Board {
     }
 
     ArrayList<BoardCell> getCellsAvailableToMove() {
-        ArrayList<BoardCell> result = new ArrayList<>();
-        for (int i = 0; i < gameBoard.length; ++i) {
+        ArrayList<BoardCell> availableCells = new ArrayList<>();
+        for (int i = 0; i < height; ++i) {
             if (i != playerPosition.x && gameBoard[i][playerPosition.y].getState() != BoardCell.State.NOTHING) {
-                result.add(gameBoard[i][playerPosition.y]);
+                availableCells.add(gameBoard[i][playerPosition.y]);
             }
         }
-        for (int j = 0; j < gameBoard[playerPosition.x].length; ++j) {
+        for (int j = 0; j < width; ++j) {
             if (j != playerPosition.y && gameBoard[playerPosition.x][j].getState() != BoardCell.State.NOTHING) {
-                result.add(gameBoard[j][playerPosition.y]);
+                availableCells.add(gameBoard[j][playerPosition.y]);
             }
         }
-        return result;
+        return availableCells;
     }
 
-    @SuppressLint("Assert")
-    void MovePlayer(BoardCell newPosition) {
-        assert newPosition.getRow() == playerPosition.x || newPosition.getColumn() == playerPosition.y;
+    void movePlayer(BoardCell newPosition) {
         gameBoard[playerPosition.x][playerPosition.y].setState(BoardCell.State.NOTHING);
         int rowMoveDirection = (playerPosition.x < newPosition.getRow()) ? 1 : -1;
         int columnMoveDirection = (playerPosition.y < newPosition.getColumn()) ? 1 : -1;
