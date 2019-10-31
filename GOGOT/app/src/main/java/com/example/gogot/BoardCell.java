@@ -1,35 +1,34 @@
 package com.example.gogot;
 
 import android.graphics.Picture;
+import android.graphics.Point;
 
-enum State {
-    NOTHING(0), PLAYER(1), DRAGON(2), OGRE(3), MINOTAUR(4), ELF(5), FAIRY(6), GNOME(7), GOBLIN(8);
+class BoardCell {
+    enum State {
+        NOTHING(0), PLAYER(1), DRAGON(2), OGRE(3), MINOTAUR(4), ELF(5), FAIRY(6), GNOME(7), GOBLIN(8);
 
-    private int code;
+        private int code;
 
-    State(int state) {
-        this.code = state;
+        State(int state) {
+            this.code = state;
+        }
     }
-}
 
-public class BoardCell {
     private State state;
     private Picture picture;
-    private int row, column;
+    private Point position;
 
     BoardCell(State state, int row, int column) {
         this.state = state;
-        this.row = row;
-        this.column = column;
-        setPicture();
+        this.position = new Point(row, column);
     }
 
     int getRow() {
-        return row;
+        return position.x;
     }
 
     int getColumn() {
-        return column;
+        return position.y;
     }
 
     State getState() {
@@ -42,7 +41,7 @@ public class BoardCell {
 
     private void setPicture() {
         switch (state) {
-            // in each case setting the appropriate picture
+            // TODO in each case setting the appropriate picture
             case NOTHING:
             case PLAYER:
             case DRAGON:
