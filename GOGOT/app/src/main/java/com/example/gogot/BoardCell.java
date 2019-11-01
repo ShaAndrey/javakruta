@@ -25,6 +25,8 @@ class BoardCell {
         return position.y;
     }
 
+    Point getPosition() { return position; }
+
     State getState() {
         return state;
     }

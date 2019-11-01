@@ -78,4 +78,12 @@ public class Board {
         playerPosition = new Point(newPosition.getRow(), newPosition.getColumn());
         gameBoard[playerPosition.x][playerPosition.y].setState(BoardCell.State.PLAYER);
     }
+
+    public BoardCell getGameBoardCell(Point p) {
+        return gameBoard[p.x][p.y];
+    }
+
+    public Point getPlayerPosition() {
+        return playerPosition;
+    }
 }
