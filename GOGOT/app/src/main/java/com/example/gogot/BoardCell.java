@@ -1,9 +1,8 @@
 package com.example.gogot;
 
-import android.graphics.Picture;
 import android.graphics.Point;
 
-class BoardCell extends GameCell {
+class BoardCell extends PlayCard {
 
     private Point position;
 

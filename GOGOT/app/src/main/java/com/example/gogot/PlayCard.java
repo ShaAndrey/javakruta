@@ -2,7 +2,7 @@ package com.example.gogot;
 
 import android.graphics.Picture;
 
-public abstract class GameCell {
+public abstract class PlayCard {
     enum State {
         NOTHING, PLAYER, DRAGON, OGRE, MINOTAUR, ELF, FAIRY, GNOME, GOBLIN;
     }
