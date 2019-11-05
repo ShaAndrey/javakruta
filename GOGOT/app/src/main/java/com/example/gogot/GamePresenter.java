@@ -7,6 +7,11 @@ public class GamePresenter implements MainContract.Presenter {
     private MainContract.Model model;
     private MainContract.View view;
 
+    GamePresenter(MainContract.View view) {
+        this.view = view;
+//        this.model = new MainContract.Model();        // ошибка, пока не определилимодель
+    }
+
     @Override
     public void handleTurn(Point newPlayerPosition) {
         model.handleTurn(newPlayerPosition);
