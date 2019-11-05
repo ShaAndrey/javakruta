@@ -1,31 +1,15 @@
 package com.example.gogot;
 
 import android.graphics.Picture;
-import android.graphics.Point;
 
-class BoardCell {
+public abstract class PlayCard {
     enum State {
         NOTHING, PLAYER, DRAGON, OGRE, MINOTAUR, ELF, FAIRY, GNOME, GOBLIN;
     }
 
-    private State state;
-    private Picture picture;
-    private Point position;
+    protected State state;
+    protected Picture picture;
 
-    BoardCell(State state, int row, int column) {
-        this.state = state;
-        this.position = new Point(row, column);
-    }
-
-    int getRow() {
-        return position.x;
-    }
-
-    int getColumn() {
-        return position.y;
-    }
-
-    Point getPosition() { return position; }
 
     State getState() {
         return state;
