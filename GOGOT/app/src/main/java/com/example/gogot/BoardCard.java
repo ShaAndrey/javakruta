@@ -2,11 +2,11 @@ package com.example.gogot;
 
 import android.graphics.Point;
 
-class BoardCell extends PlayCard {
+class BoardCard extends PlayCard {
 
     private Point position;
 
-    BoardCell(State state, int row, int column) {
+    BoardCard(State state, int row, int column) {
         super.state = state;
         this.position = new Point(row, column);
     }

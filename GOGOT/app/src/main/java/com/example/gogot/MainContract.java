@@ -23,7 +23,7 @@ public interface MainContract {
         // в реализации этого метода в классе model будет вызываться movePlayer();
 
         Point getPlayerPosition();
-        BoardCell.State getBoardCellState();
+        BoardCard.State getBoardCellState();
         Board getGameBoard();
         // методы, через которые презентер и вьюшка могут получать конкретную информацию о доске
 
