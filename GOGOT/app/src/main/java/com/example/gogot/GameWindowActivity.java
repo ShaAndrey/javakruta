@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.transition.TransitionManager;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,25 +47,31 @@ public class GameWindowActivity extends AppCompatActivity {
     private void initializeGameBoard() {
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
-                TextView textView = new TextView(this);
-                textView.setId(View.generateViewId());
-                textView.setText(String.valueOf(i * boardSize + j));
-                textView.setGravity(Gravity.CENTER);
+                ImageView imageView = new ImageView(this);
+                imageView.setId(View.generateViewId());
+                imageView.setImageResource(R.drawable.star);
+                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
 
                 GradientDrawable border = new GradientDrawable();
                 border.setColor(0xffEB5D0D);
                 border.setStroke(1, 0x66000000);
-                textView.setBackground(border);
+                imageView.setBackground(border);
 
                 Constraints.LayoutParams params = new Constraints.LayoutParams(0, 0);
-                constraintLayout.addView(textView, params);
+                constraintLayout.addView(imageView, params);
 
                 ConstraintSet set = new ConstraintSet();
                 set.clone(constraintLayout);
-                set.connect(textView.getId(), TOP, horizontalGuidelines[i].getId(), TOP);
-                set.connect(textView.getId(), BOTTOM, horizontalGuidelines[i + 1].getId(), BOTTOM);
-                set.connect(textView.getId(), START, verticalGuidelines[j].getId(), START);
-                set.connect(textView.getId(), END, verticalGuidelines[j + 1].getId(), END);
+                set.connect(imageView.getId(), TOP, horizontalGuidelines[i].getId(), TOP);
+                set.connect(imageView.getId(), BOTTOM, horizontalGuidelines[i + 1].getId(), BOTTOM);
+                set.connect(imageView.getId(), START, verticalGuidelines[j].getId(), START);
+                set.connect(imageView.getId(), END, verticalGuidelines[j + 1].getId(), END);
                 set.applyTo(constraintLayout);
             }
         }

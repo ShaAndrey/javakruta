@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.17"
+        app:layout_constraintGuide_percent="0.167"
         android:tag="horizontalGuideline1"/>
 
     <androidx.constraintlayout.widget.Guideline
@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.33"
+        app:layout_constraintGuide_percent="0.333"
         android:tag="horizontalGuideline2" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -43,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.67"
+        app:layout_constraintGuide_percent="0.667"
         android:tag="horizontalGuideline4" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -51,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.83"
+        app:layout_constraintGuide_percent="0.833"
         android:tag="horizontalGuideline5" />
 
     <androidx.constraintlayout.widget.Guideline
