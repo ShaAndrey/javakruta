@@ -9,7 +9,8 @@ public class GamePresenter implements MainContract.Presenter {
 
     @Override
     public void handleTurn(Point newPlayerPosition) {
-
+        model.handleTurn(newPlayerPosition);
+        view.refreshBoard();
     }
 
     @Override
