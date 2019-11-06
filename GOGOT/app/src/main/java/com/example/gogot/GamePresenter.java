@@ -9,7 +9,7 @@ public class GamePresenter implements MainContract.Presenter {
 
     GamePresenter(MainContract.View view) {
         this.view = view;
-//        this.model = new MainContract.Model();        // ошибка, пока не определилимодель
+        this.model = new GameModel();
     }
 
     @Override
