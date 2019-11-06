@@ -20,7 +20,8 @@ import static androidx.constraintlayout.widget.ConstraintSet.BOTTOM;
 import static androidx.constraintlayout.widget.ConstraintSet.START;
 import static androidx.constraintlayout.widget.ConstraintSet.TOP;
 
-public class GameWindowActivity extends AppCompatActivity {
+public class GameWindowActivity extends AppCompatActivity
+        implements MainContract.View {
     private ConstraintLayout constraintLayout;
     private Guideline[] horizontalGuidelines;
     private Guideline[] verticalGuidelines;
@@ -93,5 +94,21 @@ public class GameWindowActivity extends AppCompatActivity {
         set.connect(playerView.getId(), START, verticalGuidelines[2].getId(), START);
         set.connect(playerView.getId(), END, verticalGuidelines[2 + 1].getId(), END);
         set.applyTo(constraintLayout);
+    }
+
+    @Override
+    public void refreshBoard() {
+        initializeGameBoard();
+        initializePlayerView();
+    }
+
+    @Override
+    public void refreshPoints() {
+
+    }
+
+    @Override
+    public void refreshCards() {
+
     }
 }
