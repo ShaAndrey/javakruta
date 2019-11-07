@@ -15,6 +15,7 @@ public class GameActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         presenter = new GamePresenter(this);
         setContentView(R.layout.game_activity_layout);
         initializeBoard();
