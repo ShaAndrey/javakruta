@@ -3,13 +3,12 @@ package com.example.gogot;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.constraintlayout.widget.Constraints;
@@ -20,18 +19,33 @@ import static androidx.constraintlayout.widget.ConstraintSet.BOTTOM;
 import static androidx.constraintlayout.widget.ConstraintSet.START;
 import static androidx.constraintlayout.widget.ConstraintSet.TOP;
 
-
-public class BoardActivity extends ConstraintLayout {
+public class GameBoardLayout extends ConstraintLayout {
     private Guideline[] horizontalGuidelines;
     private Guideline[] verticalGuidelines;
     private TextView playerView;
-//    private Board gameBoard;
     private int boardSize;
 
-    BoardActivity(Context context, int size) {
+    public GameBoardLayout(Context context) {
         super(context);
-        boardSize = size;
+        initLayout();
+    }
+
+    public GameBoardLayout(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initLayout();
+    }
+
+    public GameBoardLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        initLayout();
+    }
+
+    void initLayout() {
         inflate(getContext(), R.layout.layout_game_board, this);
+    }
+
+    void initBoard(int boardSize) {
+        this.boardSize = boardSize;
         int guidelinesCount = boardSize + 1;
         horizontalGuidelines = new Guideline[guidelinesCount];
         verticalGuidelines = new Guideline[guidelinesCount];
@@ -44,7 +58,6 @@ public class BoardActivity extends ConstraintLayout {
         initializePlayerView();
     }
 
-
     private void initializeGameBoard() {
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
@@ -52,6 +65,7 @@ public class BoardActivity extends ConstraintLayout {
                 imageView.setId(View.generateViewId());
                 imageView.setImageResource(R.drawable.star);
                 imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                imageView.setPadding(1, 1, 1, 1);
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

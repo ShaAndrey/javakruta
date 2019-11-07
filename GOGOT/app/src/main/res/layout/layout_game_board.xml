@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/layout_game_board"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#1EAF97"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizontalGuideline0"
@@ -117,5 +119,4 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="1"
         android:tag="verticalGuideline6"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</merge>

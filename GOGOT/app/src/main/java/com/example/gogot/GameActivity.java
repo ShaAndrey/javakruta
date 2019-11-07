@@ -6,22 +6,24 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 
-public class GameWindowActivity extends AppCompatActivity
+public class GameActivity extends AppCompatActivity
         implements MainContract.View {
-    BoardActivity gameBoard;
+
+    GameBoardLayout gameBoard;
     GamePresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new GamePresenter(this);
-        setContentView(R.layout.activity_game_window);
+        setContentView(R.layout.game_activity_layout);
         initializeBoard();
     }
 
     @Override
     public void initializeBoard() {
-        gameBoard = new BoardActivity(this, presenter.getBoardSize());
+        gameBoard = findViewById(R.id.layout_game_board);
+        gameBoard.initBoard(6);
     }
 
     @Override
