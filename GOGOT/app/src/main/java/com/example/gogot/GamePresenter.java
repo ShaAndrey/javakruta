@@ -7,6 +7,12 @@ public class GamePresenter implements MainContract.Presenter {
     private MainContract.Model model;
     private MainContract.View view;
 
+
+    @Override
+    public Board getGameBoard() {
+        return model.getGameBoard();
+    }
+
     GamePresenter(MainContract.View view) {
         this.view = view;
         this.model = new GameModel();
@@ -31,5 +37,10 @@ public class GamePresenter implements MainContract.Presenter {
     @Override
     public Picture getBoardCellPicture(Point cellPosition) {
         return null;
+    }
+
+    @Override
+    public int getBoardSize() {
+        return model.getBoardSize();
     }
 }

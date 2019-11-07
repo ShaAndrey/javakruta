@@ -20,6 +20,7 @@ public abstract class PlayCard {
     }
 
     private void setPicture() {
+        picture = new Picture();
         switch (state) {
             // TODO in each case setting the appropriate picture
             case NOTHING:

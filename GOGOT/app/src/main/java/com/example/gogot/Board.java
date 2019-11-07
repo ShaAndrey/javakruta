@@ -22,9 +22,9 @@ public class Board {
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {
                 gameBoard[i][j] = generatedCellsIterator.next();
-                if (generatedCellsIterator.next().getState() == BoardCard.State.PLAYER) {
-                    playerPosition = new Point(i, j);
-                }
+//                if (generatedCellsIterator.next().getState() == BoardCard.State.PLAYER) { // Error here
+//                    playerPosition = new Point(i, j);
+//                }
             }
         }
     }
@@ -83,5 +83,9 @@ public class Board {
 
     public Point getPlayerPosition() {
         return playerPosition;
+    }
+
+    public int getSize() {
+        return height;
     }
 }

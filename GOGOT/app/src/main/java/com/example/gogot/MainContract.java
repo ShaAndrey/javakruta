@@ -5,6 +5,7 @@ import android.graphics.Point;
 
 public interface MainContract {
     interface View {
+        void initializeBoard();
         void refreshBoard();
         void refreshPoints();
         void refreshCards();
@@ -16,6 +17,11 @@ public interface MainContract {
         void getCards();
         void getPoints(); // будет не void, просто пока непонятно как мы будем хранить счет и карты
         Picture getBoardCellPicture(Point cellPosition);
+
+        int getBoardSize();
+
+        Board getGameBoard();
+
     }
 
     interface Model {
@@ -29,5 +35,7 @@ public interface MainContract {
 
         void getPoints();
         void getCards();
+
+        int getBoardSize();
     }
 }

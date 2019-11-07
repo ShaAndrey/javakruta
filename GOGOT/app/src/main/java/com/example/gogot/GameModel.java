@@ -7,9 +7,10 @@ import java.util.ArrayList;
 public class GameModel implements MainContract.Model {
     private Board board;
     private ArrayList<PlayersHand> playersHandArrayList;
+    private int boardSize = 6;
 
-    GameModel (int n, int m) {
-        board = new Board(n, m);
+    GameModel() {
+        board = new Board(boardSize, boardSize);
     }
 
     @Override
@@ -40,5 +41,10 @@ public class GameModel implements MainContract.Model {
     @Override
     public void getCards() {
 
+    }
+
+    @Override
+    public int getBoardSize() {
+        return boardSize;
     }
 }
