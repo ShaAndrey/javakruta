@@ -66,12 +66,7 @@ public class GameBoardLayout extends ConstraintLayout {
                 imageView.setImageResource(R.drawable.star);
                 imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 imageView.setPadding(1, 1, 1, 1);
-                imageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                });
+                imageView.setOnClickListener(v -> {});
 
                 GradientDrawable border = new GradientDrawable();
                 border.setColor(0xffEB5D0D);
@@ -80,14 +75,7 @@ public class GameBoardLayout extends ConstraintLayout {
 
                 Constraints.LayoutParams params = new Constraints.LayoutParams(0, 0);
                 addView(imageView, params);
-
-                ConstraintSet set = new ConstraintSet();
-                set.clone(this);
-                set.connect(imageView.getId(), TOP, horizontalGuidelines[i].getId(), TOP);
-                set.connect(imageView.getId(), BOTTOM, horizontalGuidelines[i + 1].getId(), BOTTOM);
-                set.connect(imageView.getId(), START, verticalGuidelines[j].getId(), START);
-                set.connect(imageView.getId(), END, verticalGuidelines[j + 1].getId(), END);
-                set.applyTo(this);
+                placeViewInCell(imageView.getId(), i, j);
             }
         }
     }
@@ -100,13 +88,17 @@ public class GameBoardLayout extends ConstraintLayout {
         playerView.setBackgroundColor(Color.parseColor("#FFD500"));
         Constraints.LayoutParams params = new Constraints.LayoutParams(0, 0);
         addView(playerView, params);
+        placeViewInCell(playerView.getId(), 2, 2);
 
+    }
+
+    private void placeViewInCell(int viewId, int i, int j) {
         ConstraintSet set = new ConstraintSet();
         set.clone(this);
-        set.connect(playerView.getId(), TOP, horizontalGuidelines[2].getId(), TOP);
-        set.connect(playerView.getId(), BOTTOM, horizontalGuidelines[2 + 1].getId(), BOTTOM);
-        set.connect(playerView.getId(), START, verticalGuidelines[2].getId(), START);
-        set.connect(playerView.getId(), END, verticalGuidelines[2 + 1].getId(), END);
+        set.connect(viewId, TOP, horizontalGuidelines[i].getId(), TOP);
+        set.connect(viewId, BOTTOM, horizontalGuidelines[i + 1].getId(), BOTTOM);
+        set.connect(viewId, START, verticalGuidelines[j].getId(), START);
+        set.connect(viewId, END, verticalGuidelines[j + 1].getId(), END);
         set.applyTo(this);
     }
 }

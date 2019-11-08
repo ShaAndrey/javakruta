@@ -21,10 +21,11 @@ public class Board {
         Iterator<BoardCard> generatedCellsIterator = generatedCells.iterator();
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {
-                gameBoard[i][j] = generatedCellsIterator.next();
-//                if (generatedCellsIterator.next().getState() == BoardCard.State.PLAYER) { // Error here
-//                    playerPosition = new Point(i, j);
-//                }
+                BoardCard nextCard = generatedCellsIterator.next();
+                gameBoard[i][j] = nextCard;
+                if (nextCard.getState() == BoardCard.State.PLAYER) {
+                    playerPosition = new Point(i, j);
+                }
             }
         }
     }
