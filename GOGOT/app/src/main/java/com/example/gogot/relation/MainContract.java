@@ -1,7 +1,10 @@
-package com.example.gogot;
+package com.example.gogot.relation;
 
 import android.graphics.Picture;
 import android.graphics.Point;
+
+import com.example.gogot.model.Board;
+import com.example.gogot.model.BoardCard;
 
 public interface MainContract {
     interface View {

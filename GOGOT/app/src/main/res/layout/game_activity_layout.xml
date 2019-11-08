@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#18B8B8"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizontalGuideline0"
@@ -36,7 +36,7 @@
         app:layout_constraintBottom_toBottomOf="@id/horizontalGuideline1"
         app:layout_constraintTop_toTopOf="@id/horizontalGuideline0" />
 
-    <com.example.gogot.GameBoardLayout
+    <com.example.gogot.ui.GameBoardLayout
         android:id="@+id/layout_game_board"
         android:layout_width="0dp"
         android:layout_height="0dp"

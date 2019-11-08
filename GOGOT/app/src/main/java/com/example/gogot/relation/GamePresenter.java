@@ -1,7 +1,10 @@
-package com.example.gogot;
+package com.example.gogot.relation;
 
 import android.graphics.Picture;
 import android.graphics.Point;
+
+import com.example.gogot.model.Board;
+import com.example.gogot.model.GameModel;
 
 public class GamePresenter implements MainContract.Presenter {
     private MainContract.Model model;
@@ -13,7 +16,7 @@ public class GamePresenter implements MainContract.Presenter {
         return model.getGameBoard();
     }
 
-    GamePresenter(MainContract.View view) {
+    public GamePresenter(MainContract.View view) {
         this.view = view;
         this.model = new GameModel();
     }

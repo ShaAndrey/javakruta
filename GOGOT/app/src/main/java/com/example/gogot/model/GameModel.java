@@ -1,6 +1,8 @@
-package com.example.gogot;
+package com.example.gogot.model;
 
 import android.graphics.Point;
+
+import com.example.gogot.relation.MainContract;
 
 import java.util.ArrayList;
 
@@ -9,7 +11,7 @@ public class GameModel implements MainContract.Model {
     private ArrayList<PlayersHand> playersHandArrayList;
     private int boardSize = 6;
 
-    GameModel() {
+    public GameModel() {
         board = new Board(boardSize, boardSize);
     }
 

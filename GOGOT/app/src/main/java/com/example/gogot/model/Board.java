@@ -1,4 +1,4 @@
-package com.example.gogot;
+package com.example.gogot.model;
 
 import android.graphics.Point;
 

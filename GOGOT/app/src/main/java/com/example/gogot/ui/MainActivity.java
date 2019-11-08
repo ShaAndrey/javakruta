@@ -1,10 +1,12 @@
-package com.example.gogot;
+package com.example.gogot.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+
+import com.example.gogot.R;
 
 public class MainActivity extends AppCompatActivity {
 

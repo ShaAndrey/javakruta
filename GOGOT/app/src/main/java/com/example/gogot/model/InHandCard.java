@@ -1,4 +1,4 @@
-package com.example.gogot;
+package com.example.gogot.model;
 
 public class InHandCard extends PlayCard {
 

@@ -1,9 +1,12 @@
-package com.example.gogot;
+package com.example.gogot.ui;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.gogot.relation.GamePresenter;
+import com.example.gogot.relation.MainContract;
+import com.example.gogot.R;
 
 
 public class GameActivity extends AppCompatActivity

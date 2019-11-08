@@ -1,9 +1,9 @@
-package com.example.gogot;
+package com.example.gogot.model;
 
 import android.graphics.Picture;
 
 public abstract class PlayCard {
-    enum State {
+    public enum State {
         NOTHING, PLAYER, DRAGON, OGRE, MINOTAUR, ELF, FAIRY, GNOME, GOBLIN;
     }
 

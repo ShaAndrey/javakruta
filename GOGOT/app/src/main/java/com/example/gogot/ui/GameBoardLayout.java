@@ -1,4 +1,4 @@
-package com.example.gogot;
+package com.example.gogot.ui;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -13,6 +13,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.constraintlayout.widget.Constraints;
 import androidx.constraintlayout.widget.Guideline;
+
+import com.example.gogot.R;
 
 import static androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.END;
 import static androidx.constraintlayout.widget.ConstraintSet.BOTTOM;
