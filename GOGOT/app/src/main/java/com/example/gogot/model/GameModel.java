@@ -16,37 +16,17 @@ public class GameModel implements MainContract.Model {
     }
 
     @Override
-    public void handleTurn(Point newPlayerPosition) {
-
-    }
-
-    @Override
-    public Point getPlayerPosition() {
+    public ArrayList<Point> handleTurn(Point newPlayerPosition) {
         return null;
     }
 
     @Override
-    public BoardCard.State getBoardCellState() {
-        return null;
+    public boolean isMovePossible() {
+        return !board.getCellsAvailableToMove().isEmpty();
     }
 
     @Override
-    public Board getGameBoard() {
-        return board;
-    }
-
-    @Override
-    public void getPoints() {
-
-    }
-
-    @Override
-    public void getCards() {
-
-    }
-
-    @Override
-    public int getBoardSize() {
-        return boardSize;
+    public boolean isMovePossible(Point newPlayerPosition) {
+        return false;
     }
 }

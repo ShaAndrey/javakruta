@@ -6,39 +6,25 @@ import android.graphics.Point;
 import com.example.gogot.model.Board;
 import com.example.gogot.model.BoardCard;
 
+import java.util.ArrayList;
+
 public interface MainContract {
     interface View {
-        void initializeBoard();
-        void refreshBoard();
-        void refreshPoints();
-        void refreshCards();
+        void drawInitialBoard();
+        void movePlayer(Point newPlayerPosition);
+        void collectCards(ArrayList<Point> cardsToCollect);
+        void youCantMoveThere();
+        void stopGame();
     }
 
     interface Presenter {
         void handleTurn(Point newPlayerPosition);
-
-        void getCards();
-        void getPoints(); // будет не void, просто пока непонятно как мы будем хранить счет и карты
-        Picture getBoardCellPicture(Point cellPosition);
-
-        int getBoardSize();
-
-        Board getGameBoard();
-
+        void stopGame();
     }
 
     interface Model {
-        void handleTurn(Point newPlayerPosition);
-        // в реализации этого метода в классе model будет вызываться movePlayer();
-
-        Point getPlayerPosition();
-        BoardCard.State getBoardCellState();
-        Board getGameBoard();
-        // методы, через которые презентер и вьюшка могут получать конкретную информацию о доске
-
-        void getPoints();
-        void getCards();
-
-        int getBoardSize();
+        ArrayList<Point> handleTurn(Point newPlayerPosition);
+        boolean isMovePossible();
+        boolean isMovePossible(Point newPlayerPosition);
     }
 }
