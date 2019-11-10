@@ -19,7 +19,7 @@ public class GamePresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void drawInitialBoard() {
+    public void createView() {
         view.drawInitialBoard(model.getBoard().getBoardCards());
     }
 

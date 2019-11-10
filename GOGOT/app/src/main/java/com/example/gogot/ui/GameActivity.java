@@ -26,7 +26,7 @@ public class GameActivity extends AppCompatActivity
         getSupportActionBar().hide();
         presenter = new GamePresenter(this);
         setContentView(R.layout.game_activity_layout);
-        presenter.drawInitialBoard();
+        presenter.createView();
     }
 
     @Override

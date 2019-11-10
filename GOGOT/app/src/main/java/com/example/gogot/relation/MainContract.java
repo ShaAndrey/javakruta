@@ -19,7 +19,7 @@ public interface MainContract {
     }
 
     interface Presenter {
-        void drawInitialBoard();
+        void createView();
         void handleTurn(Point newPlayerPosition);
         void stopGame();
     }
