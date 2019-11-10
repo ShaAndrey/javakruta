@@ -18,6 +18,8 @@ import com.example.gogot.R;
 import com.example.gogot.model.BoardCard;
 import com.example.gogot.model.PlayCard;
 
+import java.util.ArrayList;
+
 import static androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.END;
 import static androidx.constraintlayout.widget.ConstraintSet.BOTTOM;
 import static androidx.constraintlayout.widget.ConstraintSet.START;
@@ -49,7 +51,7 @@ public class GameBoardLayout extends ConstraintLayout {
         inflate(getContext(), R.layout.layout_game_board, this);
     }
 
-    void initBoard(int boardSize, BoardCard[][] boardCards) {
+    void initBoard(int boardSize, BoardCard[][] boardCards, ArrayList<BoardCard> cardsToMove) {
         this.boardSize = boardSize;
         int guidelinesCount = boardSize + 1;
         horizontalGuidelines = new Guideline[guidelinesCount];
@@ -59,16 +61,16 @@ public class GameBoardLayout extends ConstraintLayout {
             horizontalGuidelines[i] = findViewWithTag("horizontalGuideline" + i);
             verticalGuidelines[i] = findViewWithTag("verticalGuideline" + i);
         }
-        initializeGameBoard(boardCards);
+        initializeGameBoard(boardCards, cardsToMove);
 //        initializePlayerView();
     }
 
-    private void initializeGameBoard(BoardCard[][] boardCards) {
+    private void initializeGameBoard(BoardCard[][] boardCards,
+                                     ArrayList<BoardCard> cardsToMove) {
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
                 ImageView imageView = new ImageView(getContext());      // ??
                 imageView.setId(View.generateViewId());
-//                imageView.setImageResource(R.drawable.star);
                 imageView.setImageResource(activityListener.setImageToCard(boardCards[i][j]));
                 imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 imageView.setPadding(1, 1, 1, 1);
@@ -77,7 +79,11 @@ public class GameBoardLayout extends ConstraintLayout {
 
                 GradientDrawable border = new GradientDrawable();
                 border.setColor(0xffEB5D0D);
-                border.setStroke(1, 0x66000000);
+                if (cardsToMove.contains(boardCards[i][j])) {
+                    border.setStroke(10, 0xFF00FF00);
+                } else {
+                    border.setStroke(1, 0x66000000);
+                }
                 imageView.setBackground(border);
 
                 Constraints.LayoutParams params = new Constraints.LayoutParams(0, 0);
@@ -116,5 +122,10 @@ public class GameBoardLayout extends ConstraintLayout {
 
     void setListener(ActivityListener activityListener) {
         this.activityListener = activityListener;
+    }
+
+    void setIllumination(ImageView imageView) {
+
+
     }
 }

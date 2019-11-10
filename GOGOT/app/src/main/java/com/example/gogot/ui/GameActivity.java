@@ -56,10 +56,10 @@ public class GameActivity extends AppCompatActivity
     }
 
     @Override
-    public void drawInitialBoard(BoardCard[][] boardCards) {
+    public void drawInitialBoard(BoardCard[][] boardCards, ArrayList<BoardCard> cardsToMove) {
         gameBoard = findViewById(R.id.layout_game_board);
         gameBoard.setListener(this);
-        gameBoard.initBoard(6, boardCards);         // TODO: not 6 here
+        gameBoard.initBoard(6, boardCards, cardsToMove);         // TODO: not 6 here
     }
 
     @Override

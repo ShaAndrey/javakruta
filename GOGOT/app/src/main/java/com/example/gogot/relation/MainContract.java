@@ -11,23 +11,33 @@ import java.util.ArrayList;
 
 public interface MainContract {
     interface View {
-        void drawInitialBoard(BoardCard[][] gameBoard);
+        void drawInitialBoard(BoardCard[][] gameBoard,
+                              ArrayList<BoardCard> cardsToMove);
+
         void movePlayer(Point newPlayerPosition);
+
         void collectCards(ArrayList<Point> cardsToCollect);
+
         void youCantMoveThere();
+
         void stopGame();
     }
 
     interface Presenter {
         void createView();
+
         void handleTurn(Point newPlayerPosition);
+
         void stopGame();
     }
 
     interface Model {
         ArrayList<Point> handleTurn(Point newPlayerPosition);
+
         boolean isMovePossible();
+
         boolean isMovePossible(Point newPlayerPosition);
+
         Board getBoard();
     }
 }

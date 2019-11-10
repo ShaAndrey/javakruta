@@ -47,7 +47,7 @@ public class Board {
         return gameBoard;
     }
 
-    ArrayList<BoardCard> getCellsAvailableToMove() {
+    public ArrayList<BoardCard> getCellsAvailableToMove() {
         ArrayList<BoardCard> availableCells = new ArrayList<>();
         for (int i = 0; i < height; ++i) {
             if (i != playerPosition.x && gameBoard[i][playerPosition.y].getState() != BoardCard.State.NOTHING) {
