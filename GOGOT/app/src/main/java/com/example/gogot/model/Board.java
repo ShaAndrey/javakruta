@@ -43,11 +43,11 @@ public class Board {
         return generatedCells;
     }
 
-    BoardCard[][] getGameBoard() {
+    public BoardCard[][] getBoardCards() {
         return gameBoard;
     }
 
-    ArrayList<BoardCard> getCellsAvailableToMove() {
+    public ArrayList<BoardCard> getCellsAvailableToMove() {
         ArrayList<BoardCard> availableCells = new ArrayList<>();
         for (int i = 0; i < height; ++i) {
             if (i != playerPosition.x && gameBoard[i][playerPosition.y].getState() != BoardCard.State.NOTHING) {
@@ -56,7 +56,7 @@ public class Board {
         }
         for (int j = 0; j < width; ++j) {
             if (j != playerPosition.y && gameBoard[playerPosition.x][j].getState() != BoardCard.State.NOTHING) {
-                availableCells.add(gameBoard[j][playerPosition.y]);
+                availableCells.add(gameBoard[playerPosition.x][j]);
             }
         }
         return availableCells;

@@ -1,9 +1,7 @@
 package com.example.gogot.relation;
 
-import android.graphics.Picture;
 import android.graphics.Point;
 
-import com.example.gogot.model.Board;
 import com.example.gogot.model.GameModel;
 
 public class GamePresenter implements MainContract.Presenter {
@@ -18,6 +16,12 @@ public class GamePresenter implements MainContract.Presenter {
     @Override
     public void stopGame() {
         view.stopGame();
+    }
+
+    @Override
+    public void createView() {
+        view.drawInitialBoard(model.getBoard().getBoardCards(),
+                model.getBoard().getCellsAvailableToMove());
     }
 
     @Override

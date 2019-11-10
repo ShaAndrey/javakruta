@@ -11,32 +11,12 @@ public abstract class PlayCard {
     protected Picture picture;
 
 
-    State getState() {
+    public State getState() {
         return state;
     }
 
-    Picture getPicture() {
-        return picture;
-    }
-
-    private void setPicture() {
-        picture = new Picture();
-        switch (state) {
-            // TODO in each case setting the appropriate picture
-            case NOTHING:
-            case PLAYER:
-            case DRAGON:
-            case OGRE:
-            case MINOTAUR:
-            case ELF:
-            case FAIRY:
-            case GNOME:
-            case GOBLIN:
-        }
-    }
 
     void setState(State newState) {
         state = newState;
-        setPicture();
     }
 }

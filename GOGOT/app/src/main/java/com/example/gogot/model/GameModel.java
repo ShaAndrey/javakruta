@@ -20,6 +20,8 @@ public class GameModel implements MainContract.Model {
         return null;
     }
 
+
+
     @Override
     public boolean isMovePossible() {
         return !board.getCellsAvailableToMove().isEmpty();
@@ -28,5 +30,10 @@ public class GameModel implements MainContract.Model {
     @Override
     public boolean isMovePossible(Point newPlayerPosition) {
         return false;
+    }
+
+    @Override
+    public Board getBoard() {
+        return board;
     }
 }
