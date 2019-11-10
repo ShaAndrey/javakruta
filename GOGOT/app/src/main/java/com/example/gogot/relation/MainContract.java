@@ -5,12 +5,13 @@ import android.graphics.Point;
 
 import com.example.gogot.model.Board;
 import com.example.gogot.model.BoardCard;
+import com.example.gogot.model.PlayCard;
 
 import java.util.ArrayList;
 
 public interface MainContract {
     interface View {
-        void drawInitialBoard();
+        void drawInitialBoard(BoardCard[][] gameBoard);
         void movePlayer(Point newPlayerPosition);
         void collectCards(ArrayList<Point> cardsToCollect);
         void youCantMoveThere();
@@ -18,6 +19,7 @@ public interface MainContract {
     }
 
     interface Presenter {
+        void drawInitialBoard();
         void handleTurn(Point newPlayerPosition);
         void stopGame();
     }
@@ -26,5 +28,6 @@ public interface MainContract {
         ArrayList<Point> handleTurn(Point newPlayerPosition);
         boolean isMovePossible();
         boolean isMovePossible(Point newPlayerPosition);
+        Board getBoard();
     }
 }

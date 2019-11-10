@@ -15,6 +15,8 @@ import androidx.constraintlayout.widget.Constraints;
 import androidx.constraintlayout.widget.Guideline;
 
 import com.example.gogot.R;
+import com.example.gogot.model.BoardCard;
+import com.example.gogot.model.PlayCard;
 
 import static androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.END;
 import static androidx.constraintlayout.widget.ConstraintSet.BOTTOM;
@@ -26,6 +28,7 @@ public class GameBoardLayout extends ConstraintLayout {
     private Guideline[] verticalGuidelines;
     private TextView playerView;
     private int boardSize;
+    private ActivityListener activityListener;
 
     public GameBoardLayout(Context context) {
         super(context);
@@ -46,7 +49,7 @@ public class GameBoardLayout extends ConstraintLayout {
         inflate(getContext(), R.layout.layout_game_board, this);
     }
 
-    void initBoard(int boardSize) {
+    void initBoard(int boardSize, BoardCard[][] boardCards) {
         this.boardSize = boardSize;
         int guidelinesCount = boardSize + 1;
         horizontalGuidelines = new Guideline[guidelinesCount];
@@ -56,19 +59,21 @@ public class GameBoardLayout extends ConstraintLayout {
             horizontalGuidelines[i] = findViewWithTag("horizontalGuideline" + i);
             verticalGuidelines[i] = findViewWithTag("verticalGuideline" + i);
         }
-        initializeGameBoard();
-        initializePlayerView();
+        initializeGameBoard(boardCards);
+//        initializePlayerView();
     }
 
-    private void initializeGameBoard() {
+    private void initializeGameBoard(BoardCard[][] boardCards) {
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
                 ImageView imageView = new ImageView(getContext());      // ??
                 imageView.setId(View.generateViewId());
-                imageView.setImageResource(R.drawable.star);
+//                imageView.setImageResource(R.drawable.star);
+                imageView.setImageResource(activityListener.setImageToCard(boardCards[i][j]));
                 imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 imageView.setPadding(1, 1, 1, 1);
-                imageView.setOnClickListener(v -> {});
+                imageView.setOnClickListener(v -> {
+                });
 
                 GradientDrawable border = new GradientDrawable();
                 border.setColor(0xffEB5D0D);
@@ -102,5 +107,14 @@ public class GameBoardLayout extends ConstraintLayout {
         set.connect(viewId, START, verticalGuidelines[j].getId(), START);
         set.connect(viewId, END, verticalGuidelines[j + 1].getId(), END);
         set.applyTo(this);
+    }
+
+
+    interface ActivityListener {
+        int setImageToCard(PlayCard card);
+    }
+
+    void setListener(ActivityListener activityListener) {
+        this.activityListener = activityListener;
     }
 }

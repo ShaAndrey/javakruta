@@ -43,7 +43,7 @@ public class Board {
         return generatedCells;
     }
 
-    BoardCard[][] getGameBoard() {
+    public BoardCard[][] getBoardCards() {
         return gameBoard;
     }
 
