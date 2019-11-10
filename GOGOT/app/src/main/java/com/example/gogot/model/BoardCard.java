@@ -2,6 +2,8 @@ package com.example.gogot.model;
 
 import android.graphics.Point;
 
+import java.util.Objects;
+
 public class BoardCard extends PlayCard {
 
     private Point position;
@@ -19,6 +21,16 @@ public class BoardCard extends PlayCard {
         return position.y;
     }
 
-    Point getPosition() { return position; }
+    Point getPosition() {
+        return position;
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BoardCard boardCard = (BoardCard) o;
+        return Objects.equals(position, boardCard.position)
+                && Objects.equals(state, boardCard.state);
+    }
 }
