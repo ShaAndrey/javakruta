@@ -1,10 +1,12 @@
-package com.example.gogot;
+package com.example.gogot.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+
+import com.example.gogot.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         Button newGameButton = findViewById(R.id.buttonNewGame);
         newGameButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this,
-                    GameWindowActivity.class);
+                    GameActivity.class);
             startActivity(intent);
         });
     }

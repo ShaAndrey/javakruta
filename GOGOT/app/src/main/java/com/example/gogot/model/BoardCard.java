@@ -1,8 +1,8 @@
-package com.example.gogot;
+package com.example.gogot.model;
 
 import android.graphics.Point;
 
-class BoardCard extends PlayCard {
+public class BoardCard extends PlayCard {
 
     private Point position;
 

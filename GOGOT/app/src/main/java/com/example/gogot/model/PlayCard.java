@@ -1,9 +1,9 @@
-package com.example.gogot;
+package com.example.gogot.model;
 
 import android.graphics.Picture;
 
 public abstract class PlayCard {
-    enum State {
+    public enum State {
         NOTHING, PLAYER, DRAGON, OGRE, MINOTAUR, ELF, FAIRY, GNOME, GOBLIN;
     }
 
@@ -20,6 +20,7 @@ public abstract class PlayCard {
     }
 
     private void setPicture() {
+        picture = new Picture();
         switch (state) {
             // TODO in each case setting the appropriate picture
             case NOTHING:
