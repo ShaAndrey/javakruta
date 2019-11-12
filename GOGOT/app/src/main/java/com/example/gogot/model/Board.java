@@ -62,7 +62,8 @@ public class Board {
         return availableCells;
     }
 
-    void movePlayer(BoardCard newPosition) {
+    ArrayList<BoardCard> movePlayer(BoardCard newPosition) {
+        ArrayList<BoardCard> cardsToCollect = new ArrayList<>();
         gameBoard[playerPosition.x][playerPosition.y].setState(BoardCard.State.NOTHING);
         int rowMoveDirection = (playerPosition.x < newPosition.getRow()) ? 1 : -1;
         int columnMoveDirection = (playerPosition.y < newPosition.getColumn()) ? 1 : -1;
@@ -71,11 +72,13 @@ public class Board {
                 if (gameBoard[i][j].getState() == newPosition.getState()) {
                     gameBoard[i][j].setState(BoardCard.State.NOTHING);
                     // TODO also ensure that a player earns points
+                    cardsToCollect.add(gameBoard[i][j]);
                 }
             }
         }
         playerPosition = new Point(newPosition.getRow(), newPosition.getColumn());
         gameBoard[playerPosition.x][playerPosition.y].setState(BoardCard.State.PLAYER);
+        return cardsToCollect;
     }
 
     public BoardCard getGameBoardCell(Point p) {

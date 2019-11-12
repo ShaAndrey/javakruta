@@ -36,6 +36,8 @@ public class GameBoardLayout extends ConstraintLayout {
     private ImageView playerView;
     private int boardSize;
     private ActivityListener activityListener;
+    private int[][] viewId;
+
 
     public GameBoardLayout(Context context) {
         super(context);
@@ -71,6 +73,7 @@ public class GameBoardLayout extends ConstraintLayout {
 
     private void initializeGameBoard(BoardCard[][] boardCards,
                                      ArrayList<BoardCard> cardsToMove) {
+        viewId = new int[boardSize][boardSize];
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
                 if (boardCards[i][j].getState().equals(PlayCard.State.PLAYER)) {
@@ -82,30 +85,23 @@ public class GameBoardLayout extends ConstraintLayout {
                 }
             }
         }
+        setIllumination(boardCards, cardsToMove);
     }
 
     private void initializeImageView(ImageView imageView, BoardCard[][] boardCards,
                                      ArrayList<BoardCard> cardsToMove, int i, int j) {
         imageView.setId(View.generateViewId());
+        viewId[i][j] = imageView.getId();
         imageView.setImageResource(activityListener.setImageToCard(boardCards[i][j]));
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        imageView.setPadding(1, 1, 1, 1);
+        imageView.setPadding(5, 5, 5, 5);
         imageView.setOnClickListener(v -> {
             activityListener.startTurn(boardCards[i][j]);
-//            activityListener.startTurn(new BoardCard(boardCards[i][j].getState(), i, j));
         });
-        GradientDrawable border = new GradientDrawable();
-        border.setColor(0xffEB5D0D);
-        if (cardsToMove.contains(boardCards[i][j])) {
-            border.setStroke(10, 0xFF00FF00);
-        } else {
-            border.setStroke(1, 0x66000000);
-        }
-        imageView.setBackground(border);
+
         Constraints.LayoutParams params = new Constraints.LayoutParams(0, 0);
         addView(imageView, params);
         placeViewInCell(imageView.getId(), i, j);
-
     }
 
     private void placeViewInCell(int viewId, int i, int j) {
@@ -121,6 +117,7 @@ public class GameBoardLayout extends ConstraintLayout {
 
     interface ActivityListener {
         int setImageToCard(PlayCard card);
+
         void startTurn(BoardCard boardCard);
     }
 
@@ -136,9 +133,58 @@ public class GameBoardLayout extends ConstraintLayout {
         set.connect(playerView.getId(), START, verticalGuidelines[newPlayerPosition.y].getId(), START);
         set.connect(playerView.getId(), END, verticalGuidelines[newPlayerPosition.y + 1].getId(), END);
         ChangeBounds transition = new ChangeBounds();
-        transition.setInterpolator(new AnticipateOvershootInterpolator(1.1f));
-        transition.setDuration(3000);
+        transition.setInterpolator(new AnticipateOvershootInterpolator(1.0f));
+        transition.setDuration(2000);
         TransitionManager.beginDelayedTransition(this, transition);
         set.applyTo(this);
     }
+
+    void removeIllumination(BoardCard[][] boardCards) {
+        setIllumination(boardCards, null);
+    }
+
+    void collectCards(ArrayList<BoardCard> cardsToCollect) {
+        // TODO
+    }
+
+    void refreshBoard() {
+        //TODO
+    }
+
+    void setIllumination(BoardCard[][] boardCards,
+                         ArrayList<BoardCard> cardsToMove) {
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                GradientDrawable border = new GradientDrawable();
+                border.setColor(0xffEB5D0D);
+                if (cardsToMove != null && cardsToMove.contains(boardCards[i][j])) {
+                    border.setStroke(5, 0xFF00FF00);
+                } else if (boardCards[i][j].getState() == PlayCard.State.PLAYER) {
+                    border.setStroke(5, 0xFF0000FF);
+
+                } else {
+                    border.setStroke(1, 0x66000000);
+                }
+                ImageView imageView = findViewById(viewId[i][j]);
+                imageView.setBackground(border);
+            }
+        }
+    }
+
+    void refreshBoard(BoardCard[][] boardCards,
+                      ArrayList<BoardCard> cardsToMove) {
+//        viewId = new int[boardSize][boardSize];
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                if (boardCards[i][j].getState().equals(PlayCard.State.PLAYER)) {
+                    initializeImageView(playerView, boardCards, cardsToMove, i, j);
+                } else {
+                    ImageView imageView = findViewById(viewId[i][j]);           // ??
+                    initializeImageView(imageView, boardCards, cardsToMove, i, j);
+                }
+            }
+        }
+        setIllumination(boardCards, cardsToMove);
+    }
+
 }

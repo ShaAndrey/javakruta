@@ -16,11 +16,16 @@ public interface MainContract {
 
         void movePlayer(Point newPlayerPosition);
 
-        void collectCards(ArrayList<Point> cardsToCollect);
+        void collectCards(ArrayList<BoardCard> cardsToCollect);
 
         void youCantMoveThere();
 
         void stopGame();
+
+        void removeIllumination(BoardCard[][] boardCards);
+
+        void refreshBoard(BoardCard[][] gameBoard,
+                          ArrayList<BoardCard> cardsToMove);
     }
 
     interface Presenter {
@@ -32,7 +37,7 @@ public interface MainContract {
     }
 
     interface Model {
-        ArrayList<Point> handleTurn(BoardCard boardCard);
+        ArrayList<BoardCard> handleTurn(BoardCard boardCard);
 
         boolean isMovePossible();
 

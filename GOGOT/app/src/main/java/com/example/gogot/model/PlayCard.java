@@ -1,6 +1,5 @@
 package com.example.gogot.model;
 
-import android.graphics.Picture;
 
 public abstract class PlayCard {
     public enum State {
@@ -8,7 +7,6 @@ public abstract class PlayCard {
     }
 
     protected State state;
-    protected Picture picture;
 
 
     public State getState() {

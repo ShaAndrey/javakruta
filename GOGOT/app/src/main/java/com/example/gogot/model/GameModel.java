@@ -16,8 +16,8 @@ public class GameModel implements MainContract.Model {
     }
 
     @Override
-    public ArrayList<Point> handleTurn(BoardCard boardCard) {
-        return null;
+    public ArrayList<BoardCard> handleTurn(BoardCard boardCard) {
+        return board.movePlayer(boardCard);
     }
 
 

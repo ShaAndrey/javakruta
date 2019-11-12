@@ -28,9 +28,12 @@ public class GamePresenter implements MainContract.Presenter {
     @Override
     public void handleTurn(BoardCard boardCard) {
         if (model.isMovePossible(boardCard)) {
+            view.removeIllumination(model.getBoard().getBoardCards());
             view.movePlayer(new Point(boardCard.getRow(), boardCard.getColumn()));
-            view.collectCards(model.handleTurn(boardCard));
-            if(model.isMovePossible()) {
+//            view.collectCards(model.handleTurn(boardCard));
+//            view.refreshBoard(model.getBoard().getBoardCards(),
+//                    model.getBoard().getCellsAvailableToMove());
+            if (model.isMovePossible()) {
                 stopGame();
             }
         } else {

@@ -68,13 +68,23 @@ public class GameActivity extends AppCompatActivity
     }
 
     @Override
+    public void removeIllumination(BoardCard[][] boardCards) {
+        gameBoard.removeIllumination(boardCards);
+    }
+
+    @Override
     public void movePlayer(Point newPlayerPosition) {
         gameBoard.movePlayer(newPlayerPosition);
     }
 
     @Override
-    public void collectCards(ArrayList<Point> cardsToCollect) {
+    public void refreshBoard(BoardCard[][] boardCards, ArrayList<BoardCard> cardsToMove) {
+        gameBoard.refreshBoard(boardCards, cardsToMove);         // TODO: not 6 here
+    }
 
+    @Override
+    public void collectCards(ArrayList<BoardCard> cardsToCollect) {
+        gameBoard.collectCards(cardsToCollect);
     }
 
     @Override
