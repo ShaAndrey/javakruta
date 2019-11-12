@@ -17,26 +17,26 @@ public class Board {
         height = n;
         width = m;
 
-        HashSet<BoardCard.State> generatedCells = generateCells(n, m);
-        Iterator<BoardCard.State> generatedCellsIterator = generatedCells.iterator();
+        HashSet<BoardCard> generatedCells = generateCells(n, m);
+        Iterator<BoardCard> generatedCellsIterator = generatedCells.iterator();
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {
-                BoardCard.State nextState = generatedCellsIterator.next();
-                gameBoard[i][j] = new BoardCard(nextState, i, j);
-                if (nextState == BoardCard.State.PLAYER) {
+                BoardCard nextCard = generatedCellsIterator.next();
+                gameBoard[i][j] = new BoardCard(nextCard.state, i, j);
+                if (nextCard.getState() == BoardCard.State.PLAYER) {
                     playerPosition = new Point(i, j);
                 }
             }
         }
     }
 
-    private HashSet<BoardCard.State> generateCells(int n, int m) {
+    private HashSet<BoardCard> generateCells(int n, int m) {
         BoardCard.State[] states = BoardCard.State.values();
-        HashSet<BoardCard.State> generatedCells = new HashSet<>();
+        HashSet<BoardCard> generatedCells = new HashSet<>();
         int totalCells = 0;
         for (int i = 0; totalCells < n * m; ++i) {
             for (int j = 0; j <= i; ++j) {
-                generatedCells.add(states[i + 1]);
+                generatedCells.add(new BoardCard(states[i + 1], i, j));
             }
             totalCells += i + 1;
         }
