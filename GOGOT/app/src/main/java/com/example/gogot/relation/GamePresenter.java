@@ -2,6 +2,7 @@ package com.example.gogot.relation;
 
 import android.graphics.Point;
 
+import com.example.gogot.model.BoardCard;
 import com.example.gogot.model.GameModel;
 
 public class GamePresenter implements MainContract.Presenter {
@@ -25,10 +26,10 @@ public class GamePresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void handleTurn(Point newPlayerPosition) {
-        if (model.isMovePossible(newPlayerPosition)) {
-            view.movePlayer(newPlayerPosition);
-            view.collectCards(model.handleTurn(newPlayerPosition));
+    public void handleTurn(BoardCard boardCard) {
+        if (model.isMovePossible(boardCard)) {
+            view.movePlayer(new Point(boardCard.getRow(), boardCard.getColumn()));
+            view.collectCards(model.handleTurn(boardCard));
             if(model.isMovePossible()) {
                 stopGame();
             }

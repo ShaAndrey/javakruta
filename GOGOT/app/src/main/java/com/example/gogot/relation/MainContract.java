@@ -26,17 +26,17 @@ public interface MainContract {
     interface Presenter {
         void createView();
 
-        void handleTurn(Point newPlayerPosition);
+        void handleTurn(BoardCard boardCard);
 
         void stopGame();
     }
 
     interface Model {
-        ArrayList<Point> handleTurn(Point newPlayerPosition);
+        ArrayList<Point> handleTurn(BoardCard boardCard);
 
         boolean isMovePossible();
 
-        boolean isMovePossible(Point newPlayerPosition);
+        boolean isMovePossible(BoardCard boardCard);
 
         Board getBoard();
     }

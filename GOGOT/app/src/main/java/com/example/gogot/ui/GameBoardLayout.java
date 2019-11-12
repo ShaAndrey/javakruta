@@ -2,10 +2,15 @@ package com.example.gogot.ui;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
+import android.media.Image;
+import android.transition.ChangeBounds;
+import android.transition.TransitionManager;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
+import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,7 +33,7 @@ import static androidx.constraintlayout.widget.ConstraintSet.TOP;
 public class GameBoardLayout extends ConstraintLayout {
     private Guideline[] horizontalGuidelines;
     private Guideline[] verticalGuidelines;
-    private TextView playerView;
+    private ImageView playerView;
     private int boardSize;
     private ActivityListener activityListener;
 
@@ -62,46 +67,44 @@ public class GameBoardLayout extends ConstraintLayout {
             verticalGuidelines[i] = findViewWithTag("verticalGuideline" + i);
         }
         initializeGameBoard(boardCards, cardsToMove);
-//        initializePlayerView();
     }
 
     private void initializeGameBoard(BoardCard[][] boardCards,
                                      ArrayList<BoardCard> cardsToMove) {
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
-                ImageView imageView = new ImageView(getContext());      // ??
-                imageView.setId(View.generateViewId());
-                imageView.setImageResource(activityListener.setImageToCard(boardCards[i][j]));
-                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                imageView.setPadding(1, 1, 1, 1);
-                imageView.setOnClickListener(v -> {
-                });
-
-                GradientDrawable border = new GradientDrawable();
-                border.setColor(0xffEB5D0D);
-                if (cardsToMove.contains(boardCards[i][j])) {
-                    border.setStroke(10, 0xFF00FF00);
+                if (boardCards[i][j].getState().equals(PlayCard.State.PLAYER)) {
+                    playerView = new ImageView(getContext());
+                    initializeImageView(playerView, boardCards, cardsToMove, i, j);
                 } else {
-                    border.setStroke(1, 0x66000000);
+                    ImageView imageView = new ImageView(getContext());
+                    initializeImageView(imageView, boardCards, cardsToMove, i, j);
                 }
-                imageView.setBackground(border);
-
-                Constraints.LayoutParams params = new Constraints.LayoutParams(0, 0);
-                addView(imageView, params);
-                placeViewInCell(imageView.getId(), i, j);
             }
         }
     }
 
-    private void initializePlayerView() {
-        playerView = new TextView(getContext());            // ??
-        playerView.setId(View.generateViewId());
-        playerView.setText("Player");
-        playerView.setGravity(Gravity.CENTER);
-        playerView.setBackgroundColor(Color.parseColor("#FFD500"));
+    private void initializeImageView(ImageView imageView, BoardCard[][] boardCards,
+                                     ArrayList<BoardCard> cardsToMove, int i, int j) {
+        imageView.setId(View.generateViewId());
+        imageView.setImageResource(activityListener.setImageToCard(boardCards[i][j]));
+        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        imageView.setPadding(1, 1, 1, 1);
+        imageView.setOnClickListener(v -> {
+            activityListener.startTurn(boardCards[i][j]);
+//            activityListener.startTurn(new BoardCard(boardCards[i][j].getState(), i, j));
+        });
+        GradientDrawable border = new GradientDrawable();
+        border.setColor(0xffEB5D0D);
+        if (cardsToMove.contains(boardCards[i][j])) {
+            border.setStroke(10, 0xFF00FF00);
+        } else {
+            border.setStroke(1, 0x66000000);
+        }
+        imageView.setBackground(border);
         Constraints.LayoutParams params = new Constraints.LayoutParams(0, 0);
-        addView(playerView, params);
-        placeViewInCell(playerView.getId(), 2, 2);
+        addView(imageView, params);
+        placeViewInCell(imageView.getId(), i, j);
 
     }
 
@@ -118,14 +121,24 @@ public class GameBoardLayout extends ConstraintLayout {
 
     interface ActivityListener {
         int setImageToCard(PlayCard card);
+        void startTurn(BoardCard boardCard);
     }
 
     void setListener(ActivityListener activityListener) {
         this.activityListener = activityListener;
     }
 
-    void setIllumination(ImageView imageView) {
-
-
+    void movePlayer(Point newPlayerPosition) {
+        ConstraintSet set = new ConstraintSet();
+        set.clone(this);
+        set.connect(playerView.getId(), TOP, horizontalGuidelines[newPlayerPosition.x].getId(), TOP);
+        set.connect(playerView.getId(), BOTTOM, horizontalGuidelines[newPlayerPosition.x + 1].getId(), BOTTOM);
+        set.connect(playerView.getId(), START, verticalGuidelines[newPlayerPosition.y].getId(), START);
+        set.connect(playerView.getId(), END, verticalGuidelines[newPlayerPosition.y + 1].getId(), END);
+        ChangeBounds transition = new ChangeBounds();
+        transition.setInterpolator(new AnticipateOvershootInterpolator(1.1f));
+        transition.setDuration(3000);
+        TransitionManager.beginDelayedTransition(this, transition);
+        set.applyTo(this);
     }
 }

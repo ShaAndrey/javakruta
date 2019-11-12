@@ -16,7 +16,7 @@ public class GameModel implements MainContract.Model {
     }
 
     @Override
-    public ArrayList<Point> handleTurn(Point newPlayerPosition) {
+    public ArrayList<Point> handleTurn(BoardCard boardCard) {
         return null;
     }
 
@@ -28,8 +28,8 @@ public class GameModel implements MainContract.Model {
     }
 
     @Override
-    public boolean isMovePossible(Point newPlayerPosition) {
-        return false;
+    public boolean isMovePossible(BoardCard boardCard) {
+        return board.getCellsAvailableToMove().contains(boardCard);
     }
 
     @Override

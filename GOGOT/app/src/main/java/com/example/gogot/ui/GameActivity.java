@@ -56,6 +56,11 @@ public class GameActivity extends AppCompatActivity
     }
 
     @Override
+    public void startTurn(BoardCard boardCard) {
+        presenter.handleTurn(boardCard);
+    }
+
+    @Override
     public void drawInitialBoard(BoardCard[][] boardCards, ArrayList<BoardCard> cardsToMove) {
         gameBoard = findViewById(R.id.layout_game_board);
         gameBoard.setListener(this);
@@ -64,7 +69,7 @@ public class GameActivity extends AppCompatActivity
 
     @Override
     public void movePlayer(Point newPlayerPosition) {
-
+        gameBoard.movePlayer(newPlayerPosition);
     }
 
     @Override

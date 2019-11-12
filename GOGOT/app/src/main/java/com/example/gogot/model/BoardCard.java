@@ -8,16 +8,16 @@ public class BoardCard extends PlayCard {
 
     private Point position;
 
-    BoardCard(State state, int row, int column) {
+    public BoardCard(State state, int row, int column) {
         super.state = state;
         this.position = new Point(row, column);
     }
 
-    int getRow() {
+    public int getRow() {
         return position.x;
     }
 
-    int getColumn() {
+    public int getColumn() {
         return position.y;
     }
 
