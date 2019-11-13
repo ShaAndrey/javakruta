@@ -147,10 +147,6 @@ public class GameBoardLayout extends ConstraintLayout {
         // TODO
     }
 
-    void refreshBoard() {
-        //TODO
-    }
-
     void setIllumination(BoardCard[][] boardCards,
                          ArrayList<BoardCard> cardsToMove) {
         for (int i = 0; i < boardSize; i++) {
@@ -173,15 +169,10 @@ public class GameBoardLayout extends ConstraintLayout {
 
     void refreshBoard(BoardCard[][] boardCards,
                       ArrayList<BoardCard> cardsToMove) {
-//        viewId = new int[boardSize][boardSize];
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
-                if (boardCards[i][j].getState().equals(PlayCard.State.PLAYER)) {
-                    initializeImageView(playerView, boardCards, cardsToMove, i, j);
-                } else {
-                    ImageView imageView = findViewById(viewId[i][j]);           // ??
-                    initializeImageView(imageView, boardCards, cardsToMove, i, j);
-                }
+                ImageView imageView = findViewById(viewId[i][j]);
+                imageView.setImageResource(activityListener.setImageToCard(boardCards[i][j]));
             }
         }
         setIllumination(boardCards, cardsToMove);

@@ -67,16 +67,20 @@ public class Board {
         gameBoard[playerPosition.x][playerPosition.y].setState(BoardCard.State.NOTHING);
         int rowMoveDirection = (playerPosition.x < newPosition.getRow()) ? 1 : -1;
         int columnMoveDirection = (playerPosition.y < newPosition.getColumn()) ? 1 : -1;
-        for (int i = playerPosition.x; i <= newPosition.getRow(); i += rowMoveDirection) {
-            for (int j = playerPosition.y; j <= newPosition.getColumn(); j += columnMoveDirection) {
-                if (gameBoard[i][j].getState() == newPosition.getState()) {
-                    gameBoard[i][j].setState(BoardCard.State.NOTHING);
-                    // TODO also ensure that a player earns points
-                    cardsToCollect.add(gameBoard[i][j]);
-                }
+        for (int i = playerPosition.x; i != newPosition.getRow(); i += rowMoveDirection) {
+            if (gameBoard[i][playerPosition.y].getState() == newPosition.getState()) {
+                gameBoard[i][playerPosition.y].setState(BoardCard.State.NOTHING);
+                cardsToCollect.add(gameBoard[i][playerPosition.y]);
+            }
+        }
+        for (int j = playerPosition.y; j != newPosition.getColumn(); j += columnMoveDirection) {
+            if (gameBoard[playerPosition.x][j].getState() == newPosition.getState()) {
+                gameBoard[playerPosition.x][j].setState(BoardCard.State.NOTHING);
+                cardsToCollect.add(gameBoard[playerPosition.x][j]);
             }
         }
         playerPosition = new Point(newPosition.getRow(), newPosition.getColumn());
+        cardsToCollect.add(gameBoard[playerPosition.x][playerPosition.y]);
         gameBoard[playerPosition.x][playerPosition.y].setState(BoardCard.State.PLAYER);
         return cardsToCollect;
     }

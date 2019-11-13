@@ -79,7 +79,7 @@ public class GameActivity extends AppCompatActivity
 
     @Override
     public void refreshBoard(BoardCard[][] boardCards, ArrayList<BoardCard> cardsToMove) {
-        gameBoard.refreshBoard(boardCards, cardsToMove);         // TODO: not 6 here
+        gameBoard.refreshBoard(boardCards, cardsToMove);
     }
 
     @Override
