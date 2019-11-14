@@ -174,8 +174,6 @@ public class GameBoardLayout extends ConstraintLayout {
                 ImageView imageView = findViewById(viewId[i][j]);
                 if (boardCards[i][j].getState() == PlayCard.State.NOTHING) {
                     imageView.setVisibility(View.INVISIBLE);
-                } else {
-                    imageView.setImageResource(activityListener.setImageToCard(boardCards[i][j]));
                 }
             }
         }
