@@ -1,18 +1,17 @@
 package com.example.gogot.ui;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
-import android.media.Image;
 import android.transition.ChangeBounds;
+import android.transition.Transition;
+import android.transition.TransitionListenerAdapter;
 import android.transition.TransitionManager;
 import android.util.AttributeSet;
-import android.view.Gravity;
+import android.util.TimeUtils;
 import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -78,26 +77,24 @@ public class GameBoardLayout extends ConstraintLayout {
             for (int j = 0; j < boardSize; j++) {
                 if (boardCards[i][j].getState().equals(PlayCard.State.PLAYER)) {
                     playerView = new ImageView(getContext());
-                    initializeImageView(playerView, boardCards, cardsToMove, i, j);
+                    initializeImageView(playerView, boardCards, i, j);
                 } else {
                     ImageView imageView = new ImageView(getContext());
-                    initializeImageView(imageView, boardCards, cardsToMove, i, j);
+                    initializeImageView(imageView, boardCards, i, j);
                 }
             }
         }
         setIllumination(boardCards, cardsToMove);
     }
 
-    private void initializeImageView(ImageView imageView, BoardCard[][] boardCards,
-                                     ArrayList<BoardCard> cardsToMove, int i, int j) {
+    private void initializeImageView(ImageView imageView,
+                                     BoardCard[][] boardCards, int i, int j) {
         imageView.setId(View.generateViewId());
         viewId[i][j] = imageView.getId();
         imageView.setImageResource(activityListener.setImageToCard(boardCards[i][j]));
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         imageView.setPadding(5, 5, 5, 5);
-        imageView.setOnClickListener(v -> {
-            activityListener.startTurn(boardCards[i][j]);
-        });
+        imageView.setOnClickListener(v -> activityListener.startTurn(boardCards[i][j]));
 
         Constraints.LayoutParams params = new Constraints.LayoutParams(0, 0);
         addView(imageView, params);
@@ -119,13 +116,18 @@ public class GameBoardLayout extends ConstraintLayout {
         int setImageToCard(PlayCard card);
 
         void startTurn(BoardCard boardCard);
+
+        void resumeTurn(BoardCard boardCard);
     }
 
     void setListener(ActivityListener activityListener) {
         this.activityListener = activityListener;
     }
 
-    void movePlayer(Point newPlayerPosition) {
+    void movePlayer(Point playerPosition, Point newPlayerPosition) {
+        int curId = viewId[newPlayerPosition.x][newPlayerPosition.y];
+        viewId[newPlayerPosition.x][newPlayerPosition.y] = viewId[playerPosition.x][playerPosition.y];
+        viewId[playerPosition.x][playerPosition.y] = curId;
         ConstraintSet set = new ConstraintSet();
         set.clone(this);
         set.connect(playerView.getId(), TOP, horizontalGuidelines[newPlayerPosition.x].getId(), TOP);
@@ -134,7 +136,8 @@ public class GameBoardLayout extends ConstraintLayout {
         set.connect(playerView.getId(), END, verticalGuidelines[newPlayerPosition.y + 1].getId(), END);
         ChangeBounds transition = new ChangeBounds();
         transition.setInterpolator(new AnticipateOvershootInterpolator(1.0f));
-        transition.setDuration(2000);
+        int animationDuration = 1500;
+        transition.setDuration(animationDuration);
         TransitionManager.beginDelayedTransition(this, transition);
         set.applyTo(this);
     }
@@ -172,7 +175,11 @@ public class GameBoardLayout extends ConstraintLayout {
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
                 ImageView imageView = findViewById(viewId[i][j]);
-                imageView.setImageResource(activityListener.setImageToCard(boardCards[i][j]));
+                if (boardCards[i][j].getState() == PlayCard.State.NOTHING) {
+                    imageView.setVisibility(View.INVISIBLE);
+                } else {
+                    imageView.setImageResource(activityListener.setImageToCard(boardCards[i][j]));
+                }
             }
         }
         setIllumination(boardCards, cardsToMove);

@@ -14,7 +14,7 @@ public interface MainContract {
         void drawInitialBoard(BoardCard[][] gameBoard,
                               ArrayList<BoardCard> cardsToMove);
 
-        void movePlayer(Point newPlayerPosition);
+        void movePlayer(Point playerPosition, Point newPlayerPosition);
 
         void collectCards(ArrayList<BoardCard> cardsToCollect);
 
@@ -44,5 +44,7 @@ public interface MainContract {
         boolean isMovePossible(BoardCard boardCard);
 
         Board getBoard();
+
+        Point getPlayerPosition();
     }
 }

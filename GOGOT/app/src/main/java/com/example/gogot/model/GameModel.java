@@ -8,7 +8,12 @@ import java.util.ArrayList;
 
 public class GameModel implements MainContract.Model {
     private Board board;
-    private ArrayList<PlayersHand> playersHandArrayList;
+
+    @Override
+    public Point getPlayerPosition() {
+        return board.getPlayerPosition();
+    }
+
     private int boardSize = 6;
 
     public GameModel() {
@@ -36,4 +41,6 @@ public class GameModel implements MainContract.Model {
     public Board getBoard() {
         return board;
     }
+
+
 }
