@@ -118,8 +118,6 @@ public class GameBoardLayout extends ConstraintLayout {
         int setImageToCard(PlayCard card);
 
         void startTurn(BoardCard boardCard);
-
-        void resumeTurn(BoardCard boardCard);
     }
 
     void setListener(ActivityListener activityListener) {

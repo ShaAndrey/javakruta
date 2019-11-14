@@ -73,11 +73,6 @@ public class GameActivity extends AppCompatActivity
     }
 
     @Override
-    public void resumeTurn(BoardCard boardCard) {
-
-    }
-
-    @Override
     public void movePlayer(Point playerPosition, Point newPlayerPosition) {
         gameBoard.movePlayer(playerPosition, newPlayerPosition);
     }
