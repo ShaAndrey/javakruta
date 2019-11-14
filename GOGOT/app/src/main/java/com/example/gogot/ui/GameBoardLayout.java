@@ -36,6 +36,7 @@ public class GameBoardLayout extends ConstraintLayout {
     private int boardSize;
     private ActivityListener activityListener;
     private int[][] viewId;
+    private Point playerPosition;
 
 
     public GameBoardLayout(Context context) {
@@ -76,14 +77,15 @@ public class GameBoardLayout extends ConstraintLayout {
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
                 if (boardCards[i][j].getState().equals(PlayCard.State.PLAYER)) {
-                    playerView = new ImageView(getContext());
-                    initializeImageView(playerView, boardCards, i, j);
+                    playerPosition = new Point(i, j);
                 } else {
                     ImageView imageView = new ImageView(getContext());
                     initializeImageView(imageView, boardCards, i, j);
                 }
             }
         }
+        playerView = new ImageView(getContext());
+        initializeImageView(playerView, boardCards, playerPosition.x, playerPosition.y);
         setIllumination(boardCards, cardsToMove);
     }
 

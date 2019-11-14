@@ -26,7 +26,6 @@ public class GameModel implements MainContract.Model {
     }
 
 
-
     @Override
     public boolean isMovePossible() {
         return !board.getCellsAvailableToMove().isEmpty();
