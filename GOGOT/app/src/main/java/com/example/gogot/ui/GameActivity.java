@@ -73,8 +73,8 @@ public class GameActivity extends AppCompatActivity
     }
 
     @Override
-    public void movePlayer(Point playerPosition, Point newPlayerPosition) {
-        gameBoard.movePlayer(playerPosition, newPlayerPosition);
+    public void movePlayer(BoardCard playerCard, Point newPlayerPosition) {
+        gameBoard.movePlayer(playerCard, newPlayerPosition);
     }
 
     @Override
@@ -95,5 +95,10 @@ public class GameActivity extends AppCompatActivity
     @Override
     public void stopGame() {
 
+    }
+
+    @Override
+    public void updateIlluminationAndCollectCards() {
+        presenter.updateIlluminationAndCollectCards();
     }
 }

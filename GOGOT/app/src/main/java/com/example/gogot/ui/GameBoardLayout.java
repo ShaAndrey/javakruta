@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
 import android.transition.ChangeBounds;
+import android.transition.Transition;
+import android.transition.TransitionListenerAdapter;
 import android.transition.TransitionManager;
 import android.util.AttributeSet;
 import android.view.View;
@@ -34,6 +36,7 @@ public class GameBoardLayout extends ConstraintLayout {
     private ActivityListener activityListener;
     private int[][] viewId;
     private Point playerPosition;
+    private Point newPlayerPosition;
 
 
     public GameBoardLayout(Context context) {
@@ -115,36 +118,83 @@ public class GameBoardLayout extends ConstraintLayout {
         int setImageToCard(PlayCard card);
 
         void startTurn(BoardCard boardCard);
+
+        void updateIlluminationAndCollectCards();
     }
 
     void setListener(ActivityListener activityListener) {
         this.activityListener = activityListener;
     }
 
-    void movePlayer(Point playerPosition, Point newPlayerPosition) {
-        int curId = viewId[newPlayerPosition.x][newPlayerPosition.y];
-        viewId[newPlayerPosition.x][newPlayerPosition.y] = viewId[playerPosition.x][playerPosition.y];
-        viewId[playerPosition.x][playerPosition.y] = curId;
+    void movePlayer(BoardCard playerCard, Point newPlayerPosition) {
+//        int curId = viewId[newPlayerPosition.x][newPlayerPosition.y];
+//        viewId[newPlayerPosition.x][newPlayerPosition.y] = viewId[playerPosition.x][playerPosition.y];
+//        viewId[playerPosition.x][playerPosition.y] = curId;
+        this.newPlayerPosition = newPlayerPosition;
+        animateMove(playerCard, newPlayerPosition);
+    }
+
+    void animateMove(BoardCard cardToMove, Point newPosition) {
+        ImageView viewToMove;
+        if (cardToMove.getState().equals(PlayCard.State.PLAYER)) {
+            viewToMove = playerView;
+        } else {
+            viewToMove = findViewById(viewId[cardToMove.getRow()][cardToMove.getColumn()]);
+        }
         ConstraintSet set = new ConstraintSet();
         set.clone(this);
-        set.connect(playerView.getId(), TOP, horizontalGuidelines[newPlayerPosition.x].getId(), TOP);
-        set.connect(playerView.getId(), BOTTOM, horizontalGuidelines[newPlayerPosition.x + 1].getId(), BOTTOM);
-        set.connect(playerView.getId(), START, verticalGuidelines[newPlayerPosition.y].getId(), START);
-        set.connect(playerView.getId(), END, verticalGuidelines[newPlayerPosition.y + 1].getId(), END);
+        set.connect(viewToMove.getId(), TOP, horizontalGuidelines[newPosition.x].getId(), TOP);
+        set.connect(viewToMove.getId(), BOTTOM, horizontalGuidelines[newPosition.x + 1].getId(), BOTTOM);
+        set.connect(viewToMove.getId(), START, verticalGuidelines[newPosition.y].getId(), START);
+        set.connect(viewToMove.getId(), END, verticalGuidelines[newPosition.y + 1].getId(), END);
         ChangeBounds transition = new ChangeBounds();
         transition.setInterpolator(new AnticipateOvershootInterpolator(1.0f));
         int animationDuration = 1500;
         transition.setDuration(animationDuration);
+        transition.addListener(new Transition.TransitionListener() {
+            @Override
+            public void onTransitionStart(Transition transition) {
+            }
+
+            @Override
+            public void onTransitionEnd(Transition transition) {
+                if (cardToMove.getState().equals(PlayCard.State.PLAYER)) {
+                    activityListener.updateIlluminationAndCollectCards();
+//                    int curId = viewId[newPosition.x][newPosition.y];
+//                    viewId[newPosition.x][newPosition.y] = viewId[playerPosition.x][playerPosition.y];
+//                    viewId[playerPosition.x][playerPosition.y] = curId;
+                } else {
+                    viewToMove.setVisibility(View.INVISIBLE);
+                    viewId[newPlayerPosition.x][newPlayerPosition.y] = viewId[playerPosition.x][playerPosition.y];
+                }
+            }
+
+            @Override
+            public void onTransitionCancel(Transition transition) {
+
+            }
+
+            @Override
+            public void onTransitionPause(Transition transition) {
+
+            }
+
+            @Override
+            public void onTransitionResume(Transition transition) {
+
+            }
+        });
         TransitionManager.beginDelayedTransition(this, transition);
         set.applyTo(this);
     }
+
 
     void removeIllumination(BoardCard[][] boardCards) {
         setIllumination(boardCards, null);
     }
 
     void collectCards(ArrayList<BoardCard> cardsToCollect) {
-        // TODO
+        cardsToCollect.forEach(boardCard -> animateMove(boardCard, new Point(0, 0)));
     }
 
     void setIllumination(BoardCard[][] boardCards,
@@ -169,14 +219,8 @@ public class GameBoardLayout extends ConstraintLayout {
 
     void refreshBoard(BoardCard[][] boardCards,
                       ArrayList<BoardCard> cardsToMove) {
-        for (int i = 0; i < boardSize; i++) {
-            for (int j = 0; j < boardSize; j++) {
-                ImageView imageView = findViewById(viewId[i][j]);
-                if (boardCards[i][j].getState() == PlayCard.State.NOTHING) {
-                    imageView.setVisibility(View.INVISIBLE);
-                }
-            }
-        }
+//        viewId[newPlayerPosition.x][newPlayerPosition.y] = viewId[playerPosition.x][playerPosition.y];
+
         setIllumination(boardCards, cardsToMove);
     }
 

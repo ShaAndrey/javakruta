@@ -21,7 +21,7 @@ public class GameModel implements MainContract.Model {
     }
 
     @Override
-    public ArrayList<BoardCard> handleTurn(BoardCard boardCard) {
+    public  ArrayList<BoardCard>  handleTurn(BoardCard boardCard) {
         return board.movePlayer(boardCard);
     }
 
@@ -41,5 +41,12 @@ public class GameModel implements MainContract.Model {
         return board;
     }
 
-
+    @Override
+    public ArrayList<BoardCard> getCardsToCollect() {
+        return board.getCardsToCollect();
+    }
+    @Override
+    public BoardCard getPlayerCard() {
+        return board.getPlayerCard();
+    }
 }

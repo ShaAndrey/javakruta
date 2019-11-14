@@ -27,14 +27,19 @@ public class GamePresenter implements MainContract.Presenter {
 
 
     @Override
+    public void updateIlluminationAndCollectCards() {
+        view.collectCards(model.getCardsToCollect());
+        view.refreshBoard(model.getBoard().getBoardCards(),
+                model.getBoard().getCellsAvailableToMove());
+    }
+
+    @Override
     public void handleTurn(BoardCard boardCard) {
         if (model.isMovePossible(boardCard)) {
             view.removeIllumination(model.getBoard().getBoardCards());
-            view.movePlayer(model.getPlayerPosition(),
+            model.handleTurn(boardCard);
+            view.movePlayer(model.getPlayerCard(),
                     new Point(boardCard.getRow(), boardCard.getColumn()));
-            view.collectCards(model.handleTurn(boardCard));
-            view.refreshBoard(model.getBoard().getBoardCards(),
-                    model.getBoard().getCellsAvailableToMove());
             if (model.isMovePossible()) {
                 stopGame();
             }

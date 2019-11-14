@@ -11,6 +11,7 @@ public class Board {
     private BoardCard[][] gameBoard;
     private int height, width;
     private Point playerPosition;
+    private ArrayList<BoardCard> cardsToCollect;
 
     Board(int n, int m) {
         gameBoard = new BoardCard[n][m];
@@ -63,7 +64,7 @@ public class Board {
     }
 
     ArrayList<BoardCard> movePlayer(BoardCard newPosition) {
-        ArrayList<BoardCard> cardsToCollect = new ArrayList<>();
+        cardsToCollect = new ArrayList<>();
         gameBoard[playerPosition.x][playerPosition.y].setState(BoardCard.State.NOTHING);
         int rowMoveDirection = (playerPosition.x < newPosition.getRow()) ? 1 : -1;
         int columnMoveDirection = (playerPosition.y < newPosition.getColumn()) ? 1 : -1;
@@ -73,8 +74,8 @@ public class Board {
         for (int j = playerPosition.y; j != newPosition.getColumn(); j += columnMoveDirection) {
             collectCard(gameBoard[playerPosition.x][j], newPosition, cardsToCollect);
         }
+        cardsToCollect.add(gameBoard[newPosition.getRow()][newPosition.getColumn()]);
         playerPosition = new Point(newPosition.getRow(), newPosition.getColumn());
-        cardsToCollect.add(gameBoard[playerPosition.x][playerPosition.y]);
         gameBoard[playerPosition.x][playerPosition.y].setState(BoardCard.State.PLAYER);
         return cardsToCollect;
     }
@@ -91,11 +92,20 @@ public class Board {
         return gameBoard[p.x][p.y];
     }
 
-    public Point getPlayerPosition() {
+    Point getPlayerPosition() {
         return playerPosition;
     }
 
     public int getSize() {
         return height;
     }
+
+    BoardCard getPlayerCard() {
+        return gameBoard[playerPosition.x][playerPosition.y];
+    }
+
+    ArrayList<BoardCard> getCardsToCollect () {
+        return cardsToCollect;
+    }
+
 }
