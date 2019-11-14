@@ -131,12 +131,12 @@ public class GameBoardLayout extends ConstraintLayout {
 //        viewId[newPlayerPosition.x][newPlayerPosition.y] = viewId[playerPosition.x][playerPosition.y];
 //        viewId[playerPosition.x][playerPosition.y] = curId;
         this.newPlayerPosition = newPlayerPosition;
-        animateMove(playerCard, newPlayerPosition);
+        animateMove(playerCard, newPlayerPosition, true);
     }
 
-    void animateMove(BoardCard cardToMove, Point newPosition) {
+    void animateMove(BoardCard cardToMove, Point newPosition, boolean player) {
         ImageView viewToMove;
-        if (cardToMove.getState().equals(PlayCard.State.PLAYER)) {
+        if (player) {
             viewToMove = playerView;
         } else {
             viewToMove = findViewById(viewId[cardToMove.getRow()][cardToMove.getColumn()]);
@@ -158,14 +158,14 @@ public class GameBoardLayout extends ConstraintLayout {
 
             @Override
             public void onTransitionEnd(Transition transition) {
-                if (cardToMove.getState().equals(PlayCard.State.PLAYER)) {
+                if (player) {
                     activityListener.updateIlluminationAndCollectCards();
 //                    int curId = viewId[newPosition.x][newPosition.y];
 //                    viewId[newPosition.x][newPosition.y] = viewId[playerPosition.x][playerPosition.y];
 //                    viewId[playerPosition.x][playerPosition.y] = curId;
                 } else {
                     viewToMove.setVisibility(View.INVISIBLE);
-                    viewId[newPlayerPosition.x][newPlayerPosition.y] = viewId[playerPosition.x][playerPosition.y];
+//                    viewId[newPlayerPosition.x][newPlayerPosition.y] = viewId[playerPosition.x][playerPosition.y];
                 }
             }
 
@@ -194,7 +194,8 @@ public class GameBoardLayout extends ConstraintLayout {
     }
 
     void collectCards(ArrayList<BoardCard> cardsToCollect) {
-        cardsToCollect.forEach(boardCard -> animateMove(boardCard, new Point(0, 0)));
+        cardsToCollect.forEach(boardCard -> animateMove(boardCard,
+                new Point(0, 0), false));
     }
 
     void setIllumination(BoardCard[][] boardCards,
@@ -219,8 +220,7 @@ public class GameBoardLayout extends ConstraintLayout {
 
     void refreshBoard(BoardCard[][] boardCards,
                       ArrayList<BoardCard> cardsToMove) {
-//        viewId[newPlayerPosition.x][newPlayerPosition.y] = viewId[playerPosition.x][playerPosition.y];
-
+        viewId[newPlayerPosition.x][newPlayerPosition.y] = viewId[playerPosition.x][playerPosition.y];
         setIllumination(boardCards, cardsToMove);
     }
 
