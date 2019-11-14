@@ -128,7 +128,6 @@ public class GameBoardLayout extends ConstraintLayout {
 
     void movePlayer(BoardCard playerCard, Point newPlayerPosition) {
         this.newPlayerPosition = newPlayerPosition;
-//        animateMove(playerCard, newPlayerPosition, true);
         ConstraintSet set = new ConstraintSet();
         set.clone(this);
         set.connect(playerView.getId(), TOP, horizontalGuidelines[newPlayerPosition.x].getId(), TOP);
@@ -168,61 +167,6 @@ public class GameBoardLayout extends ConstraintLayout {
         set.applyTo(this);
     }
 
-    void animateMove(BoardCard cardToMove, Point newPosition, boolean player) {
-        ImageView viewToMove;
-        if (player) {
-            viewToMove = playerView;
-        } else {
-            viewToMove = findViewById(viewId[cardToMove.getRow()][cardToMove.getColumn()]);
-        }
-        ConstraintSet set = new ConstraintSet();
-        set.clone(this);
-        set.connect(viewToMove.getId(), TOP, horizontalGuidelines[newPosition.x].getId(), TOP);
-        set.connect(viewToMove.getId(), BOTTOM, horizontalGuidelines[newPosition.x + 1].getId(), BOTTOM);
-        set.connect(viewToMove.getId(), START, verticalGuidelines[newPosition.y].getId(), START);
-        set.connect(viewToMove.getId(), END, verticalGuidelines[newPosition.y + 1].getId(), END);
-        ChangeBounds transition = new ChangeBounds();
-        transition.setInterpolator(new AnticipateOvershootInterpolator(1.0f));
-        int animationDuration = 1500;
-        transition.setDuration(animationDuration);
-        transition.addListener(new Transition.TransitionListener() {
-            @Override
-            public void onTransitionStart(Transition transition) {
-            }
-
-            @Override
-            public void onTransitionEnd(Transition transition) {
-                if (player) {
-                    activityListener.updateIlluminationAndCollectCards();
-//                    int curId = viewId[newPosition.x][newPosition.y];
-//                    viewId[newPosition.x][newPosition.y] = viewId[playerPosition.x][playerPosition.y];
-//                    viewId[playerPosition.x][playerPosition.y] = curId;
-                } else {
-                    viewToMove.setVisibility(View.INVISIBLE);
-                    System.out.println("shit");
-//                    viewId[newPlayerPosition.x][newPlayerPosition.y] = viewId[playerPosition.x][playerPosition.y];
-                }
-            }
-
-            @Override
-            public void onTransitionCancel(Transition transition) {
-
-            }
-
-            @Override
-            public void onTransitionPause(Transition transition) {
-
-            }
-
-            @Override
-            public void onTransitionResume(Transition transition) {
-
-            }
-        });
-        TransitionManager.beginDelayedTransition(this, transition);
-        set.applyTo(this);
-    }
-
 
     void removeIllumination(BoardCard[][] boardCards) {
         setIllumination(boardCards, null);
@@ -230,10 +174,13 @@ public class GameBoardLayout extends ConstraintLayout {
 
     void collectCards(ArrayList<BoardCard> cardsToCollect) {
         cardsToCollect.forEach(boardCard -> {
-            ImageView  imageView = findViewById(viewId[boardCard.getRow()][boardCard.getColumn()]);
+            ImageView imageView = findViewById(viewId[boardCard.getRow()][boardCard.getColumn()]);
             imageView.setVisibility(View.INVISIBLE);
         });
+        int curId = viewId[newPlayerPosition.x][newPlayerPosition.y];
         viewId[newPlayerPosition.x][newPlayerPosition.y] = viewId[playerPosition.x][playerPosition.y];
+        viewId[playerPosition.x][playerPosition.y] = curId;
+        playerPosition = newPlayerPosition;
     }
 
     void setIllumination(BoardCard[][] boardCards,
@@ -244,7 +191,7 @@ public class GameBoardLayout extends ConstraintLayout {
                 border.setColor(0xffEB5D0D);
                 if (cardsToMove != null && cardsToMove.contains(boardCards[i][j])) {
                     border.setStroke(5, 0xFF00FF00);
-                } else if (boardCards[i][j].getState() == PlayCard.State.PLAYER) {
+                } else if (boardCards[i][j].getState().equals(PlayCard.State.PLAYER)) {
                     border.setStroke(5, 0xFF0000FF);
                 } else {
                     border.setStroke(1, 0x66000000);
@@ -257,7 +204,6 @@ public class GameBoardLayout extends ConstraintLayout {
 
     void refreshBoard(BoardCard[][] boardCards,
                       ArrayList<BoardCard> cardsToMove) {
-//        viewId[newPlayerPosition.x][newPlayerPosition.y] = viewId[playerPosition.x][playerPosition.y];
         setIllumination(boardCards, cardsToMove);
     }
 
