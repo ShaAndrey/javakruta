@@ -1,11 +1,9 @@
 package com.example.gogot.relation;
 
-import android.graphics.Picture;
 import android.graphics.Point;
 
 import com.example.gogot.model.Board;
 import com.example.gogot.model.BoardCard;
-import com.example.gogot.model.PlayCard;
 
 import java.util.ArrayList;
 
