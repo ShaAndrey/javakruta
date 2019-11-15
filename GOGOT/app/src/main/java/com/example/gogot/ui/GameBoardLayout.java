@@ -5,7 +5,6 @@ import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
 import android.transition.ChangeBounds;
 import android.transition.Transition;
-import android.transition.TransitionListenerAdapter;
 import android.transition.TransitionManager;
 import android.util.AttributeSet;
 import android.view.View;
@@ -33,7 +32,7 @@ public class GameBoardLayout extends ConstraintLayout {
     private Guideline[] verticalGuidelines;
     private ImageView playerView;
     private int boardSize;
-    private ActivityListener activityListener;
+    private ActivityListener activityBoardListener;
     private int[][] viewId;
     private Point playerPosition;
     private Point newPlayerPosition;
@@ -93,10 +92,10 @@ public class GameBoardLayout extends ConstraintLayout {
                                      BoardCard[][] boardCards, int i, int j) {
         imageView.setId(View.generateViewId());
         viewId[i][j] = imageView.getId();
-        imageView.setImageResource(activityListener.setImageToCard(boardCards[i][j]));
+        imageView.setImageResource(activityBoardListener.setImageToCard(boardCards[i][j]));
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         imageView.setPadding(5, 5, 5, 5);
-        imageView.setOnClickListener(v -> activityListener.startTurn(boardCards[i][j]));
+        imageView.setOnClickListener(v -> activityBoardListener.startTurn(boardCards[i][j]));
 
         Constraints.LayoutParams params = new Constraints.LayoutParams(0, 0);
         addView(imageView, params);
@@ -123,7 +122,7 @@ public class GameBoardLayout extends ConstraintLayout {
     }
 
     void setListener(ActivityListener activityListener) {
-        this.activityListener = activityListener;
+        this.activityBoardListener = activityListener;
     }
 
     void movePlayer(BoardCard playerCard, Point newPlayerPosition) {
@@ -145,7 +144,7 @@ public class GameBoardLayout extends ConstraintLayout {
 
             @Override
             public void onTransitionEnd(Transition transition) {
-                activityListener.updateIlluminationAndCollectCards();
+                activityBoardListener.updateIlluminationAndCollectCards();
             }
 
             @Override

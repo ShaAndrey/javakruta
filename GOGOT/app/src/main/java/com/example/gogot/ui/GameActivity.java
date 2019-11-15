@@ -2,6 +2,7 @@ package com.example.gogot.ui;
 
 import android.graphics.Point;
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,13 +14,16 @@ import com.example.gogot.relation.MainContract;
 import com.example.gogot.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class GameActivity extends AppCompatActivity
-        implements MainContract.View, GameBoardLayout.ActivityListener {
+        implements MainContract.View, GameBoardLayout.ActivityListener,
+        PlayerHandLayout.ActivityPlayerHandListener {
 
     GameBoardLayout gameBoard;
     GamePresenter presenter;
+    List<PlayerHandLayout> playerHandLayouts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +68,14 @@ public class GameActivity extends AppCompatActivity
     }
 
     @Override
+    public void drawPlayersHands() {
+        playerHandLayouts = new ArrayList<>();
+        playerHandLayouts.add(findViewById(R.id.layout_player_hand));
+        playerHandLayouts.get(0).setListener(this);
+        playerHandLayouts.get(0).initHand();
+    }
+
+    @Override
     public void drawInitialBoard(BoardCard[][] boardCards, ArrayList<BoardCard> cardsToMove) {
         gameBoard = findViewById(R.id.layout_game_board);
         gameBoard.setListener(this);
@@ -103,5 +115,10 @@ public class GameActivity extends AppCompatActivity
     @Override
     public void updateIlluminationAndCollectCards() {
         presenter.updateIlluminationAndCollectCards();
+    }
+
+    @Override
+    public int setImageToIndex(int index) {
+        return setImageToCard(new PlayCard(index));
     }
 }

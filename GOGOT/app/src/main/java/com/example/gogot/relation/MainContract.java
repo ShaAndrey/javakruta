@@ -12,6 +12,8 @@ public interface MainContract {
         void drawInitialBoard(BoardCard[][] gameBoard,
                               ArrayList<BoardCard> cardsToMove);
 
+        void drawPlayersHands();
+
         void movePlayer(BoardCard playerCard, Point newPlayerPosition);
 
         void collectCards(ArrayList<BoardCard> cardsToCollect);
@@ -34,10 +36,11 @@ public interface MainContract {
         void stopGame();
 
         void updateIlluminationAndCollectCards();
+
     }
 
     interface Model {
-        ArrayList<BoardCard>  handleTurn(BoardCard boardCard);
+        ArrayList<BoardCard> handleTurn(BoardCard boardCard);
 
         boolean isMovePossible();
 

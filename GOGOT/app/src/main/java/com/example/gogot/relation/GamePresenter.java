@@ -23,6 +23,7 @@ public class GamePresenter implements MainContract.Presenter {
     public void createView() {
         view.drawInitialBoard(model.getBoard().getBoardCards(),
                 model.getBoard().getCellsAvailableToMove());
+        view.drawPlayersHands();
     }
 
 

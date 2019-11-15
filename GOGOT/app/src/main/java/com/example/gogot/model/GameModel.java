@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 public class GameModel implements MainContract.Model {
     private Board board;
+    private int amountOfPlayers = 2;            // TODO add multiplayer
+    private ArrayList<PlayersHand> playersHands;
 
     @Override
     public Point getPlayerPosition() {
