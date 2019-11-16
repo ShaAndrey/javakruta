@@ -2,7 +2,6 @@ package com.example.gogot.ui;
 
 import android.graphics.Point;
 import android.os.Bundle;
-import android.view.View;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -70,7 +69,7 @@ public class GameActivity extends AppCompatActivity
     @Override
     public void drawPlayersHands() {
         playerHandLayouts = new ArrayList<>();
-        playerHandLayouts.add(findViewById(R.id.layout_player_hand));
+        playerHandLayouts.add(findViewById(R.id.layout_player1_hand));
         playerHandLayouts.get(0).setListener(this);
         playerHandLayouts.get(0).initHand();
     }

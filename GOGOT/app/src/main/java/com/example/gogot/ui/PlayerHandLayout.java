@@ -77,7 +77,8 @@ public class PlayerHandLayout extends ConstraintLayout {
     private void initializeImageView(ImageView imageView, int i, int j) {
         imageView.setId(View.generateViewId());
         viewId[i][j] = imageView.getId();
-        imageView.setImageResource(activityPlayerHandListener.setImageToIndex(i + j + 1));
+        imageView.setImageResource(activityPlayerHandListener.
+                setImageToIndex(i * playerHandWidth + j + 1));
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         imageView.setPadding(5, 5, 5, 5);
 
