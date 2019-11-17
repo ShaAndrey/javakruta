@@ -12,6 +12,9 @@ public class Board {
     private int height, width;
     private Point playerPosition;
     private ArrayList<BoardCard> cardsToCollect;
+    private BoardListener boardListener;
+    private int amountOfCardsToCollect;
+    private PlayCard.State stateOfCardsToCollect;
 
     Board(int n, int m) {
         gameBoard = new BoardCard[n][m];
@@ -48,8 +51,8 @@ public class Board {
         return gameBoard;
     }
 
-    public ArrayList<BoardCard> getCellsAvailableToMove() {
-        ArrayList<BoardCard> availableCells = new ArrayList<>();
+    public ArrayList<PlayCard> getCellsAvailableToMove() {
+        ArrayList<PlayCard> availableCells = new ArrayList<>();
         for (int i = 0; i < height; ++i) {
             if (i != playerPosition.x && gameBoard[i][playerPosition.y].getState() != BoardCard.State.NOTHING) {
                 availableCells.add(gameBoard[i][playerPosition.y]);
@@ -65,6 +68,8 @@ public class Board {
 
     ArrayList<BoardCard> movePlayer(BoardCard newPosition) {
         cardsToCollect = new ArrayList<>();
+        amountOfCardsToCollect = 1;
+        stateOfCardsToCollect = newPosition.getState();
         gameBoard[playerPosition.x][playerPosition.y].setState(BoardCard.State.NOTHING);
         int rowMoveDirection = (playerPosition.x < newPosition.getRow()) ? 1 : -1;
         int columnMoveDirection = (playerPosition.y < newPosition.getColumn()) ? 1 : -1;
@@ -74,6 +79,7 @@ public class Board {
         for (int j = playerPosition.y; j != newPosition.getColumn(); j += columnMoveDirection) {
             collectCard(gameBoard[playerPosition.x][j], newPosition, cardsToCollect);
         }
+        boardListener.addCardsToPlayer(stateOfCardsToCollect, amountOfCardsToCollect);
         cardsToCollect.add(gameBoard[newPosition.getRow()][newPosition.getColumn()]);
         playerPosition = new Point(newPosition.getRow(), newPosition.getColumn());
         gameBoard[playerPosition.x][playerPosition.y].setState(BoardCard.State.PLAYER);
@@ -85,7 +91,12 @@ public class Board {
         if (cardToCollect.getState() == newPosition.getState()) {
             cardToCollect.setState(BoardCard.State.NOTHING);
             cardsToCollect.add(cardToCollect);
+            ++amountOfCardsToCollect;
         }
+    }
+
+    interface BoardListener {
+        void addCardsToPlayer(PlayCard.State stateOfCardsToCollect, int amountOfCardsToCollect);
     }
 
     public BoardCard getGameBoardCell(Point p) {
@@ -108,4 +119,15 @@ public class Board {
         return cardsToCollect;
     }
 
+    void setBoardListener(BoardListener listener) {
+        boardListener = listener;
+    }
+
+    int getAmountOfCardsToCollect() {
+        return amountOfCardsToCollect;
+    }
+
+    PlayCard.State getStateOfCardsToCollect() {
+        return stateOfCardsToCollect;
+    }
 }

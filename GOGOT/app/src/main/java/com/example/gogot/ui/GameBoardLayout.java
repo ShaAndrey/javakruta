@@ -57,7 +57,7 @@ public class GameBoardLayout extends ConstraintLayout {
         inflate(getContext(), R.layout.layout_game_board, this);
     }
 
-    void initBoard(int boardSize, BoardCard[][] boardCards, ArrayList<BoardCard> cardsToMove) {
+    void initBoard(int boardSize, BoardCard[][] boardCards, ArrayList<PlayCard> cardsToMove) {
         this.boardSize = boardSize;
         int guidelinesCount = boardSize + 1;
         horizontalGuidelines = new Guideline[guidelinesCount];
@@ -71,7 +71,7 @@ public class GameBoardLayout extends ConstraintLayout {
     }
 
     private void initializeGameBoard(BoardCard[][] boardCards,
-                                     ArrayList<BoardCard> cardsToMove) {
+                                     ArrayList<PlayCard> cardsToMove) {
         viewId = new int[boardSize][boardSize];
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
@@ -177,13 +177,14 @@ public class GameBoardLayout extends ConstraintLayout {
             imageView.setVisibility(View.INVISIBLE);
         });
         int curId = viewId[newPlayerPosition.x][newPlayerPosition.y];
-        viewId[newPlayerPosition.x][newPlayerPosition.y] = viewId[playerPosition.x][playerPosition.y];
+        viewId[newPlayerPosition.x][newPlayerPosition.y] =
+                viewId[playerPosition.x][playerPosition.y];
         viewId[playerPosition.x][playerPosition.y] = curId;
         playerPosition = newPlayerPosition;
     }
 
     void setIllumination(BoardCard[][] boardCards,
-                         ArrayList<BoardCard> cardsToMove) {
+                         ArrayList<PlayCard> cardsToMove) {
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
                 GradientDrawable border = new GradientDrawable();
@@ -202,7 +203,7 @@ public class GameBoardLayout extends ConstraintLayout {
     }
 
     void refreshBoard(BoardCard[][] boardCards,
-                      ArrayList<BoardCard> cardsToMove) {
+                      ArrayList<PlayCard> cardsToMove) {
         setIllumination(boardCards, cardsToMove);
     }
 

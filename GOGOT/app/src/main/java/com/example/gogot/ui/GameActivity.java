@@ -75,7 +75,7 @@ public class GameActivity extends AppCompatActivity
     }
 
     @Override
-    public void drawInitialBoard(BoardCard[][] boardCards, ArrayList<BoardCard> cardsToMove) {
+    public void drawInitialBoard(BoardCard[][] boardCards, ArrayList<PlayCard> cardsToMove) {
         gameBoard = findViewById(R.id.layout_game_board);
         gameBoard.setListener(this);
         gameBoard.initBoard(6, boardCards, cardsToMove);         // TODO: not 6 here
@@ -92,8 +92,14 @@ public class GameActivity extends AppCompatActivity
     }
 
     @Override
-    public void refreshBoard(BoardCard[][] boardCards, ArrayList<BoardCard> cardsToMove) {
+    public void refreshBoard(BoardCard[][] boardCards, ArrayList<PlayCard> cardsToMove) {
         gameBoard.refreshBoard(boardCards, cardsToMove);
+    }
+
+    @Override
+    public void addCardsToPlayer(PlayCard.State stateOfCardsToAdd,
+                                 int amountOfCardsToAdd, int playerInd) {
+        playerHandLayouts.get(playerInd).addCardsAmount(stateOfCardsToAdd, amountOfCardsToAdd);
     }
 
     @Override
@@ -120,4 +126,7 @@ public class GameActivity extends AppCompatActivity
     public int setImageToIndex(int index) {
         return setImageToCard(new PlayCard(index));
     }
+
+
+
 }

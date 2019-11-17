@@ -32,6 +32,9 @@ public class GamePresenter implements MainContract.Presenter {
         view.collectCards(model.getCardsToCollect());
         view.refreshBoard(model.getBoard().getBoardCards(),
                 model.getBoard().getCellsAvailableToMove());
+        view.addCardsToPlayer(model.getStateOfCardsToCollect(),
+                model.getAmountOfCardsToCollect(), model.getPlayerIndex());
+        model.nextPlayer();
     }
 
     @Override

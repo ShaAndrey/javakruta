@@ -4,13 +4,14 @@ import android.graphics.Point;
 
 import com.example.gogot.model.Board;
 import com.example.gogot.model.BoardCard;
+import com.example.gogot.model.PlayCard;
 
 import java.util.ArrayList;
 
 public interface MainContract {
     interface View {
         void drawInitialBoard(BoardCard[][] gameBoard,
-                              ArrayList<BoardCard> cardsToMove);
+                              ArrayList<PlayCard> cardsToMove);
 
         void drawPlayersHands();
 
@@ -25,7 +26,10 @@ public interface MainContract {
         void removeIllumination(BoardCard[][] boardCards);
 
         void refreshBoard(BoardCard[][] gameBoard,
-                          ArrayList<BoardCard> cardsToMove);
+                          ArrayList<PlayCard> cardsToMove);
+
+        void addCardsToPlayer(PlayCard.State stateOfCardsToAdd,
+                              int amountOfCardsToAdd, int playerInd);
     }
 
     interface Presenter {
@@ -53,5 +57,14 @@ public interface MainContract {
         BoardCard getPlayerCard();
 
         ArrayList<BoardCard> getCardsToCollect();
+
+        int getPlayerIndex();
+
+        void nextPlayer();
+
+
+        int getAmountOfCardsToCollect();
+
+        PlayCard.State getStateOfCardsToCollect();
     }
 }

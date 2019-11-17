@@ -5,8 +5,11 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
+import android.util.Pair;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -17,6 +20,9 @@ import com.example.gogot.R;
 import com.example.gogot.model.BoardCard;
 import com.example.gogot.model.PlayCard;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 import static androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.END;
 import static androidx.constraintlayout.widget.ConstraintSet.BOTTOM;
 import static androidx.constraintlayout.widget.ConstraintSet.START;
@@ -25,7 +31,8 @@ import static androidx.constraintlayout.widget.ConstraintSet.TOP;
 public class PlayerHandLayout extends ConstraintLayout {
     private Guideline[] horizontalGuidelines;
     private Guideline[] verticalGuidelines;
-    private int viewId[][];
+    private int[][] cardsImageViewId;
+    private int[][] cardsAmountTextViewId;
     private int playerHandWidth = 4;
     private int playerHandHeight = 2;
     ActivityPlayerHandListener activityPlayerHandListener;
@@ -65,18 +72,21 @@ public class PlayerHandLayout extends ConstraintLayout {
     }
 
     void initializePlayerHand() {
-        viewId = new int[playerHandHeight][playerHandWidth];
+        cardsImageViewId = new int[playerHandHeight][playerHandWidth];
+        cardsAmountTextViewId = new int[playerHandHeight][playerHandWidth];
         for (int i = 0; i < playerHandHeight; i++) {
             for (int j = 0; j < playerHandWidth; j++) {
                 ImageView imageView = new ImageView(getContext());
                 initializeImageView(imageView, i, j);
+                TextView amountView = new TextView(getContext());
+                initializeAmountView(amountView, i, j);
             }
         }
     }
 
     private void initializeImageView(ImageView imageView, int i, int j) {
         imageView.setId(View.generateViewId());
-        viewId[i][j] = imageView.getId();
+        cardsImageViewId[i][j] = imageView.getId();
         imageView.setImageResource(activityPlayerHandListener.
                 setImageToIndex(i * playerHandWidth + j + 1));
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
@@ -91,6 +101,19 @@ public class PlayerHandLayout extends ConstraintLayout {
 
         addView(imageView, params);
         placeViewInCell(imageView.getId(), i, j);
+    }
+
+    void initializeAmountView(TextView amountView, int i, int j) {
+        amountView.setId(View.generateViewId());
+        cardsAmountTextViewId[i][j] = amountView.getId();
+        if (i != 0 || j != 0) {
+            amountView.setText("0");
+        }
+        amountView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 50f);
+        amountView.setTextColor(Color.parseColor("#CCFFFF00"));
+        amountView.setPadding(5, 5, 5, 5);
+        addView(amountView);
+        placeViewInCell(amountView.getId(), i, j);
     }
 
     interface ActivityPlayerHandListener {
@@ -111,4 +134,31 @@ public class PlayerHandLayout extends ConstraintLayout {
         set.applyTo(this);
     }
 
+    void addCardsAmount(PlayCard.State stateOfCardsToAdd,
+                        int amountOfCardsToAdd) {
+        PlayCard.State[] h = PlayCard.State.values();
+        for (int i = 2; i < h.length; i++) {
+            if (stateOfCardsToAdd.equals(h[i])) {
+                Point position = getPointByStateId(i);
+                int id = cardsAmountTextViewId[position.x][position.y];
+                changeTextView(id, amountOfCardsToAdd);
+                placeViewInCell(id, position.x, position.y);
+                break;
+            }
+        }
+    }
+
+    void changeTextView(int id, int changeOn) {
+        TextView view = findViewById(id);
+        String text = view.getText().toString();
+        int amount = Integer.parseInt(text);
+        view.setText(String.valueOf(amount + changeOn));
+    }
+
+    Point getPointByStateId(int i) {
+        Point point = new Point();
+        point.x = (i - 1) / playerHandWidth;
+        point.y = i - 4 * (point.x) - 1;
+        return point;
+    }
 }
