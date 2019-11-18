@@ -106,9 +106,7 @@ public class PlayerHandLayout extends ConstraintLayout {
     void initializeAmountView(TextView amountView, int i, int j) {
         amountView.setId(View.generateViewId());
         cardsAmountTextViewId[i][j] = amountView.getId();
-        if (i != 0 || j != 0) {
-            amountView.setText("0");
-        }
+        amountView.setText("0");
         amountView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 50f);
         amountView.setTextColor(Color.parseColor("#CCFFFF00"));
         amountView.setPadding(5, 5, 5, 5);
@@ -136,16 +134,21 @@ public class PlayerHandLayout extends ConstraintLayout {
 
     void addCardsAmount(PlayCard.State stateOfCardsToAdd,
                         int amountOfCardsToAdd) {
-        PlayCard.State[] h = PlayCard.State.values();
-        for (int i = 2; i < h.length; i++) {
-            if (stateOfCardsToAdd.equals(h[i])) {
-                Point position = getPointByStateId(i);
-                int id = cardsAmountTextViewId[position.x][position.y];
-                changeTextView(id, amountOfCardsToAdd);
-                placeViewInCell(id, position.x, position.y);
-                break;
-            }
-        }
+        Point position = getPointByStateId(stateOfCardsToAdd.ordinal());
+        int id = cardsAmountTextViewId[position.x][position.y];
+        changeTextView(id, amountOfCardsToAdd);
+        placeViewInCell(id, position.x, position.y);
+    }
+
+    void updatePlayerPoints(int playerPoints) {
+        int id = cardsAmountTextViewId[0][0];
+        setTextView(id, playerPoints);
+        placeViewInCell(id, 0, 0);
+    }
+
+    void setTextView(int id, int value) {
+        TextView view = findViewById(id);
+        view.setText(String.valueOf(value));
     }
 
     void changeTextView(int id, int changeOn) {
@@ -160,5 +163,20 @@ public class PlayerHandLayout extends ConstraintLayout {
         point.x = (i - 1) / playerHandWidth;
         point.y = i - 4 * (point.x) - 1;
         return point;
+    }
+
+    void updateIllumination(boolean[] playerDominateStates) {
+        for (int i = 2; i < playerDominateStates.length; i++) {
+            GradientDrawable border = new GradientDrawable();
+            border.setColor(0xffEB5D0D);
+            if (playerDominateStates[i]) {
+                border.setStroke(10, 0xFFffd700);
+            } else {
+                border.setStroke(1, 0x66000000);
+            }
+            Point point = getPointByStateId(i);
+            ImageView imageView = findViewById(cardsImageViewId[point.x][point.y]);
+            imageView.setBackground(border);
+        }
     }
 }

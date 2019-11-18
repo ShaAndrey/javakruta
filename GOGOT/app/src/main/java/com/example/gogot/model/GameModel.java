@@ -5,6 +5,7 @@ import android.graphics.Point;
 import com.example.gogot.relation.MainContract;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameModel implements MainContract.Model, Board.BoardListener {
     private Board board;
@@ -71,6 +72,17 @@ public class GameModel implements MainContract.Model, Board.BoardListener {
     @Override
     public PlayCard.State getStateOfCardsToCollect() {
         return board.getStateOfCardsToCollect();
+    }
+
+    @Override
+    public List<boolean[]> getPlayersDominateStates() {
+        return players.getPlayersDominateStates();
+    }
+
+    @Override
+    public List<Integer> getPoints() {
+        List<Integer> points = players.getPoints();
+        return points;
     }
 
     @Override

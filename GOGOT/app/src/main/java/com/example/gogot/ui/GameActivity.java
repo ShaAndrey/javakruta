@@ -103,6 +103,20 @@ public class GameActivity extends AppCompatActivity
     }
 
     @Override
+    public void updatePlayerPoints(List<Integer> points) {
+        for (int i = 0; i < playerHandLayouts.size(); i++) {
+            playerHandLayouts.get(i).updatePlayerPoints(points.get(i));
+        }
+    }
+
+    @Override
+    public void updatePlayersIllumination(List<boolean[]> playersDominateStates) {
+        for (int i = 0; i < playerHandLayouts.size(); i++) {
+            playerHandLayouts.get(i).updateIllumination(playersDominateStates.get(i));
+        }
+    }
+
+    @Override
     public void collectCards(ArrayList<BoardCard> cardsToCollect) {
         gameBoard.collectCards(cardsToCollect);
     }
@@ -126,7 +140,5 @@ public class GameActivity extends AppCompatActivity
     public int setImageToIndex(int index) {
         return setImageToCard(new PlayCard(index));
     }
-
-
 
 }

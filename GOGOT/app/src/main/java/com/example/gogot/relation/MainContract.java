@@ -7,6 +7,7 @@ import com.example.gogot.model.BoardCard;
 import com.example.gogot.model.PlayCard;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface MainContract {
     interface View {
@@ -30,6 +31,9 @@ public interface MainContract {
 
         void addCardsToPlayer(PlayCard.State stateOfCardsToAdd,
                               int amountOfCardsToAdd, int playerInd);
+        void updatePlayerPoints(List<Integer> points);
+
+        void updatePlayersIllumination(List<boolean[]> playersDominateStates);
     }
 
     interface Presenter {
@@ -40,7 +44,6 @@ public interface MainContract {
         void stopGame();
 
         void updateIlluminationAndCollectCards();
-
     }
 
     interface Model {
@@ -66,5 +69,9 @@ public interface MainContract {
         int getAmountOfCardsToCollect();
 
         PlayCard.State getStateOfCardsToCollect();
+
+        List<Integer> getPoints();
+
+        List<boolean[]> getPlayersDominateStates();
     }
 }
