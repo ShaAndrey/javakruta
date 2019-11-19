@@ -1,6 +1,7 @@
 package com.example.gogot.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,9 @@ public class PlayersHand {
 
     PlayersHand() {
         inHandCards = new HashMap<PlayCard.State, Integer>();
+        ArrayList<PlayCard.State> states =
+                new ArrayList<>(Arrays.asList(PlayCard.State.values()));
+        states.forEach(state -> inHandCards.put(state, 0));
         dominateStates = new boolean[9];
         points = 0;
     }
@@ -52,7 +56,7 @@ public class PlayersHand {
         this.points += toAdd;
     }
 
-    void setPlayerListener (Players players) {
+    void setPlayerListener(Players players) {
         playerListener = players;
     }
 

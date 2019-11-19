@@ -9,9 +9,9 @@ public class GamePresenter implements MainContract.Presenter {
     private MainContract.Model model;
     private MainContract.View view;
 
-    public GamePresenter(MainContract.View view) {
+    public GamePresenter(MainContract.View view, int amountOfPlayers) {
         this.view = view;
-        this.model = new GameModel();
+        this.model = new GameModel(amountOfPlayers);
     }
 
     @Override
@@ -20,7 +20,7 @@ public class GamePresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void createView() {
+    public void createView(int amountOfPlayers) {
         view.drawInitialBoard(model.getBoard().getBoardCards(),
                 model.getBoard().getCellsAvailableToMove());
         view.drawPlayersHands();

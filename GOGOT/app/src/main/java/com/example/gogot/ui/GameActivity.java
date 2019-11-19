@@ -1,9 +1,11 @@
 package com.example.gogot.ui;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.WindowManager;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gogot.model.BoardCard;
@@ -15,14 +17,16 @@ import com.example.gogot.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.max;
+
 
 public class GameActivity extends AppCompatActivity
         implements MainContract.View, GameBoardLayout.ActivityListener,
         PlayerHandLayout.ActivityPlayerHandListener {
-
     GameBoardLayout gameBoard;
     GamePresenter presenter;
     List<PlayerHandLayout> playerHandLayouts;
+    public static int amountOfPlayers;                             // is it OK?
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +34,13 @@ public class GameActivity extends AppCompatActivity
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
-        presenter = new GamePresenter(this);
-        setContentView(R.layout.game_activity_layout);
-        presenter.createView();
+        presenter = new GamePresenter(this, amountOfPlayers);
+        if (amountOfPlayers == 3) {
+            setContentView(R.layout.game_3players_activity_layout);
+        } else {
+            setContentView(R.layout.game_activity_layout);
+        }
+        presenter.createView(amountOfPlayers);
     }
 
     @Override
@@ -69,9 +77,16 @@ public class GameActivity extends AppCompatActivity
     @Override
     public void drawPlayersHands() {
         playerHandLayouts = new ArrayList<>();
-        playerHandLayouts.add(findViewById(R.id.layout_player1_hand));
-        playerHandLayouts.get(0).setListener(this);
-        playerHandLayouts.get(0).initHand();
+        if (amountOfPlayers < 3) {
+            playerHandLayouts.add(findViewById(R.id.layout_player1_hand));
+            playerHandLayouts.add(findViewById(R.id.layout_player2_hand));
+        } else {
+            playerHandLayouts.add(findViewById(R.id.layout_player1_hand));
+        }
+        playerHandLayouts.forEach(playerHandLayout -> {
+            playerHandLayout.setListener(this);
+            playerHandLayout.initHand();
+        });
     }
 
     @Override

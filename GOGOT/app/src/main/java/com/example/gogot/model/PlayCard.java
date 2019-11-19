@@ -2,7 +2,7 @@ package com.example.gogot.model;
 
 
 public class PlayCard {
-    public enum State {
+    public static enum State {
         NOTHING, PLAYER, DRAGON, OGRE, MINOTAUR, ELF, FAIRY, GNOME, GOBLIN;
     }
 

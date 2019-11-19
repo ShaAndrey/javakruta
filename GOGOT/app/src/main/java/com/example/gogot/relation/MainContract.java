@@ -37,7 +37,7 @@ public interface MainContract {
     }
 
     interface Presenter {
-        void createView();
+        void createView(int amountOfPlayers);
 
         void handleTurn(BoardCard boardCard);
 

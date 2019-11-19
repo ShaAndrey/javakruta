@@ -18,10 +18,10 @@ public class GameModel implements MainContract.Model, Board.BoardListener {
         players.nextPlayer();
     }
 
-    public GameModel() {
+    public GameModel(int amountOfPlayers) {
         board = new Board(boardSize, boardSize);
         board.setBoardListener(this);
-        players = new Players();
+        players = new Players(amountOfPlayers);
     }
 
     @Override

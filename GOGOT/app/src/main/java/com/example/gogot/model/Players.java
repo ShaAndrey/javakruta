@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Players implements PlayersHand.PlayerListener {
-    int amountOfPlayers = 1;            // TODO add multiplayer
+    int amountOfPlayers;
     int currentPlayer = 0;
     ArrayList<PlayersHand> playersHands;
 
-    Players() {
+    Players(int amountOfPlayers) {
+        this.amountOfPlayers = amountOfPlayers;
         playersHands = new ArrayList<>();
         for (int i = 0; i < amountOfPlayers; i++) {
             playersHands.add(new PlayersHand());
