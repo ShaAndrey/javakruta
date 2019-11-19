@@ -125,9 +125,16 @@ public class GameActivity extends AppCompatActivity
     }
 
     @Override
-    public void updatePlayersIllumination(List<boolean[]> playersDominateStates) {
+    public void updatePlayersIllumination(List<boolean[]> playersDominateStates,
+                                          int currentPlayer) {
         for (int i = 0; i < playerHandLayouts.size(); i++) {
-            playerHandLayouts.get(i).updateIllumination(playersDominateStates.get(i));
+            if ((currentPlayer + 1) % playerHandLayouts.size() == i) {
+                playerHandLayouts.get(i).updateIllumination
+                        (playersDominateStates.get(i), true);
+            } else {
+                playerHandLayouts.get(i).updateIllumination
+                        (playersDominateStates.get(i), false);
+            }
         }
     }
 

@@ -33,7 +33,8 @@ public interface MainContract {
                               int amountOfCardsToAdd, int playerInd);
         void updatePlayerPoints(List<Integer> points);
 
-        void updatePlayersIllumination(List<boolean[]> playersDominateStates);
+        void updatePlayersIllumination(List<boolean[]> playersDominateStates,
+                                       int currentPlayer);
     }
 
     interface Presenter {

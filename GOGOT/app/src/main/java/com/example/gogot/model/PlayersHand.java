@@ -14,7 +14,7 @@ public class PlayersHand {
     private boolean[] dominateStates;
 
     PlayersHand() {
-        inHandCards = new HashMap<PlayCard.State, Integer>();
+        inHandCards = new HashMap<>();
         ArrayList<PlayCard.State> states =
                 new ArrayList<>(Arrays.asList(PlayCard.State.values()));
         states.forEach(state -> inHandCards.put(state, 0));

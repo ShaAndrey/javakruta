@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Pair;
 import android.util.TypedValue;
@@ -11,10 +12,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.constraintlayout.widget.Constraints;
 import androidx.constraintlayout.widget.Guideline;
+import androidx.core.widget.TextViewCompat;
 
 import com.example.gogot.R;
 import com.example.gogot.model.BoardCard;
@@ -35,6 +38,7 @@ public class PlayerHandLayout extends ConstraintLayout {
     private int[][] cardsAmountTextViewId;
     private int playerHandWidth = 4;
     private int playerHandHeight = 2;
+    int padding = 10;
     ActivityPlayerHandListener activityPlayerHandListener;
 
     public PlayerHandLayout(Context context) {
@@ -90,7 +94,7 @@ public class PlayerHandLayout extends ConstraintLayout {
         imageView.setImageResource(activityPlayerHandListener.
                 setImageToIndex(i * playerHandWidth + j + 1));
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        imageView.setPadding(5, 5, 5, 5);
+        imageView.setPadding(padding, padding, padding, padding);
 
         Constraints.LayoutParams params = new Constraints.LayoutParams(0, 0);
 
@@ -106,12 +110,11 @@ public class PlayerHandLayout extends ConstraintLayout {
     void initializeAmountView(TextView amountView, int i, int j) {
         amountView.setId(View.generateViewId());
         cardsAmountTextViewId[i][j] = amountView.getId();
-        amountView.setText("0");
-        amountView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 50f);
         amountView.setTextColor(Color.parseColor("#CCFFFF00"));
-        amountView.setPadding(5, 5, 5, 5);
+        amountView.setPadding(padding, padding, padding, padding);
         addView(amountView);
         placeViewInCell(amountView.getId(), i, j);
+        setTextView(amountView.getId(), 0);
     }
 
     interface ActivityPlayerHandListener {
@@ -149,6 +152,8 @@ public class PlayerHandLayout extends ConstraintLayout {
     void setTextView(int id, int value) {
         TextView view = findViewById(id);
         view.setText(String.valueOf(value));
+        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(view, 1, 1, 1,
+                TypedValue.COMPLEX_UNIT_DIP);
     }
 
     void changeTextView(int id, int changeOn) {
@@ -156,6 +161,8 @@ public class PlayerHandLayout extends ConstraintLayout {
         String text = view.getText().toString();
         int amount = Integer.parseInt(text);
         view.setText(String.valueOf(amount + changeOn));
+        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(view, 1, 1, 1,
+                TypedValue.COMPLEX_UNIT_DIP);
     }
 
     Point getPointByStateId(int i) {
@@ -165,12 +172,12 @@ public class PlayerHandLayout extends ConstraintLayout {
         return point;
     }
 
-    void updateIllumination(boolean[] playerDominateStates) {
+    void updateIllumination(boolean[] playerDominateStates, boolean currentPlayer) {
         for (int i = 2; i < playerDominateStates.length; i++) {
             GradientDrawable border = new GradientDrawable();
-            border.setColor(0xffEB5D0D);
+            border.setColor(0xffEB5D1F);
             if (playerDominateStates[i]) {
-                border.setStroke(10, 0xFFffd700);
+                border.setStroke(padding, 0xFFffd700);
             } else {
                 border.setStroke(1, 0x66000000);
             }
@@ -178,5 +185,15 @@ public class PlayerHandLayout extends ConstraintLayout {
             ImageView imageView = findViewById(cardsImageViewId[point.x][point.y]);
             imageView.setBackground(border);
         }
+        GradientDrawable border = new GradientDrawable();
+        border.setColor(0xffEB5D1F);
+        if (currentPlayer) {
+            border.setStroke(padding, 0xFF0000FF);
+        } else {
+            border.setStroke(1, 0x66000000);
+        }
+        Point point = getPointByStateId(1);
+        ImageView imageView = findViewById(cardsImageViewId[point.x][point.y]);
+        imageView.setBackground(border);
     }
 }
