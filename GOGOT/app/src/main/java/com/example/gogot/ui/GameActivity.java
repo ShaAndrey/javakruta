@@ -139,6 +139,16 @@ public class GameActivity extends AppCompatActivity
     }
 
     @Override
+    public void invalidateBoardCellsListeners() {
+        gameBoard.invalidateBoardCellsListeners();
+    }
+
+    @Override
+    public void revalidateBoardCellsListeners(BoardCard[][] boardCards) {
+        gameBoard.revalidateBoardCellsListeners(boardCards);
+    }
+
+    @Override
     public void collectCards(ArrayList<BoardCard> cardsToCollect) {
         gameBoard.collectCards(cardsToCollect);
     }

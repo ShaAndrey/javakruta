@@ -13,6 +13,11 @@ public class BoardCard extends PlayCard {
         this.position = new Point(row, column);
     }
 
+    BoardCard (BoardCard otherCard) {
+        super(otherCard);
+        position = otherCard.position;
+    }
+
     public int getRow() {
         return position.x;
     }
