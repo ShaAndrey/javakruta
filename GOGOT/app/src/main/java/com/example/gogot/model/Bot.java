@@ -46,6 +46,18 @@ public class Bot extends PlayersHand {
 
     private void checkCell(BoardCard boardCard) {
         currentCellToGo = new BoardCard(boardCard);
+        makeTurn(boardCard);
+        List<BoardCard> availableCells = board.getCellsAvailableToMove();
+        availableCells.forEach(availableBoardCard -> {
+            Board board = new Board(this.board);
+            Players players = new Players(this.players);
+            checkCellForEnemy(availableBoardCard);
+            this.board = board;
+            this.players = players;
+        });
+    }
+
+    private void checkCellForEnemy(BoardCard boardCard) {
         pointsDifferences = players.getPlayersPoints();
         int currentDifference = -pointsDifferences.get(1) + pointsDifferences.get(0);  // TODO: add flexibility
         makeTurn(boardCard);
