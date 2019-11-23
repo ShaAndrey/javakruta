@@ -24,13 +24,6 @@
             app:layout_constraintGuide_percent="0.83" />
 
         <View
-            android:id="@+id/view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline0"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="#DDA788"
@@ -47,49 +40,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/horizontalGuideline0"
             app:layout_constraintVertical_bias="0.5"/>
-
-        <com.example.gogot.ui.PlayerHandLayout4x2
-            android:id="@+id/layout_player1_hand"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_game_board"
-            app:layout_constraintEnd_toEndOf="@id/verticalGuideline1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintDimensionRatio="2:1"
-            app:layout_constraintVertical_bias="0.5"
-            />
-
-        <com.example.gogot.ui.PlayerHandLayout3x3
-            android:id="@+id/layout_player2_hand"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="@id/horizontalGuideline0"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/verticalGuideline1"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintVertical_bias="0.5"
-            />
-
-        <com.example.gogot.ui.PlayerHandLayout3x3
-            android:id="@+id/layout_player3_hand"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="@id/horizontalGuideline0"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/verticalGuideline1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintVertical_bias="0.5"
-            />
-
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/verticalGuideline1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.50" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

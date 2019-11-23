@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,7 +13,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.constraintlayout.widget.Constraints;
 import androidx.constraintlayout.widget.Guideline;
-import androidx.core.widget.TextViewCompat;
 
 import com.example.gogot.R;
 import com.example.gogot.model.PlayCard;
@@ -54,7 +52,7 @@ abstract public class PlayerHandLayout extends ConstraintLayout {
     }
 
     protected void initLayout() {
-        inflate(getContext(), R.layout.layout_player_hand, this);
+        inflate(getContext(), R.layout.layout_2x4_player_hand, this);
     }
 
     void initHand() {
@@ -201,4 +199,5 @@ abstract public class PlayerHandLayout extends ConstraintLayout {
 
     protected void setSize() {
     }
+
 }

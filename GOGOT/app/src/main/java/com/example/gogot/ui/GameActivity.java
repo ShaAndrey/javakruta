@@ -1,6 +1,5 @@
 package com.example.gogot.ui;
 
-import android.content.DialogInterface;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -22,7 +21,7 @@ public class GameActivity extends AppCompatActivity
         PlayerHandLayout.ActivityPlayerHandListener, MenuDialog.MenuDialogListener {
     GameBoardLayout gameBoard;
     GamePresenter presenter;
-    List<PlayerHandLayout> playerHandLayouts;
+    PlayerHandLayout handLayout;
     public static int amountOfPlayers;                             // is it OK?
     MenuDialog gameMenu;
 
@@ -76,8 +75,10 @@ public class GameActivity extends AppCompatActivity
 
     @Override
     public void drawPlayersHands() {
+
         playerHandLayouts = new ArrayList<>();
         if (amountOfPlayers < 3) {
+            PlayersLayout playersLayout = new PlayersLayout(this);
             playerHandLayouts.add(findViewById(R.id.layout_player1_hand));
             playerHandLayouts.add(findViewById(R.id.layout_player2_hand));
         } else {
@@ -162,6 +163,16 @@ public class GameActivity extends AppCompatActivity
 
     @Override
     public void stopGame() {
+        if (amountOfPlayers == 3) {
+            setContentView(R.layout.game_3players_activity_layout);
+        } else {
+//            setContentView(R.layout.activity_end_game);
+//            ConstraintSet constraintSet = new ConstraintSet();
+//            constraintSet.clone(this);
+
+//            playerHandLayouts.set(0, findViewById(R.id.layout_player1_end_game_hand));
+//            playerHandLayouts.set(1, findViewById(R.id.layout_player2_end_game_hand));
+        }
 
     }
 
