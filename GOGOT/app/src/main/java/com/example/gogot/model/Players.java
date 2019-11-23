@@ -115,6 +115,12 @@ public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
         return points;
     }
 
+    ArrayList<Integer> getPlayersAmountForState(PlayCard.State state) {
+        ArrayList<Integer> points = new ArrayList<>();
+        playersHands.forEach(playersHand -> points.add(playersHand.getAmountForState(state)));
+        return points;
+    }
+
     @Override
     public Players getPlayers() {
         return this;
