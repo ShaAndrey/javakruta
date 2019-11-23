@@ -6,15 +6,17 @@ import java.util.List;
 public class Bot extends PlayersHand {
     Board board;
     Players players;
-    List<Integer> pointsDifferences;
-    int maxDifference;
+    //    List<Integer> pointsDifferences;
+    double maxDifference;
     BotListener botListener;
     BoardCard cellToGo;
     BoardCard currentCellToGo;
+    boolean[] dominationEnsured;
 
     Bot() {
         super();
         dominateStates[0] = true;
+        dominationEnsured = new boolean[9];
     }
 
     private void setBoard() {
@@ -46,27 +48,34 @@ public class Bot extends PlayersHand {
 
     private void checkCell(BoardCard boardCard) {
         currentCellToGo = new BoardCard(boardCard);
-        makeTurn(boardCard);
-        List<BoardCard> availableCells = board.getCellsAvailableToMove();
-        availableCells.forEach(availableBoardCard -> {
-            Board board = new Board(this.board);
-            Players players = new Players(this.players);
-            checkCellForEnemy(availableBoardCard);
-            this.board = board;
-            this.players = players;
-        });
-    }
-
-    private void checkCellForEnemy(BoardCard boardCard) {
-        pointsDifferences = players.getPlayersPoints();
-        int currentDifference = -pointsDifferences.get(1) + pointsDifferences.get(0);  // TODO: add flexibility
+        List<Integer> pointsDifferences = players.getPlayersPoints();
+        double currentDifference = -pointsDifferences.get(1) + pointsDifferences.get(0);  // TODO: add flexibility
         makeTurn(boardCard);
         pointsDifferences = players.getPlayersPoints();
+        if (canInsureDomination(boardCard.getState())) {
+            currentDifference += boardCard.getState().ordinal();
+        }
         currentDifference += pointsDifferences.get(1) - pointsDifferences.get(0);  // TODO: add flexibility
         if (maxDifference <= currentDifference) {
             maxDifference = currentDifference;
             cellToGo = currentCellToGo;
         }
+    }
+
+    boolean canInsureDomination(PlayCard.State state) {
+        List<Integer> playersAmountForState = players.getPlayersAmountForState(state);
+        int sum = 0;
+        for (int i = 0; i < playersAmountForState.size(); i++) {
+            sum += playersAmountForState.get(i);
+        }
+        int stateInd = state.ordinal();
+        if (playersAmountForState.get(0) > stateInd / 2 ||
+                (playersAmountForState.get(0) >= (stateInd + 1) / 2 &&
+                        sum == stateInd) && !dominationEnsured[stateInd]) {
+            dominationEnsured[stateInd] = true;
+            return true;
+        }
+        return false;
     }
 
     private void makeTurn(BoardCard boardCard) {
