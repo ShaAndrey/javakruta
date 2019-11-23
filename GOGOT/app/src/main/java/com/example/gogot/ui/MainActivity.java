@@ -33,11 +33,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        amountOfPlayers = Integer.valueOf(data.getStringExtra(AMOUNT_OF_PLAYERS));
-        Intent intent = new Intent(MainActivity.this,
-                GameActivity.class);
-        startActivity(intent);
+        if (resultCode == RESULT_OK) {
+            super.onActivityResult(requestCode, resultCode, data);
+            amountOfPlayers = Integer.valueOf(data.getStringExtra(AMOUNT_OF_PLAYERS));
+            Intent intent = new Intent(MainActivity.this,
+                    GameActivity.class);
+            startActivity(intent);
+        }
     }
 
 }

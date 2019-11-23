@@ -152,8 +152,8 @@ abstract public class PlayerHandLayout extends ConstraintLayout {
     void setTextView(int id, int value) {
         TextView view = findViewById(id);
         view.setText(String.valueOf(value));
-        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(view, 1, 1, 1,
-                TypedValue.COMPLEX_UNIT_DIP);
+//        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(view, 1, 1, 1,
+//                TypedValue.COMPLEX_UNIT_DIP);
         view.setTextSize(40);                           // kostyl
     }
 
@@ -162,8 +162,8 @@ abstract public class PlayerHandLayout extends ConstraintLayout {
         String text = view.getText().toString();
         int amount = Integer.parseInt(text);
         view.setText(String.valueOf(amount + changeOn));
-        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(view, 1, 1, 1,
-                TypedValue.COMPLEX_UNIT_DIP);
+//        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(view, 1, 1, 1,
+//                TypedValue.COMPLEX_UNIT_DIP);
         view.setTextSize(40);                           // kostyl
     }
 

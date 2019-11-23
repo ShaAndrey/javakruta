@@ -1,11 +1,10 @@
 package com.example.gogot.ui;
 
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.WindowManager;
-
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gogot.model.BoardCard;
@@ -17,16 +16,15 @@ import com.example.gogot.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Math.max;
-
 
 public class GameActivity extends AppCompatActivity
         implements MainContract.View, GameBoardLayout.ActivityListener,
-        PlayerHandLayout.ActivityPlayerHandListener {
+        PlayerHandLayout.ActivityPlayerHandListener, MenuDialog.MenuDialogListener {
     GameBoardLayout gameBoard;
     GamePresenter presenter;
     List<PlayerHandLayout> playerHandLayouts;
     public static int amountOfPlayers;                             // is it OK?
+    MenuDialog gameMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +39,8 @@ public class GameActivity extends AppCompatActivity
             setContentView(R.layout.game_activity_layout);
         }
         presenter.createView(amountOfPlayers);
+        gameMenu = new MenuDialog(this);
+        gameMenu.setListener(this);
     }
 
     @Override
@@ -173,6 +173,26 @@ public class GameActivity extends AppCompatActivity
     @Override
     public int setImageToIndex(int index) {
         return setImageToCard(new PlayCard(index));
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            gameMenu.show();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+    @Override
+    public void openSettings() {
+
+    }
+
+    @Override
+    public void exitGame() {
+        onBackPressed();
     }
 
 }
