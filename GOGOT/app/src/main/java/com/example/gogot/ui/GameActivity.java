@@ -2,9 +2,16 @@ package com.example.gogot.ui;
 
 import android.graphics.Point;
 import android.os.Bundle;
+import android.transition.ChangeBounds;
+import android.transition.Transition;
+import android.transition.TransitionManager;
 import android.view.KeyEvent;
 import android.view.WindowManager;
+import android.view.animation.LinearInterpolator;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.example.gogot.model.BoardCard;
 import com.example.gogot.model.PlayCard;
@@ -21,9 +28,11 @@ public class GameActivity extends AppCompatActivity
         PlayerHandLayout.ActivityPlayerHandListener, MenuDialog.MenuDialogListener {
     GameBoardLayout gameBoard;
     GamePresenter presenter;
-    PlayerHandLayout handLayout;
     public static int amountOfPlayers;                             // is it OK?
     MenuDialog gameMenu;
+    ArrayList<PlayerHandLayout> playerHandLayouts;
+
+    ConstraintLayout gameActivityLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +43,10 @@ public class GameActivity extends AppCompatActivity
         presenter = new GamePresenter(this, amountOfPlayers);
         if (amountOfPlayers == 3) {
             setContentView(R.layout.game_3players_activity_layout);
+            gameActivityLayout = findViewById(R.id.game_3_players_activity_layout);
         } else {
             setContentView(R.layout.game_activity_layout);
+            gameActivityLayout = findViewById(R.id.game_activity_layout);
         }
         presenter.createView(amountOfPlayers);
         gameMenu = new MenuDialog(this);
@@ -75,10 +86,8 @@ public class GameActivity extends AppCompatActivity
 
     @Override
     public void drawPlayersHands() {
-
         playerHandLayouts = new ArrayList<>();
         if (amountOfPlayers < 3) {
-            PlayersLayout playersLayout = new PlayersLayout(this);
             playerHandLayouts.add(findViewById(R.id.layout_player1_hand));
             playerHandLayouts.add(findViewById(R.id.layout_player2_hand));
         } else {
@@ -163,17 +172,68 @@ public class GameActivity extends AppCompatActivity
 
     @Override
     public void stopGame() {
-        if (amountOfPlayers == 3) {
-            setContentView(R.layout.game_3players_activity_layout);
-        } else {
-//            setContentView(R.layout.activity_end_game);
-//            ConstraintSet constraintSet = new ConstraintSet();
-//            constraintSet.clone(this);
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(gameActivityLayout);
 
-//            playerHandLayouts.set(0, findViewById(R.id.layout_player1_end_game_hand));
-//            playerHandLayouts.set(1, findViewById(R.id.layout_player2_end_game_hand));
+        int id = playerHandLayouts.get(0).getId();
+        constraintSet.connect(id, ConstraintSet.TOP,
+                R.id.horizontalGuidelinePlayers3, ConstraintSet.TOP);
+        constraintSet.connect(id, ConstraintSet.END,
+                ConstraintSet.PARENT_ID, ConstraintSet.END);
+
+        if (amountOfPlayers == 3) {
+            id = playerHandLayouts.get(1).getId();
+            constraintSet.connect(id, ConstraintSet.BOTTOM,
+                    R.id.horizontalGuidelinePlayers2, ConstraintSet.BOTTOM);
+
+            id = playerHandLayouts.get(2).getId();
+            constraintSet.connect(id, ConstraintSet.BOTTOM,
+                    R.id.horizontalGuidelinePlayers2, ConstraintSet.BOTTOM);
+        } else {
+            id = playerHandLayouts.get(1).getId();
+            constraintSet.connect(id, ConstraintSet.BOTTOM,
+                    R.id.horizontalGuidelinePlayers2, ConstraintSet.BOTTOM);
+            constraintSet.connect(id, ConstraintSet.START,
+                    ConstraintSet.PARENT_ID, ConstraintSet.START);
         }
 
+        id = R.id.endGameTextView;
+        constraintSet.connect(id, ConstraintSet.TOP,
+                R.id.horizontalGuidelinePlayers2, ConstraintSet.TOP);
+        constraintSet.connect(id, ConstraintSet.BOTTOM,
+                R.id.horizontalGuidelinePlayers3, ConstraintSet.BOTTOM);
+
+        ChangeBounds transition = new ChangeBounds();
+        transition.setInterpolator(new LinearInterpolator());
+        int animationDuration = 1500;
+        transition.setDuration(animationDuration);
+        transition.addListener(new Transition.TransitionListener() {
+            @Override
+            public void onTransitionStart(Transition transition) {
+            }
+
+            @Override
+            public void onTransitionEnd(Transition transition) {
+
+            }
+
+            @Override
+            public void onTransitionCancel(Transition transition) {
+
+            }
+
+            @Override
+            public void onTransitionPause(Transition transition) {
+
+            }
+
+            @Override
+            public void onTransitionResume(Transition transition) {
+
+            }
+        });
+        TransitionManager.beginDelayedTransition(gameActivityLayout, transition);
+        constraintSet.applyTo(gameActivityLayout);
     }
 
     @Override

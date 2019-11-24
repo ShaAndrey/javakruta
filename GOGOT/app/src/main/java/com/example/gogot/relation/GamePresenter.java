@@ -40,10 +40,12 @@ public class GamePresenter implements MainContract.Presenter {
         view.updatePlayerPoints(model.getPoints());
         view.updatePlayersIllumination(model.getPlayersDominateStates(), model.getPlayerIndex());
         model.nextPlayer();
-        if (model.isPlayer()) {
+        if (model.isPlayer() && !model.isMovePossible()) {
             view.revalidateBoardCellsListeners(model.getBoard().getBoardCards());
-        } else {
+        } else if (!model.isMovePossible()) {
             handleTurn(model.botPickPosition());
+        } else {
+            stopGame();
         }
     }
 
@@ -55,9 +57,6 @@ public class GamePresenter implements MainContract.Presenter {
             model.handleTurn(boardCard);
             view.movePlayer(model.getPlayerCard(),
                     new Point(boardCard.getRow(), boardCard.getColumn()));
-            if (model.isMovePossible()) {
-                stopGame();
-            }
         } else {
             view.youCantMoveThere();
         }

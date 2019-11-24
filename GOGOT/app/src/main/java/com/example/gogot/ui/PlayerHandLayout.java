@@ -14,7 +14,6 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.constraintlayout.widget.Constraints;
 import androidx.constraintlayout.widget.Guideline;
 
-import com.example.gogot.R;
 import com.example.gogot.model.PlayCard;
 
 
@@ -51,9 +50,7 @@ abstract public class PlayerHandLayout extends ConstraintLayout {
         initLayout();
     }
 
-    protected void initLayout() {
-        inflate(getContext(), R.layout.layout_2x4_player_hand, this);
-    }
+    abstract protected void initLayout();
 
     void initHand() {
         int horizontalGuidelinesCount = playerHandHeight + 1;
@@ -197,7 +194,6 @@ abstract public class PlayerHandLayout extends ConstraintLayout {
         imageView.setBackground(border);
     }
 
-    protected void setSize() {
-    }
+    abstract protected void setSize();
 
 }

@@ -9,4 +9,5 @@
     <string name="game_menu_title">Игра приостановлена</string>
     <string name="back_to_main_menu">Вернуться в главное меню</string>
     <string name="resume_game">Продолжить игру</string>
+    <string name="game_ended">Игра окончена</string>
 </resources>
