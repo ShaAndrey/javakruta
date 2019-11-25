@@ -85,7 +85,7 @@ public class Bot extends PlayersHand {
 
     interface BotListener {
         Board getBoard();
-        
+
         Players getPlayers();
     }
 
