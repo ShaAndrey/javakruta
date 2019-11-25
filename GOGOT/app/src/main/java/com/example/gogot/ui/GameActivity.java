@@ -1,13 +1,19 @@
 package com.example.gogot.ui;
 
-import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.transition.ChangeBounds;
+import android.transition.Transition;
+import android.transition.TransitionManager;
+import android.view.KeyEvent;
 import android.view.WindowManager;
+import android.view.animation.LinearInterpolator;
+import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.example.gogot.model.BoardCard;
 import com.example.gogot.model.PlayCard;
@@ -18,16 +24,21 @@ import com.example.gogot.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Math.max;
-
 
 public class GameActivity extends AppCompatActivity
-        implements MainContract.View, GameBoardLayout.ActivityListener,
-        PlayerHandLayout.ActivityPlayerHandListener {
+        implements MainContract.View,
+        GameBoardLayout.ActivityListener,
+        PlayerHandLayout.ActivityPlayerHandListener,
+        MenuDialog.MenuDialogListener,
+        EndGameLayout.EndGameLayoutListener {
     GameBoardLayout gameBoard;
     GamePresenter presenter;
-    List<PlayerHandLayout> playerHandLayouts;
     public static int amountOfPlayers;                             // is it OK?
+    MenuDialog gameMenu;
+    ArrayList<PlayerHandLayout> playerHandLayouts;
+    ConstraintLayout gameActivityLayout;
+    boolean onStop;
+    GameActivityListener gameActivityListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +49,15 @@ public class GameActivity extends AppCompatActivity
         presenter = new GamePresenter(this, amountOfPlayers);
         if (amountOfPlayers == 3) {
             setContentView(R.layout.game_3players_activity_layout);
+            gameActivityLayout = findViewById(R.id.game_3_players_activity_layout);
         } else {
             setContentView(R.layout.game_activity_layout);
+            gameActivityLayout = findViewById(R.id.game_activity_layout);
         }
         presenter.createView(amountOfPlayers);
+        gameMenu = new MenuDialog(this);
+        gameMenu.setListener(this);
+        onStop = false;
     }
 
     @Override
@@ -165,6 +181,71 @@ public class GameActivity extends AppCompatActivity
 
     @Override
     public void stopGame() {
+        onStop = true;
+        EndGameLayout endGameLayout = findViewById(R.id.layout_end_game);
+        endGameLayout.setListener(this);
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(gameActivityLayout);
+
+        int id = playerHandLayouts.get(0).getId();
+        constraintSet.connect(id, ConstraintSet.TOP,
+                R.id.horizontalGuidelinePlayers3, ConstraintSet.TOP);
+        constraintSet.connect(id, ConstraintSet.END,
+                ConstraintSet.PARENT_ID, ConstraintSet.END);
+
+        if (amountOfPlayers == 3) {
+            id = playerHandLayouts.get(1).getId();
+            constraintSet.connect(id, ConstraintSet.BOTTOM,
+                    R.id.horizontalGuidelinePlayers2, ConstraintSet.BOTTOM);
+
+            id = playerHandLayouts.get(2).getId();
+            constraintSet.connect(id, ConstraintSet.BOTTOM,
+                    R.id.horizontalGuidelinePlayers2, ConstraintSet.BOTTOM);
+        } else {
+            id = playerHandLayouts.get(1).getId();
+            constraintSet.connect(id, ConstraintSet.BOTTOM,
+                    R.id.horizontalGuidelinePlayers2, ConstraintSet.BOTTOM);
+            constraintSet.connect(id, ConstraintSet.START,
+                    ConstraintSet.PARENT_ID, ConstraintSet.START);
+        }
+
+        id = R.id.layout_end_game;
+        constraintSet.connect(id, ConstraintSet.TOP,
+                R.id.horizontalGuidelinePlayers2, ConstraintSet.TOP);
+        constraintSet.connect(id, ConstraintSet.BOTTOM,
+                R.id.horizontalGuidelinePlayers3, ConstraintSet.BOTTOM);
+
+        ChangeBounds transition = new ChangeBounds();
+        transition.setInterpolator(new LinearInterpolator());
+        int animationDuration = 1500;
+        transition.setDuration(animationDuration);
+        transition.addListener(new Transition.TransitionListener() {
+            @Override
+            public void onTransitionStart(Transition transition) {
+            }
+
+            @Override
+            public void onTransitionEnd(Transition transition) {
+
+            }
+
+            @Override
+            public void onTransitionCancel(Transition transition) {
+
+            }
+
+            @Override
+            public void onTransitionPause(Transition transition) {
+
+            }
+
+            @Override
+            public void onTransitionResume(Transition transition) {
+
+            }
+        });
+        TransitionManager.beginDelayedTransition(gameActivityLayout, transition);
+        constraintSet.applyTo(gameActivityLayout);
 
     }
 
@@ -176,6 +257,46 @@ public class GameActivity extends AppCompatActivity
     @Override
     public int setImageToIndex(int index) {
         return setImageToCard(new PlayCard(index));
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (onStop && keyCode == KeyEvent.KEYCODE_BACK) {
+            return super.onKeyDown(keyCode, event);
+        }
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            gameMenu.show();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+    @Override
+    public void openSettings() {
+
+    }
+
+    @Override
+    public void exitGame() {
+        finish();
+    }
+
+
+    @Override
+    public void onNewGame() {
+        setResult(RESULT_OK);
+        finish();
+    }
+
+    @Override
+    public void onExit() {
+        finish();
+    }
+
+
+    interface GameActivityListener {
+        void onNewGame();
     }
 
 }

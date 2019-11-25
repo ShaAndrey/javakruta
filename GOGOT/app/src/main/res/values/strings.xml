@@ -6,5 +6,9 @@
     <string name="one_vs_one">Один на один</string>
     <string name="three_players">Играть втроем</string>
     <string name="back">Назад</string>
+    <string name="game_menu_title">Игра приостановлена</string>
+    <string name="back_to_main_menu">Вернуться в главное меню</string>
+    <string name="resume_game">Продолжить игру</string>
+    <string name="game_ended">Игра окончена</string>
     <string name="you_cant_move_there">Вы не можете походить туда.</string>
 </resources>
