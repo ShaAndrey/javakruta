@@ -276,19 +276,19 @@ public class GameActivity extends AppCompatActivity
 
     @Override
     public void exitGame() {
-        onBackPressed();
+        finish();
     }
 
 
     @Override
     public void onNewGame() {
-        onBackPressed();
-        gameActivityListener.onNewGame();
+        setResult(RESULT_OK);
+        finish();
     }
 
     @Override
     public void onExit() {
-        onBackPressed();
+        finish();
     }
 
 

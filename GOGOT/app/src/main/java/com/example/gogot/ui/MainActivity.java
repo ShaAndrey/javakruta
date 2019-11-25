@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import com.example.gogot.R;
@@ -17,7 +16,8 @@ public class MainActivity extends AppCompatActivity implements GameActivity.Game
 
 
     public static final String AMOUNT_OF_PLAYERS = "amountOfPlayers";
-    public static final int START_GAME = 0;
+    public static final int PICK_GAME = 0;
+    public static final int START_GAME = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +29,15 @@ public class MainActivity extends AppCompatActivity implements GameActivity.Game
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK && requestCode == PICK_GAME) {
             super.onActivityResult(requestCode, resultCode, data);
             amountOfPlayers = Integer.valueOf(data.getStringExtra(AMOUNT_OF_PLAYERS));
             Intent intent = new Intent(MainActivity.this,
                     GameActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, START_GAME);
+        }
+        if (resultCode == RESULT_OK && requestCode == START_GAME) {
+            onNewGame();
         }
     }
 
@@ -42,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements GameActivity.Game
     public void onNewGame() {
         Intent intent = new Intent(MainActivity.this,
                 StartGameActivity.class);
-        startActivityForResult(intent, START_GAME);
+        startActivityForResult(intent, PICK_GAME);
     }
 
 }
