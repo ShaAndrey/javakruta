@@ -2,6 +2,7 @@ package com.example.gogot.ui;
 
 import android.graphics.Point;
 import android.os.Bundle;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,6 +24,8 @@ public class GameActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
         presenter = new GamePresenter(this);
         setContentView(R.layout.game_activity_layout);
@@ -56,6 +59,11 @@ public class GameActivity extends AppCompatActivity
     }
 
     @Override
+    public void startTurn(BoardCard boardCard) {
+        presenter.handleTurn(boardCard);
+    }
+
+    @Override
     public void drawInitialBoard(BoardCard[][] boardCards, ArrayList<BoardCard> cardsToMove) {
         gameBoard = findViewById(R.id.layout_game_board);
         gameBoard.setListener(this);
@@ -63,13 +71,23 @@ public class GameActivity extends AppCompatActivity
     }
 
     @Override
-    public void movePlayer(Point newPlayerPosition) {
-
+    public void removeIllumination(BoardCard[][] boardCards) {
+        gameBoard.removeIllumination(boardCards);
     }
 
     @Override
-    public void collectCards(ArrayList<Point> cardsToCollect) {
+    public void movePlayer(BoardCard playerCard, Point newPlayerPosition) {
+        gameBoard.movePlayer(playerCard, newPlayerPosition);
+    }
 
+    @Override
+    public void refreshBoard(BoardCard[][] boardCards, ArrayList<BoardCard> cardsToMove) {
+        gameBoard.refreshBoard(boardCards, cardsToMove);
+    }
+
+    @Override
+    public void collectCards(ArrayList<BoardCard> cardsToCollect) {
+        gameBoard.collectCards(cardsToCollect);
     }
 
     @Override
@@ -80,5 +98,10 @@ public class GameActivity extends AppCompatActivity
     @Override
     public void stopGame() {
 
+    }
+
+    @Override
+    public void updateIlluminationAndCollectCards() {
+        presenter.updateIlluminationAndCollectCards();
     }
 }

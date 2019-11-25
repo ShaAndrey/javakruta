@@ -1,11 +1,9 @@
 package com.example.gogot.relation;
 
-import android.graphics.Picture;
 import android.graphics.Point;
 
 import com.example.gogot.model.Board;
 import com.example.gogot.model.BoardCard;
-import com.example.gogot.model.PlayCard;
 
 import java.util.ArrayList;
 
@@ -14,30 +12,43 @@ public interface MainContract {
         void drawInitialBoard(BoardCard[][] gameBoard,
                               ArrayList<BoardCard> cardsToMove);
 
-        void movePlayer(Point newPlayerPosition);
+        void movePlayer(BoardCard playerCard, Point newPlayerPosition);
 
-        void collectCards(ArrayList<Point> cardsToCollect);
+        void collectCards(ArrayList<BoardCard> cardsToCollect);
 
         void youCantMoveThere();
 
         void stopGame();
+
+        void removeIllumination(BoardCard[][] boardCards);
+
+        void refreshBoard(BoardCard[][] gameBoard,
+                          ArrayList<BoardCard> cardsToMove);
     }
 
     interface Presenter {
         void createView();
 
-        void handleTurn(Point newPlayerPosition);
+        void handleTurn(BoardCard boardCard);
 
         void stopGame();
+
+        void updateIlluminationAndCollectCards();
     }
 
     interface Model {
-        ArrayList<Point> handleTurn(Point newPlayerPosition);
+        ArrayList<BoardCard>  handleTurn(BoardCard boardCard);
 
         boolean isMovePossible();
 
-        boolean isMovePossible(Point newPlayerPosition);
+        boolean isMovePossible(BoardCard boardCard);
 
         Board getBoard();
+
+        Point getPlayerPosition();
+
+        BoardCard getPlayerCard();
+
+        ArrayList<BoardCard> getCardsToCollect();
     }
 }

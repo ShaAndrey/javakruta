@@ -8,7 +8,12 @@ import java.util.ArrayList;
 
 public class GameModel implements MainContract.Model {
     private Board board;
-    private ArrayList<PlayersHand> playersHandArrayList;
+
+    @Override
+    public Point getPlayerPosition() {
+        return board.getPlayerPosition();
+    }
+
     private int boardSize = 6;
 
     public GameModel() {
@@ -16,10 +21,9 @@ public class GameModel implements MainContract.Model {
     }
 
     @Override
-    public ArrayList<Point> handleTurn(Point newPlayerPosition) {
-        return null;
+    public  ArrayList<BoardCard>  handleTurn(BoardCard boardCard) {
+        return board.movePlayer(boardCard);
     }
-
 
 
     @Override
@@ -28,12 +32,21 @@ public class GameModel implements MainContract.Model {
     }
 
     @Override
-    public boolean isMovePossible(Point newPlayerPosition) {
-        return false;
+    public boolean isMovePossible(BoardCard boardCard) {
+        return board.getCellsAvailableToMove().contains(boardCard);
     }
 
     @Override
     public Board getBoard() {
         return board;
+    }
+
+    @Override
+    public ArrayList<BoardCard> getCardsToCollect() {
+        return board.getCardsToCollect();
+    }
+    @Override
+    public BoardCard getPlayerCard() {
+        return board.getPlayerCard();
     }
 }
