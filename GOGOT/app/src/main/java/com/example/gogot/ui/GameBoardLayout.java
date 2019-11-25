@@ -5,7 +5,6 @@ import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
 import android.transition.ChangeBounds;
 import android.transition.Transition;
-import android.transition.TransitionListenerAdapter;
 import android.transition.TransitionManager;
 import android.util.AttributeSet;
 import android.view.View;
@@ -33,7 +32,7 @@ public class GameBoardLayout extends ConstraintLayout {
     private Guideline[] verticalGuidelines;
     private ImageView playerView;
     private int boardSize;
-    private ActivityListener activityListener;
+    private ActivityListener activityBoardListener;
     private int[][] viewId;
     private Point playerPosition;
     private Point newPlayerPosition;
@@ -58,7 +57,7 @@ public class GameBoardLayout extends ConstraintLayout {
         inflate(getContext(), R.layout.layout_game_board, this);
     }
 
-    void initBoard(int boardSize, BoardCard[][] boardCards, ArrayList<BoardCard> cardsToMove) {
+    void initBoard(int boardSize, BoardCard[][] boardCards, ArrayList<PlayCard> cardsToMove) {
         this.boardSize = boardSize;
         int guidelinesCount = boardSize + 1;
         horizontalGuidelines = new Guideline[guidelinesCount];
@@ -72,7 +71,7 @@ public class GameBoardLayout extends ConstraintLayout {
     }
 
     private void initializeGameBoard(BoardCard[][] boardCards,
-                                     ArrayList<BoardCard> cardsToMove) {
+                                     ArrayList<PlayCard> cardsToMove) {
         viewId = new int[boardSize][boardSize];
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
@@ -93,10 +92,10 @@ public class GameBoardLayout extends ConstraintLayout {
                                      BoardCard[][] boardCards, int i, int j) {
         imageView.setId(View.generateViewId());
         viewId[i][j] = imageView.getId();
-        imageView.setImageResource(activityListener.setImageToCard(boardCards[i][j]));
+        imageView.setImageResource(activityBoardListener.setImageToCard(boardCards[i][j]));
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         imageView.setPadding(5, 5, 5, 5);
-        imageView.setOnClickListener(v -> activityListener.startTurn(boardCards[i][j]));
+        imageView.setOnClickListener(v -> activityBoardListener.startTurn(boardCards[i][j]));
 
         Constraints.LayoutParams params = new Constraints.LayoutParams(0, 0);
         addView(imageView, params);
@@ -123,7 +122,7 @@ public class GameBoardLayout extends ConstraintLayout {
     }
 
     void setListener(ActivityListener activityListener) {
-        this.activityListener = activityListener;
+        this.activityBoardListener = activityListener;
     }
 
     void movePlayer(BoardCard playerCard, Point newPlayerPosition) {
@@ -145,7 +144,7 @@ public class GameBoardLayout extends ConstraintLayout {
 
             @Override
             public void onTransitionEnd(Transition transition) {
-                activityListener.updateIlluminationAndCollectCards();
+                activityBoardListener.updateIlluminationAndCollectCards();
             }
 
             @Override
@@ -178,13 +177,14 @@ public class GameBoardLayout extends ConstraintLayout {
             imageView.setVisibility(View.INVISIBLE);
         });
         int curId = viewId[newPlayerPosition.x][newPlayerPosition.y];
-        viewId[newPlayerPosition.x][newPlayerPosition.y] = viewId[playerPosition.x][playerPosition.y];
+        viewId[newPlayerPosition.x][newPlayerPosition.y] =
+                viewId[playerPosition.x][playerPosition.y];
         viewId[playerPosition.x][playerPosition.y] = curId;
         playerPosition = newPlayerPosition;
     }
 
     void setIllumination(BoardCard[][] boardCards,
-                         ArrayList<BoardCard> cardsToMove) {
+                         ArrayList<PlayCard> cardsToMove) {
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
                 GradientDrawable border = new GradientDrawable();
@@ -203,7 +203,7 @@ public class GameBoardLayout extends ConstraintLayout {
     }
 
     void refreshBoard(BoardCard[][] boardCards,
-                      ArrayList<BoardCard> cardsToMove) {
+                      ArrayList<PlayCard> cardsToMove) {
         setIllumination(boardCards, cardsToMove);
     }
 

@@ -19,6 +19,8 @@
         </activity>
         <activity android:name=".ui.GameActivity"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".ui.StartGameActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

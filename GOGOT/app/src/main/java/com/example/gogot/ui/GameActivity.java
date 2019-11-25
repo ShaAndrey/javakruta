@@ -1,9 +1,11 @@
 package com.example.gogot.ui;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.WindowManager;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gogot.model.BoardCard;
@@ -13,13 +15,18 @@ import com.example.gogot.relation.MainContract;
 import com.example.gogot.R;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import static java.lang.Math.max;
 
 
 public class GameActivity extends AppCompatActivity
-        implements MainContract.View, GameBoardLayout.ActivityListener {
-
+        implements MainContract.View, GameBoardLayout.ActivityListener,
+        PlayerHandLayout.ActivityPlayerHandListener {
     GameBoardLayout gameBoard;
     GamePresenter presenter;
+    List<PlayerHandLayout> playerHandLayouts;
+    public static int amountOfPlayers;                             // is it OK?
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +34,13 @@ public class GameActivity extends AppCompatActivity
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
-        presenter = new GamePresenter(this);
-        setContentView(R.layout.game_activity_layout);
-        presenter.createView();
+        presenter = new GamePresenter(this, amountOfPlayers);
+        if (amountOfPlayers == 3) {
+            setContentView(R.layout.game_3players_activity_layout);
+        } else {
+            setContentView(R.layout.game_activity_layout);
+        }
+        presenter.createView(amountOfPlayers);
     }
 
     @Override
@@ -64,7 +75,22 @@ public class GameActivity extends AppCompatActivity
     }
 
     @Override
-    public void drawInitialBoard(BoardCard[][] boardCards, ArrayList<BoardCard> cardsToMove) {
+    public void drawPlayersHands() {
+        playerHandLayouts = new ArrayList<>();
+        if (amountOfPlayers < 3) {
+            playerHandLayouts.add(findViewById(R.id.layout_player1_hand));
+            playerHandLayouts.add(findViewById(R.id.layout_player2_hand));
+        } else {
+            playerHandLayouts.add(findViewById(R.id.layout_player1_hand));
+        }
+        playerHandLayouts.forEach(playerHandLayout -> {
+            playerHandLayout.setListener(this);
+            playerHandLayout.initHand();
+        });
+    }
+
+    @Override
+    public void drawInitialBoard(BoardCard[][] boardCards, ArrayList<PlayCard> cardsToMove) {
         gameBoard = findViewById(R.id.layout_game_board);
         gameBoard.setListener(this);
         gameBoard.initBoard(6, boardCards, cardsToMove);         // TODO: not 6 here
@@ -81,8 +107,35 @@ public class GameActivity extends AppCompatActivity
     }
 
     @Override
-    public void refreshBoard(BoardCard[][] boardCards, ArrayList<BoardCard> cardsToMove) {
+    public void refreshBoard(BoardCard[][] boardCards, ArrayList<PlayCard> cardsToMove) {
         gameBoard.refreshBoard(boardCards, cardsToMove);
+    }
+
+    @Override
+    public void addCardsToPlayer(PlayCard.State stateOfCardsToAdd,
+                                 int amountOfCardsToAdd, int playerInd) {
+        playerHandLayouts.get(playerInd).addCardsAmount(stateOfCardsToAdd, amountOfCardsToAdd);
+    }
+
+    @Override
+    public void updatePlayerPoints(List<Integer> points) {
+        for (int i = 0; i < playerHandLayouts.size(); i++) {
+            playerHandLayouts.get(i).updatePlayerPoints(points.get(i));
+        }
+    }
+
+    @Override
+    public void updatePlayersIllumination(List<boolean[]> playersDominateStates,
+                                          int currentPlayer) {
+        for (int i = 0; i < playerHandLayouts.size(); i++) {
+            if ((currentPlayer + 1) % playerHandLayouts.size() == i) {
+                playerHandLayouts.get(i).updateIllumination
+                        (playersDominateStates.get(i), true);
+            } else {
+                playerHandLayouts.get(i).updateIllumination
+                        (playersDominateStates.get(i), false);
+            }
+        }
     }
 
     @Override
@@ -104,4 +157,10 @@ public class GameActivity extends AppCompatActivity
     public void updateIlluminationAndCollectCards() {
         presenter.updateIlluminationAndCollectCards();
     }
+
+    @Override
+    public int setImageToIndex(int index) {
+        return setImageToCard(new PlayCard(index));
+    }
+
 }

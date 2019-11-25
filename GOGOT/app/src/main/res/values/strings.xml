@@ -2,4 +2,8 @@
     <string name="app_name">GOGOT</string>
     <string name="new_game">новая игра</string>
     <string name="settings">настройки</string>
+    <string name="new_game_vs_ai">Против умнейшего искусственного интелекта</string>
+    <string name="one_vs_one">Один на один</string>
+    <string name="three_players">Играть втроем</string>
+    <string name="back">Назад</string>
 </resources>

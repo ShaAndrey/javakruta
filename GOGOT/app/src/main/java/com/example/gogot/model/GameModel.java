@@ -5,26 +5,29 @@ import android.graphics.Point;
 import com.example.gogot.relation.MainContract;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class GameModel implements MainContract.Model {
+public class GameModel implements MainContract.Model, Board.BoardListener {
     private Board board;
-
-    @Override
-    public Point getPlayerPosition() {
-        return board.getPlayerPosition();
-    }
-
+    private Players players;
     private int boardSize = 6;
 
-    public GameModel() {
+
+    @Override
+    public void nextPlayer() {
+        players.nextPlayer();
+    }
+
+    public GameModel(int amountOfPlayers) {
         board = new Board(boardSize, boardSize);
+        board.setBoardListener(this);
+        players = new Players(amountOfPlayers);
     }
 
     @Override
-    public  ArrayList<BoardCard>  handleTurn(BoardCard boardCard) {
+    public ArrayList<BoardCard> handleTurn(BoardCard boardCard) {
         return board.movePlayer(boardCard);
     }
-
 
     @Override
     public boolean isMovePossible() {
@@ -45,8 +48,46 @@ public class GameModel implements MainContract.Model {
     public ArrayList<BoardCard> getCardsToCollect() {
         return board.getCardsToCollect();
     }
+
+    @Override
+    public int getPlayerIndex() {
+        return players.getPlayerIndex();
+    }
+
     @Override
     public BoardCard getPlayerCard() {
         return board.getPlayerCard();
     }
+
+    @Override
+    public Point getPlayerPosition() {
+        return board.getPlayerPosition();
+    }
+
+    @Override
+    public int getAmountOfCardsToCollect() {
+        return board.getAmountOfCardsToCollect();
+    }
+
+    @Override
+    public PlayCard.State getStateOfCardsToCollect() {
+        return board.getStateOfCardsToCollect();
+    }
+
+    @Override
+    public List<boolean[]> getPlayersDominateStates() {
+        return players.getPlayersDominateStates();
+    }
+
+    @Override
+    public List<Integer> getPoints() {
+        List<Integer> points = players.getPoints();
+        return points;
+    }
+
+    @Override
+    public void addCardsToPlayer(PlayCard.State stateOfCardsToCollect, int amountOfCardsToCollect) {
+        players.addCardsToPlayer(stateOfCardsToCollect, amountOfCardsToCollect);
+    }
+
 }

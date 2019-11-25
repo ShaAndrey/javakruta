@@ -9,14 +9,14 @@
     tools:context=".ui.MainActivity">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/horizontalGuideline0"
+        android:id="@+id/horizontalGuidelineGameActivity0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15" />
+        app:layout_constraintGuide_percent="0.2" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/horizontalGuideline1"
+        android:id="@+id/horizontalGuidelineGameActivity1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -26,30 +26,56 @@
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline0"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalGuidelineGameActivity0"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="#DDA788"
-        app:layout_constraintBottom_toBottomOf="@id/horizontalGuideline1"
-        app:layout_constraintTop_toTopOf="@id/horizontalGuideline0" />
+        app:layout_constraintBottom_toBottomOf="@id/horizontalGuidelineGameActivity1"
+        app:layout_constraintTop_toTopOf="@id/horizontalGuidelineGameActivity0" />
 
     <com.example.gogot.ui.GameBoardLayout
         android:id="@+id/layout_game_board"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@id/horizontalGuideline1"
+        app:layout_constraintBottom_toBottomOf="@id/horizontalGuidelineGameActivity1"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/horizontalGuideline0"
+        app:layout_constraintTop_toTopOf="@id/horizontalGuidelineGameActivity0"
         app:layout_constraintVertical_bias="0.5"/>
 
-    <FrameLayout
-        android:layout_width="match_parent"
+    <com.example.gogot.ui.PlayerHandLayout
+        android:id="@+id/layout_player1_hand"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/horizontalGuideline1"/>
+        app:layout_constraintTop_toBottomOf="@+id/horizontalGuidelineGameActivity1"
+        app:layout_constraintEnd_toEndOf="@+id/verticalGuidelineGameActivity1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintDimensionRatio="2:1"
+        app:layout_constraintVertical_bias="0.5"
+        />
+
+
+    <com.example.gogot.ui.PlayerHandLayout
+        android:id="@+id/layout_player2_hand"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalGuidelineGameActivity0"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/verticalGuidelineGameActivity1"
+        app:layout_constraintDimensionRatio="2:1"
+        app:layout_constraintVertical_bias="0.5"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/verticalGuidelineGameActivity1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.50" />
 </androidx.constraintlayout.widget.ConstraintLayout>

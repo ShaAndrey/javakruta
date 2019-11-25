@@ -4,13 +4,17 @@ import android.graphics.Point;
 
 import com.example.gogot.model.Board;
 import com.example.gogot.model.BoardCard;
+import com.example.gogot.model.PlayCard;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface MainContract {
     interface View {
         void drawInitialBoard(BoardCard[][] gameBoard,
-                              ArrayList<BoardCard> cardsToMove);
+                              ArrayList<PlayCard> cardsToMove);
+
+        void drawPlayersHands();
 
         void movePlayer(BoardCard playerCard, Point newPlayerPosition);
 
@@ -23,11 +27,18 @@ public interface MainContract {
         void removeIllumination(BoardCard[][] boardCards);
 
         void refreshBoard(BoardCard[][] gameBoard,
-                          ArrayList<BoardCard> cardsToMove);
+                          ArrayList<PlayCard> cardsToMove);
+
+        void addCardsToPlayer(PlayCard.State stateOfCardsToAdd,
+                              int amountOfCardsToAdd, int playerInd);
+        void updatePlayerPoints(List<Integer> points);
+
+        void updatePlayersIllumination(List<boolean[]> playersDominateStates,
+                                       int currentPlayer);
     }
 
     interface Presenter {
-        void createView();
+        void createView(int amountOfPlayers);
 
         void handleTurn(BoardCard boardCard);
 
@@ -37,7 +48,7 @@ public interface MainContract {
     }
 
     interface Model {
-        ArrayList<BoardCard>  handleTurn(BoardCard boardCard);
+        ArrayList<BoardCard> handleTurn(BoardCard boardCard);
 
         boolean isMovePossible();
 
@@ -50,5 +61,18 @@ public interface MainContract {
         BoardCard getPlayerCard();
 
         ArrayList<BoardCard> getCardsToCollect();
+
+        int getPlayerIndex();
+
+        void nextPlayer();
+
+
+        int getAmountOfCardsToCollect();
+
+        PlayCard.State getStateOfCardsToCollect();
+
+        List<Integer> getPoints();
+
+        List<boolean[]> getPlayersDominateStates();
     }
 }

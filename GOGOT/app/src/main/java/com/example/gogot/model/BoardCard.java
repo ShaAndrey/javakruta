@@ -9,7 +9,7 @@ public class BoardCard extends PlayCard {
     private Point position;
 
     public BoardCard(State state, int row, int column) {
-        super.state = state;
+        super(state);
         this.position = new Point(row, column);
     }
 
