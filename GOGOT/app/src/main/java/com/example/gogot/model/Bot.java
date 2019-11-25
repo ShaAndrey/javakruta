@@ -6,7 +6,6 @@ import java.util.List;
 public class Bot extends PlayersHand {
     Board board;
     Players players;
-    //    List<Integer> pointsDifferences;
     double maxDifference;
     BotListener botListener;
     BoardCard cellToGo;
@@ -87,16 +86,10 @@ public class Bot extends PlayersHand {
     interface BotListener {
         Board getBoard();
 
-
         Players getPlayers();
     }
 
     void setBotListener(Players players) {
         botListener = players;
     }
-
-//    @Override
-//    public void update(Board board) {
-//        this.board = board;
-//    }
 }

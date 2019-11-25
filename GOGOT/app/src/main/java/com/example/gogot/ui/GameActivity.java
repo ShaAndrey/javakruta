@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -173,7 +174,9 @@ public class GameActivity extends AppCompatActivity
 
     @Override
     public void youCantMoveThere() {
-
+        Toast toast = Toast.makeText(getApplicationContext(),
+                R.string.you_cant_move_there, Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     @Override
