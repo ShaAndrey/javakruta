@@ -35,6 +35,10 @@ public interface MainContract {
 
         void updatePlayersIllumination(List<boolean[]> playersDominateStates,
                                        int currentPlayer);
+
+        void invalidateBoardCellsListeners();
+
+        void revalidateBoardCellsListeners(BoardCard[][] boardCards);
     }
 
     interface Presenter {
@@ -74,5 +78,9 @@ public interface MainContract {
         List<Integer> getPoints();
 
         List<boolean[]> getPlayersDominateStates();
+
+        boolean isPlayer();
+
+        BoardCard botPickPosition();
     }
 }

@@ -16,6 +16,10 @@ public class PlayCard {
         setState(state);
     }
 
+    PlayCard (PlayCard otherCard) {
+        setState(otherCard.state);
+    }
+
     public State getState() {
         return state;
     }

@@ -47,7 +47,7 @@
         app:layout_constraintTop_toTopOf="@id/horizontalGuidelineGameActivity0"
         app:layout_constraintVertical_bias="0.5"/>
 
-    <com.example.gogot.ui.PlayerHandLayout
+    <com.example.gogot.ui.PlayerHandLayout4x2
         android:id="@+id/layout_player1_hand"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -60,7 +60,7 @@
         />
 
 
-    <com.example.gogot.ui.PlayerHandLayout
+    <com.example.gogot.ui.PlayerHandLayout4x2
         android:id="@+id/layout_player2_hand"
         android:layout_width="0dp"
         android:layout_height="0dp"

@@ -7,7 +7,7 @@ import com.example.gogot.relation.MainContract;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameModel implements MainContract.Model, Board.BoardListener {
+public class GameModel implements MainContract.Model, Board.BoardListener, Players.PlayersListener {
     private Board board;
     private Players players;
     private int boardSize = 6;
@@ -22,11 +22,12 @@ public class GameModel implements MainContract.Model, Board.BoardListener {
         board = new Board(boardSize, boardSize);
         board.setBoardListener(this);
         players = new Players(amountOfPlayers);
+        players.setPlayersListener(this);
     }
 
     @Override
     public ArrayList<BoardCard> handleTurn(BoardCard boardCard) {
-        return board.movePlayer(boardCard);
+        return board.handleTurn(boardCard);
     }
 
     @Override
@@ -80,6 +81,16 @@ public class GameModel implements MainContract.Model, Board.BoardListener {
     }
 
     @Override
+    public boolean isPlayer() {
+        return players.isPlayer();
+    }
+
+    @Override
+    public BoardCard botPickPosition() {
+        return players.botPickPosition();
+    }
+
+    @Override
     public List<Integer> getPoints() {
         List<Integer> points = players.getPoints();
         return points;
@@ -90,4 +101,8 @@ public class GameModel implements MainContract.Model, Board.BoardListener {
         players.addCardsToPlayer(stateOfCardsToCollect, amountOfCardsToCollect);
     }
 
+    @Override
+    public Board getGameBoard() {
+        return getBoard();
+    }
 }

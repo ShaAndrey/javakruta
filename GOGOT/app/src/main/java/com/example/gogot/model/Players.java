@@ -3,10 +3,27 @@ package com.example.gogot.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Players implements PlayersHand.PlayerListener {
+public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
     int amountOfPlayers;
     int currentPlayer = 0;
     ArrayList<PlayersHand> playersHands;
+    PlayersListener playersListener;
+
+    Players(Players otherPlayers) {
+        amountOfPlayers = otherPlayers.amountOfPlayers;
+        currentPlayer = otherPlayers.currentPlayer;
+        playersHands = new ArrayList<>();
+        for (int i = 0; i < amountOfPlayers; i++) {
+            playersHands.add(new PlayersHand(otherPlayers.playersHands.get(i)));
+            playersHands.get(i).setPlayerListener(this);
+        }
+//        if (amountOfPlayers == 1) {
+//            ++this.amountOfPlayers;
+//            playersHands.add(new Bot());
+//            playersHands.get(1).setPlayerListener(this);
+//            ((Bot) playersHands.get(1)).setBotListener(this);
+//        }
+    }
 
     Players(int amountOfPlayers) {
         this.amountOfPlayers = amountOfPlayers;
@@ -14,6 +31,12 @@ public class Players implements PlayersHand.PlayerListener {
         for (int i = 0; i < amountOfPlayers; i++) {
             playersHands.add(new PlayersHand());
             playersHands.get(i).setPlayerListener(this);
+        }
+        if (amountOfPlayers == 1) {
+            ++this.amountOfPlayers;
+            playersHands.add(new Bot());
+            playersHands.get(1).setPlayerListener(this);
+            ((Bot) playersHands.get(1)).setBotListener(this);
         }
     }
 
@@ -68,5 +91,47 @@ public class Players implements PlayersHand.PlayerListener {
         playersHands.forEach(playersHand ->
                 playersDominateStates.add(playersHand.getDominateStates()));
         return playersDominateStates;
+    }
+
+    boolean isPlayer() {
+        return !playersHands.get(currentPlayer).checkDominateState(0);
+    }
+
+    BoardCard botPickPosition() {
+        if (playersHands.get(currentPlayer) instanceof Bot) {
+            return ((Bot) playersHands.get(currentPlayer)).pickBestTurn();
+        }
+        return null;
+    }
+
+    @Override
+    public Board getBoard() {
+        return playersListener.getGameBoard();
+    }
+
+    ArrayList<Integer> getPlayersPoints() {
+        ArrayList<Integer> points = new ArrayList<>();
+        playersHands.forEach(playersHand -> points.add(playersHand.getPoints()));
+        return points;
+    }
+
+    ArrayList<Integer> getPlayersAmountForState(PlayCard.State state) {
+        ArrayList<Integer> points = new ArrayList<>();
+        playersHands.forEach(playersHand -> points.add(playersHand.getAmountForState(state)));
+        return points;
+    }
+
+    @Override
+    public Players getPlayers() {
+        return this;
+    }
+
+
+    void setPlayersListener(GameModel model) {
+        playersListener = model;
+    }
+
+    interface PlayersListener {
+        Board getGameBoard();
     }
 }

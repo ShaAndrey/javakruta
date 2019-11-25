@@ -82,6 +82,8 @@ public class GameActivity extends AppCompatActivity
             playerHandLayouts.add(findViewById(R.id.layout_player2_hand));
         } else {
             playerHandLayouts.add(findViewById(R.id.layout_player1_hand));
+            playerHandLayouts.add(findViewById(R.id.layout_player2_hand));
+            playerHandLayouts.add(findViewById(R.id.layout_player3_hand));
         }
         playerHandLayouts.forEach(playerHandLayout -> {
             playerHandLayout.setListener(this);
@@ -136,6 +138,16 @@ public class GameActivity extends AppCompatActivity
                         (playersDominateStates.get(i), false);
             }
         }
+    }
+
+    @Override
+    public void invalidateBoardCellsListeners() {
+        gameBoard.invalidateBoardCellsListeners();
+    }
+
+    @Override
+    public void revalidateBoardCellsListeners(BoardCard[][] boardCards) {
+        gameBoard.revalidateBoardCellsListeners(boardCards);
     }
 
     @Override

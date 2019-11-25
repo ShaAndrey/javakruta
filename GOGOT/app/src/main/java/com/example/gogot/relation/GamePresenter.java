@@ -4,6 +4,9 @@ import android.graphics.Point;
 
 import com.example.gogot.model.BoardCard;
 import com.example.gogot.model.GameModel;
+import com.example.gogot.model.PlayCard;
+
+import java.util.ArrayList;
 
 public class GamePresenter implements MainContract.Presenter {
     private MainContract.Model model;
@@ -22,7 +25,7 @@ public class GamePresenter implements MainContract.Presenter {
     @Override
     public void createView(int amountOfPlayers) {
         view.drawInitialBoard(model.getBoard().getBoardCards(),
-                model.getBoard().getCellsAvailableToMove());
+                new ArrayList<>(model.getBoard().getCellsAvailableToMove()));
         view.drawPlayersHands();
     }
 
@@ -31,17 +34,23 @@ public class GamePresenter implements MainContract.Presenter {
     public void updateIlluminationAndCollectCards() {
         view.collectCards(model.getCardsToCollect());
         view.refreshBoard(model.getBoard().getBoardCards(),
-                model.getBoard().getCellsAvailableToMove());
+                new ArrayList<>(model.getBoard().getCellsAvailableToMove()));
         view.addCardsToPlayer(model.getStateOfCardsToCollect(),
                 model.getAmountOfCardsToCollect(), model.getPlayerIndex());
         view.updatePlayerPoints(model.getPoints());
         view.updatePlayersIllumination(model.getPlayersDominateStates(), model.getPlayerIndex());
         model.nextPlayer();
+        if (model.isPlayer()) {
+            view.revalidateBoardCellsListeners(model.getBoard().getBoardCards());
+        } else {
+            handleTurn(model.botPickPosition());
+        }
     }
 
     @Override
     public void handleTurn(BoardCard boardCard) {
         if (model.isMovePossible(boardCard)) {
+            view.invalidateBoardCellsListeners();
             view.removeIllumination(model.getBoard().getBoardCards());
             model.handleTurn(boardCard);
             view.movePlayer(model.getPlayerCard(),

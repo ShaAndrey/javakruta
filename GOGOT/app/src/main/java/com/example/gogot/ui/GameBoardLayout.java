@@ -95,8 +95,7 @@ public class GameBoardLayout extends ConstraintLayout {
         imageView.setImageResource(activityBoardListener.setImageToCard(boardCards[i][j]));
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         imageView.setPadding(5, 5, 5, 5);
-        imageView.setOnClickListener(v -> activityBoardListener.startTurn(boardCards[i][j]));
-
+        setListenerToView(imageView, boardCards, i, j);
         Constraints.LayoutParams params = new Constraints.LayoutParams(0, 0);
         addView(imageView, params);
         placeViewInCell(imageView.getId(), i, j);
@@ -205,6 +204,28 @@ public class GameBoardLayout extends ConstraintLayout {
     void refreshBoard(BoardCard[][] boardCards,
                       ArrayList<PlayCard> cardsToMove) {
         setIllumination(boardCards, cardsToMove);
+    }
+
+    void setListenerToView(ImageView imageView, BoardCard[][] boardCards, int i, int j) {
+        imageView.setOnClickListener(v -> activityBoardListener.startTurn(boardCards[i][j]));
+    }
+
+    void invalidateBoardCellsListeners() {
+        for (int i = 0; i < viewId.length; i++) {
+            for (int j = 0; j < viewId[0].length; j++) {
+                ImageView imageView = findViewById(viewId[i][j]);
+                imageView.setOnClickListener(null);
+            }
+        }
+    }
+
+    void revalidateBoardCellsListeners(BoardCard[][] boardCards) {
+        for (int i = 0; i < viewId.length; i++) {
+            for (int j = 0; j < viewId[0].length; j++) {
+                ImageView imageView = findViewById(viewId[i][j]);
+                setListenerToView(imageView, boardCards, i, j);
+            }
+        }
     }
 
 }

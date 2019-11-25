@@ -11,7 +11,7 @@ public class PlayersHand {
     private Map<PlayCard.State, Integer> inHandCards;
     private int points;
     private PlayerListener playerListener;
-    private boolean[] dominateStates;
+    protected boolean[] dominateStates;
 
     PlayersHand() {
         inHandCards = new HashMap<>();
@@ -20,6 +20,19 @@ public class PlayersHand {
         states.forEach(state -> inHandCards.put(state, 0));
         dominateStates = new boolean[9];
         points = 0;
+    }
+
+    PlayersHand(PlayersHand otherHand) {
+        inHandCards = new HashMap<>();
+        ArrayList<PlayCard.State> states =
+                new ArrayList<>(Arrays.asList(PlayCard.State.values()));
+        states.forEach(state -> inHandCards.put(state,
+                otherHand.inHandCards.get(state)));
+        dominateStates = new boolean[9];
+        for (int i = 0; i < dominateStates.length; i++) {
+            dominateStates[i] = otherHand.dominateStates[i];
+        }
+        points = otherHand.points;
     }
 
     void addNCardsToHand(PlayCard.State state, int n) {
