@@ -8,6 +8,7 @@ import android.transition.TransitionManager;
 import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -24,15 +25,19 @@ import java.util.List;
 
 
 public class GameActivity extends AppCompatActivity
-        implements MainContract.View, GameBoardLayout.ActivityListener,
-        PlayerHandLayout.ActivityPlayerHandListener, MenuDialog.MenuDialogListener {
+        implements MainContract.View,
+        GameBoardLayout.ActivityListener,
+        PlayerHandLayout.ActivityPlayerHandListener,
+        MenuDialog.MenuDialogListener,
+        EndGameLayout.EndGameLayoutListener {
     GameBoardLayout gameBoard;
     GamePresenter presenter;
     public static int amountOfPlayers;                             // is it OK?
     MenuDialog gameMenu;
     ArrayList<PlayerHandLayout> playerHandLayouts;
-
     ConstraintLayout gameActivityLayout;
+    boolean onStop;
+    GameActivityListener gameActivityListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +56,7 @@ public class GameActivity extends AppCompatActivity
         presenter.createView(amountOfPlayers);
         gameMenu = new MenuDialog(this);
         gameMenu.setListener(this);
+        onStop = false;
     }
 
     @Override
@@ -172,6 +178,9 @@ public class GameActivity extends AppCompatActivity
 
     @Override
     public void stopGame() {
+        onStop = true;
+        EndGameLayout endGameLayout = findViewById(R.id.layout_end_game);
+        endGameLayout.setListener(this);
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(gameActivityLayout);
 
@@ -197,7 +206,7 @@ public class GameActivity extends AppCompatActivity
                     ConstraintSet.PARENT_ID, ConstraintSet.START);
         }
 
-        id = R.id.endGameTextView;
+        id = R.id.layout_end_game;
         constraintSet.connect(id, ConstraintSet.TOP,
                 R.id.horizontalGuidelinePlayers2, ConstraintSet.TOP);
         constraintSet.connect(id, ConstraintSet.BOTTOM,
@@ -234,6 +243,7 @@ public class GameActivity extends AppCompatActivity
         });
         TransitionManager.beginDelayedTransition(gameActivityLayout, transition);
         constraintSet.applyTo(gameActivityLayout);
+
     }
 
     @Override
@@ -248,6 +258,9 @@ public class GameActivity extends AppCompatActivity
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (onStop && keyCode == KeyEvent.KEYCODE_BACK) {
+            return super.onKeyDown(keyCode, event);
+        }
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             gameMenu.show();
             return true;
@@ -264,6 +277,23 @@ public class GameActivity extends AppCompatActivity
     @Override
     public void exitGame() {
         onBackPressed();
+    }
+
+
+    @Override
+    public void onNewGame() {
+        onBackPressed();
+        gameActivityListener.onNewGame();
+    }
+
+    @Override
+    public void onExit() {
+        onBackPressed();
+    }
+
+
+    interface GameActivityListener {
+        void onNewGame();
     }
 
 }

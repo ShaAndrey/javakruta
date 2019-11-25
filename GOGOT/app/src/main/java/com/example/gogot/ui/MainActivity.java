@@ -13,7 +13,7 @@ import com.example.gogot.R;
 import static com.example.gogot.ui.GameActivity.amountOfPlayers;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GameActivity.GameActivityListener {
 
 
     public static final String AMOUNT_OF_PLAYERS = "amountOfPlayers";
@@ -24,11 +24,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button newGameButton = findViewById(R.id.buttonNewGame);
-        newGameButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this,
-                    StartGameActivity.class);
-            startActivityForResult(intent, START_GAME);
-        });
+        newGameButton.setOnClickListener(v -> onNewGame());
     }
 
     @Override
@@ -40,6 +36,13 @@ public class MainActivity extends AppCompatActivity {
                     GameActivity.class);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onNewGame() {
+        Intent intent = new Intent(MainActivity.this,
+                StartGameActivity.class);
+        startActivityForResult(intent, START_GAME);
     }
 
 }
