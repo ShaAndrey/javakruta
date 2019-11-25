@@ -6,4 +6,5 @@
     <string name="one_vs_one">Один на один</string>
     <string name="three_players">Играть втроем</string>
     <string name="back">Назад</string>
+    <string name="you_cant_move_there">Вы не можете походить туда.</string>
 </resources>
