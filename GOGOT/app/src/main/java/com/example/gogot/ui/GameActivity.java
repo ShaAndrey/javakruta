@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -157,7 +158,9 @@ public class GameActivity extends AppCompatActivity
 
     @Override
     public void youCantMoveThere() {
-
+        Toast toast = Toast.makeText(getApplicationContext(),
+                R.string.you_cant_move_there, Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     @Override
