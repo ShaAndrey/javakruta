@@ -12,7 +12,7 @@ import com.example.gogot.R;
 import static com.example.gogot.ui.GameActivity.amountOfPlayers;
 
 
-public class MainActivity extends AppCompatActivity implements GameActivity.GameActivityListener {
+public class MainActivity extends AppCompatActivity {
 
 
     public static final String AMOUNT_OF_PLAYERS = "amountOfPlayers";
@@ -41,8 +41,7 @@ public class MainActivity extends AppCompatActivity implements GameActivity.Game
         }
     }
 
-    @Override
-    public void onNewGame() {
+    void onNewGame() {
         Intent intent = new Intent(MainActivity.this,
                 StartGameActivity.class);
         startActivityForResult(intent, PICK_GAME);
