@@ -39,13 +39,14 @@ public class GameActivity extends AppCompatActivity
     public static final String AMOUNT_OF_PLAYERS = "AMOUNT_OF_PLAYERS";
     public static final int DEFAULT_PLAYER_AMOUNT = 1;
 
+    private ConstraintLayout gameActivityLayout;
     private GameBoardLayout gameBoard;
     private GamePresenter presenter;
-    public int amountOfPlayers;
     private MenuDialog gameMenu;
+
     private ArrayList<PlayerHandLayout> playerHandLayouts;
-    private ConstraintLayout gameActivityLayout;
-    boolean onStop;
+    private int amountOfPlayers;
+    private boolean userInteractionBlocked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,33 +67,7 @@ public class GameActivity extends AppCompatActivity
         presenter.createView(amountOfPlayers);
         gameMenu = new MenuDialog(this);
         gameMenu.setListener(this);
-        onStop = false;
-    }
-
-    @Override
-    public int setImageToCard(PlayCard card) {
-        switch (card.getState()) {
-            // TODO in each case setting the appropriate picture
-            case NOTHING:
-                return R.drawable.star;
-            case PLAYER:
-                return R.drawable.player;
-            case DRAGON:
-                return R.drawable.dragon;
-            case OGRE:
-                return R.drawable.ogre;
-            case MINOTAUR:
-                return R.drawable.minotaur;
-            case ELF:
-                return R.drawable.thom;
-            case FAIRY:
-                return R.drawable.fairy;
-            case GNOME:
-                return R.drawable.gnome;
-            case GOBLIN:
-                return R.drawable.goblin;
-        }
-        return 0;
+        userInteractionBlocked = false;
     }
 
     @Override
@@ -190,7 +165,7 @@ public class GameActivity extends AppCompatActivity
 
     @Override
     public void stopGame() {
-        onStop = true;
+        userInteractionBlocked = true;
         EndGameLayout endGameLayout = findViewById(R.id.layout_end_game);
         endGameLayout.setListener(this);
         ConstraintSet constraintSet = new ConstraintSet();
@@ -270,7 +245,7 @@ public class GameActivity extends AppCompatActivity
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (onStop && keyCode == KeyEvent.KEYCODE_BACK) {
+        if (userInteractionBlocked && keyCode == KeyEvent.KEYCODE_BACK) {
             return super.onKeyDown(keyCode, event);
         }
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
@@ -304,5 +279,31 @@ public class GameActivity extends AppCompatActivity
     @Override
     public void onExit() {
         finish();
+    }
+
+    @Override
+    public int setImageToCard(PlayCard card) {
+        switch (card.getState()) {
+            // TODO in each case setting the appropriate picture
+            case NOTHING:
+                return R.drawable.star;
+            case PLAYER:
+                return R.drawable.player;
+            case DRAGON:
+                return R.drawable.dragon;
+            case OGRE:
+                return R.drawable.ogre;
+            case MINOTAUR:
+                return R.drawable.minotaur;
+            case ELF:
+                return R.drawable.thom;
+            case FAIRY:
+                return R.drawable.fairy;
+            case GNOME:
+                return R.drawable.gnome;
+            case GOBLIN:
+                return R.drawable.goblin;
+        }
+        return 0;
     }
 }

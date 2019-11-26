@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameModel implements MainContract.Model, Board.BoardListener, Players.PlayersListener {
+
     private Board board;
     private Players players;
     private int boardSize = 6;
-
 
     @Override
     public void nextPlayer() {

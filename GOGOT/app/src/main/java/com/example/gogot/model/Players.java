@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
+
     private int amountOfPlayers;
     private int currentPlayer = 0;
     private ArrayList<PlayersHand> playersHands;

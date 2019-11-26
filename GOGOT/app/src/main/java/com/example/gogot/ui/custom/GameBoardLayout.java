@@ -19,6 +19,7 @@ import androidx.constraintlayout.widget.Guideline;
 import com.example.gogot.R;
 import com.example.gogot.model.entity.BoardCard;
 import com.example.gogot.model.entity.PlayCard;
+import com.example.gogot.ui.listener.TransitionEndListener;
 
 import java.util.ArrayList;
 
@@ -28,14 +29,18 @@ import static androidx.constraintlayout.widget.ConstraintSet.START;
 import static androidx.constraintlayout.widget.ConstraintSet.TOP;
 
 public class GameBoardLayout extends ConstraintLayout {
+
+    private static final int CARD_TRANSITION_DURATION = 1500;
+
     private Guideline[] horizontalGuidelines;
     private Guideline[] verticalGuidelines;
     private ImageView playerView;
-    private int boardSize;
+
     private ActivityListener activityBoardListener;
-    private int[][] viewId;
     private Point playerPosition;
     private Point newPlayerPosition;
+    private int boardSize;
+    private int[][] viewId;
 
 
     public GameBoardLayout(Context context) {
@@ -134,31 +139,11 @@ public class GameBoardLayout extends ConstraintLayout {
         set.connect(playerView.getId(), END, verticalGuidelines[newPlayerPosition.y + 1].getId(), END);
         ChangeBounds transition = new ChangeBounds();
         transition.setInterpolator(new AnticipateOvershootInterpolator(1.0f));
-        int animationDuration = 1500;
-        transition.setDuration(animationDuration);
-        transition.addListener(new Transition.TransitionListener() {
-            @Override
-            public void onTransitionStart(Transition transition) {
-            }
-
+        transition.setDuration(CARD_TRANSITION_DURATION);
+        transition.addListener(new TransitionEndListener() {
             @Override
             public void onTransitionEnd(Transition transition) {
                 activityBoardListener.updateIlluminationAndCollectCards();
-            }
-
-            @Override
-            public void onTransitionCancel(Transition transition) {
-
-            }
-
-            @Override
-            public void onTransitionPause(Transition transition) {
-
-            }
-
-            @Override
-            public void onTransitionResume(Transition transition) {
-
             }
         });
         TransitionManager.beginDelayedTransition(this, transition);

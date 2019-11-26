@@ -11,6 +11,7 @@ import java.util.Iterator;
 
 
 public class Board {
+
     private BoardCard[][] gameBoard;
     private int height, width;
     private Point playerPosition;

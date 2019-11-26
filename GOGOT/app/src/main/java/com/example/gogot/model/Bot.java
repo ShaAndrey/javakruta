@@ -7,6 +7,7 @@ import java.util.List;
 
 
 class Bot extends PlayersHand {
+
     private Board board;
     private Players players;
     private double maxDifference;
