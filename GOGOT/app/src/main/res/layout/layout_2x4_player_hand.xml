@@ -5,7 +5,8 @@
     android:id="@+id/layout_player1_hand"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FF9800">
+    android:background="#FF9800"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizontalGuidelinePlayer1"
@@ -70,4 +71,6 @@
         android:orientation="horizontal"
         android:tag="horizontalGuidelinePlayer2"
         app:layout_constraintGuide_percent="1.0" />
+
+
 </merge>

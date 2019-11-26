@@ -11,10 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.gogot.R;
 
 import static com.example.gogot.ui.MainActivity.AMOUNT_OF_PLAYERS;
-import static com.example.gogot.ui.MainActivity.START_GAME;
 
 public class StartGameActivity extends AppCompatActivity {
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,7 +44,6 @@ public class StartGameActivity extends AppCompatActivity {
                 break;
         }
         setResult(RESULT_OK, intent);
-//        startActivityForResult(intent, START_GAME);
         finish();
     }
 }

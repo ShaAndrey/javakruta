@@ -26,6 +26,6 @@ public class PlayerHandLayout4x2 extends PlayerHandLayout {
 
     @Override
     protected void initLayout() {
-        inflate(getContext(), R.layout.layout_player_hand, this);
+        inflate(getContext(), R.layout.layout_2x4_player_hand, this);
     }
 }
