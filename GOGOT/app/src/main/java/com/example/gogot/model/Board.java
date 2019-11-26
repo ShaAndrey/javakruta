@@ -48,6 +48,9 @@ public class Board {
                 }
             }
         }
+        cardsToCollect = new ArrayList<>(otherBoard.cardsToCollect);
+        amountOfCardsToCollect = otherBoard.amountOfCardsToCollect;
+        stateOfCardsToCollect = otherBoard.stateOfCardsToCollect;
     }
 
     private HashSet<BoardCard> generateCells(int n, int m) {
