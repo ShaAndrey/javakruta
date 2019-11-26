@@ -1,4 +1,4 @@
-package com.example.gogot.ui;
+package com.example.gogot.ui.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -49,13 +49,13 @@ public class MenuDialog extends Dialog {
     }
 
 
-    interface MenuDialogListener {
+    public interface MenuDialogListener {
         void openSettings();
         void exitGame();
     }
 
 
-    void setListener(MenuDialogListener menuDialogListener) {
+    public void setListener(MenuDialogListener menuDialogListener) {
         this.menuDialogListener = menuDialogListener;
     }
 }

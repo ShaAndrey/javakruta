@@ -1,9 +1,10 @@
-package com.example.gogot.ui;
+package com.example.gogot.ui.custom;
 
 import android.content.Context;
 import android.util.AttributeSet;
 
 import com.example.gogot.R;
+import com.example.gogot.ui.custom.PlayerHandLayout;
 
 public class PlayerHandLayout3x3 extends PlayerHandLayout {
     public PlayerHandLayout3x3(Context context) {

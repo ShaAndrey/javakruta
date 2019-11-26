@@ -2,6 +2,9 @@ package com.example.gogot.model;
 
 import android.graphics.Point;
 
+import com.example.gogot.model.entity.BoardCard;
+import com.example.gogot.model.entity.PlayCard;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;

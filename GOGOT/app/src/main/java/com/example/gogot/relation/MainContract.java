@@ -3,8 +3,8 @@ package com.example.gogot.relation;
 import android.graphics.Point;
 
 import com.example.gogot.model.Board;
-import com.example.gogot.model.BoardCard;
-import com.example.gogot.model.PlayCard;
+import com.example.gogot.model.entity.BoardCard;
+import com.example.gogot.model.entity.PlayCard;
 
 import java.util.ArrayList;
 import java.util.List;

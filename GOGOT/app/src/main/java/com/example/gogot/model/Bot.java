@@ -1,5 +1,8 @@
 package com.example.gogot.model;
 
+import com.example.gogot.model.entity.BoardCard;
+import com.example.gogot.model.entity.PlayCard;
+
 import java.util.List;
 
 

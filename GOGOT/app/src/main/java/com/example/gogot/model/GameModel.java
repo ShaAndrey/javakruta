@@ -2,6 +2,8 @@ package com.example.gogot.model;
 
 import android.graphics.Point;
 
+import com.example.gogot.model.entity.BoardCard;
+import com.example.gogot.model.entity.PlayCard;
 import com.example.gogot.relation.MainContract;
 
 import java.util.ArrayList;

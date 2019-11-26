@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#18B8B8"
     android:orientation="vertical"
-    tools:context=".ui.GameActivity">
+    tools:context=".ui.activity.GameActivity">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizontalGuidelineGameActivity0"
@@ -31,7 +31,7 @@
         app:layout_constraintBottom_toBottomOf="@id/horizontalGuidelineGameActivity1"
         app:layout_constraintTop_toTopOf="@id/horizontalGuidelineGameActivity0" />
 
-    <com.example.gogot.ui.GameBoardLayout
+    <com.example.gogot.ui.custom.GameBoardLayout
         android:id="@+id/layout_game_board"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -94,7 +94,7 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="1" />
 
-    <com.example.gogot.ui.PlayerHandLayout4x2
+    <com.example.gogot.ui.custom.PlayerHandLayout4x2
         android:id="@+id/layout_player1_hand"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -106,7 +106,7 @@
         app:layout_constraintVertical_bias="0.5" />
 
 
-    <com.example.gogot.ui.PlayerHandLayout4x2
+    <com.example.gogot.ui.custom.PlayerHandLayout4x2
         android:id="@+id/layout_player2_hand"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -117,7 +117,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5" />
 
-    <com.example.gogot.ui.EndGameLayout
+    <com.example.gogot.ui.custom.EndGameLayout
         android:id="@+id/layout_end_game"
         android:layout_width="0dp"
         android:layout_height="0dp"

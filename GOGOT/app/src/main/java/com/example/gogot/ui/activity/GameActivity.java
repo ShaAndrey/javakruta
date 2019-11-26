@@ -1,5 +1,6 @@
-package com.example.gogot.ui;
+package com.example.gogot.ui.activity;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.transition.ChangeBounds;
@@ -8,18 +9,21 @@ import android.transition.TransitionManager;
 import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
-import com.example.gogot.model.BoardCard;
-import com.example.gogot.model.PlayCard;
+import com.example.gogot.model.entity.BoardCard;
+import com.example.gogot.model.entity.PlayCard;
 import com.example.gogot.relation.GamePresenter;
 import com.example.gogot.relation.MainContract;
 import com.example.gogot.R;
+import com.example.gogot.ui.custom.EndGameLayout;
+import com.example.gogot.ui.custom.GameBoardLayout;
+import com.example.gogot.ui.dialog.MenuDialog;
+import com.example.gogot.ui.custom.PlayerHandLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +35,16 @@ public class GameActivity extends AppCompatActivity
         PlayerHandLayout.ActivityPlayerHandListener,
         MenuDialog.MenuDialogListener,
         EndGameLayout.EndGameLayoutListener {
-    GameBoardLayout gameBoard;
-    GamePresenter presenter;
-    public static int amountOfPlayers;                             // is it OK?
-    MenuDialog gameMenu;
-    ArrayList<PlayerHandLayout> playerHandLayouts;
-    ConstraintLayout gameActivityLayout;
+
+    public static final String AMOUNT_OF_PLAYERS = "AMOUNT_OF_PLAYERS";
+    public static final int DEFAULT_PLAYER_AMOUNT = 1;
+
+    private GameBoardLayout gameBoard;
+    private GamePresenter presenter;
+    public int amountOfPlayers;
+    private MenuDialog gameMenu;
+    private ArrayList<PlayerHandLayout> playerHandLayouts;
+    private ConstraintLayout gameActivityLayout;
     boolean onStop;
 
     @Override
@@ -45,6 +53,8 @@ public class GameActivity extends AppCompatActivity
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
+        amountOfPlayers = getIntent().getIntExtra(AMOUNT_OF_PLAYERS, DEFAULT_PLAYER_AMOUNT);
+
         presenter = new GamePresenter(this, amountOfPlayers);
         if (amountOfPlayers == 3) {
             setContentView(R.layout.game_3players_activity_layout);
@@ -284,7 +294,10 @@ public class GameActivity extends AppCompatActivity
 
     @Override
     public void onNewGame() {
-        setResult(RESULT_OK);
+        Intent intent = new Intent();
+        intent.putExtra(StartGameActivity.NEED_TO_RESTART_GAME, true);
+        intent.putExtra(AMOUNT_OF_PLAYERS, amountOfPlayers);
+        setResult(RESULT_OK, intent);
         finish();
     }
 
@@ -292,5 +305,4 @@ public class GameActivity extends AppCompatActivity
     public void onExit() {
         finish();
     }
-
 }

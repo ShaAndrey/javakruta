@@ -1,4 +1,4 @@
-package com.example.gogot.ui;
+package com.example.gogot.ui.custom;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -14,7 +14,7 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.constraintlayout.widget.Constraints;
 import androidx.constraintlayout.widget.Guideline;
 
-import com.example.gogot.model.PlayCard;
+import com.example.gogot.model.entity.PlayCard;
 
 
 import static androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.END;
@@ -52,7 +52,7 @@ abstract public class PlayerHandLayout extends ConstraintLayout {
 
     abstract protected void initLayout();
 
-    void initHand() {
+    public void initHand() {
         int horizontalGuidelinesCount = playerHandHeight + 1;
         int verticalGuidelinesCount = playerHandWidth + 1;
         horizontalGuidelines = new Guideline[horizontalGuidelinesCount];
@@ -112,11 +112,11 @@ abstract public class PlayerHandLayout extends ConstraintLayout {
         setTextView(amountView.getId(), 0);
     }
 
-    interface ActivityPlayerHandListener {
+    public interface ActivityPlayerHandListener {
         int setImageToIndex(int index);
     }
 
-    void setListener(ActivityPlayerHandListener activityListener) {
+    public void setListener(ActivityPlayerHandListener activityListener) {
         activityPlayerHandListener = activityListener;
     }
 
@@ -130,15 +130,15 @@ abstract public class PlayerHandLayout extends ConstraintLayout {
         set.applyTo(this);
     }
 
-    void addCardsAmount(PlayCard.State stateOfCardsToAdd,
-                        int amountOfCardsToAdd) {
+    public void addCardsAmount(PlayCard.State stateOfCardsToAdd,
+                               int amountOfCardsToAdd) {
         Point position = getPointByStateId(stateOfCardsToAdd.ordinal());
         int id = cardsAmountTextViewId[position.x][position.y];
         changeTextView(id, amountOfCardsToAdd);
         placeViewInCell(id, position.x, position.y);
     }
 
-    void updatePlayerPoints(int playerPoints) {
+    public void updatePlayerPoints(int playerPoints) {
         int id = cardsAmountTextViewId[0][0];
         setTextView(id, playerPoints);
         placeViewInCell(id, 0, 0);
@@ -169,7 +169,7 @@ abstract public class PlayerHandLayout extends ConstraintLayout {
         return point;
     }
 
-    void updateIllumination(boolean[] playerDominateStates, boolean currentPlayer) {
+    public void updateIllumination(boolean[] playerDominateStates, boolean currentPlayer) {
         for (int i = 2; i < playerDominateStates.length; i++) {
             GradientDrawable border = new GradientDrawable();
             border.setColor(0xffEB5D1F);

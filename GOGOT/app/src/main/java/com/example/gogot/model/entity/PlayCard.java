@@ -1,4 +1,4 @@
-package com.example.gogot.model;
+package com.example.gogot.model.entity;
 
 
 public class PlayCard {
@@ -6,7 +6,7 @@ public class PlayCard {
         NOTHING, PLAYER, DRAGON, OGRE, MINOTAUR, ELF, FAIRY, GNOME, GOBLIN;
     }
 
-    protected State state;
+    public State state;
 
     public PlayCard(int index) {
         setState(State.values()[index]);
@@ -25,7 +25,7 @@ public class PlayCard {
     }
 
 
-    void setState(State newState) {
+    public void setState(State newState) {
         state = newState;
     }
 }

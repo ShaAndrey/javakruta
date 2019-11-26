@@ -1,5 +1,7 @@
 package com.example.gogot.model;
 
+import com.example.gogot.model.entity.PlayCard;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
