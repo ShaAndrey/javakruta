@@ -38,7 +38,6 @@ public class GameActivity extends AppCompatActivity
     ArrayList<PlayerHandLayout> playerHandLayouts;
     ConstraintLayout gameActivityLayout;
     boolean onStop;
-    GameActivityListener gameActivityListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -274,7 +273,7 @@ public class GameActivity extends AppCompatActivity
 
     @Override
     public void openSettings() {
-
+        // TODO
     }
 
     @Override
@@ -292,11 +291,6 @@ public class GameActivity extends AppCompatActivity
     @Override
     public void onExit() {
         finish();
-    }
-
-
-    interface GameActivityListener {
-        void onNewGame();
     }
 
 }

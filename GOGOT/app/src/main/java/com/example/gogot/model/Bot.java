@@ -3,14 +3,13 @@ package com.example.gogot.model;
 import java.util.List;
 
 
-public class Bot extends PlayersHand {
-    Board board;
-    Players players;
-    double maxDifference;
-    BotListener botListener;
-    BoardCard cellToGo;
-    BoardCard currentCellToGo;
-    boolean[] dominationEnsured;
+class Bot extends PlayersHand {
+    private Board board;
+    private Players players;
+    private double maxDifference;
+    private BotListener botListener;
+    private BoardCard cellToGo;
+    private boolean[] dominationEnsured;
 
     Bot() {
         super();
@@ -46,15 +45,15 @@ public class Bot extends PlayersHand {
     }
 
     private void checkCell(BoardCard boardCard) {
-        currentCellToGo = new BoardCard(boardCard);
-        List<Integer> pointsDifferences = players.getPlayersPoints();
-        double currentDifference = -pointsDifferences.get(1) + pointsDifferences.get(0);  // TODO: add flexibility
+        BoardCard currentCellToGo = new BoardCard(boardCard);
+        List<Integer> playersPoints = players.getPlayersPoints();
+        double currentDifference = -playersPoints.get(1) + playersPoints.get(0);  // TODO: add flexibility
         makeTurn(boardCard);
-        pointsDifferences = players.getPlayersPoints();
+        playersPoints = players.getPlayersPoints();
         if (canInsureDomination(boardCard.getState())) {
             currentDifference += boardCard.getState().ordinal();
         }
-        currentDifference += pointsDifferences.get(1) - pointsDifferences.get(0);  // TODO: add flexibility
+        currentDifference += playersPoints.get(1) - playersPoints.get(0);  // TODO: add flexibility
         if (maxDifference <= currentDifference) {
             maxDifference = currentDifference;
             cellToGo = currentCellToGo;

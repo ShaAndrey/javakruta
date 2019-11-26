@@ -92,8 +92,7 @@ public class GameModel implements MainContract.Model, Board.BoardListener, Playe
 
     @Override
     public List<Integer> getPoints() {
-        List<Integer> points = players.getPoints();
-        return points;
+        return players.getPoints();
     }
 
     @Override
