@@ -3,15 +3,13 @@ package com.example.gogot.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
-public class PlayersHand {
+class PlayersHand {
     private Map<PlayCard.State, Integer> inHandCards;
     private int points;
     private PlayerListener playerListener;
-    protected boolean[] dominateStates;
+    boolean[] dominateStates;
 
     PlayersHand() {
         inHandCards = new HashMap<>();
@@ -29,9 +27,7 @@ public class PlayersHand {
         states.forEach(state -> inHandCards.put(state,
                 otherHand.inHandCards.get(state)));
         dominateStates = new boolean[9];
-        for (int i = 0; i < dominateStates.length; i++) {
-            dominateStates[i] = otherHand.dominateStates[i];
-        }
+        System.arraycopy(otherHand.dominateStates, 0, dominateStates, 0, dominateStates.length);
         points = otherHand.points;
     }
 

@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
-    int amountOfPlayers;
-    int currentPlayer = 0;
-    ArrayList<PlayersHand> playersHands;
-    PlayersListener playersListener;
+    private int amountOfPlayers;
+    private int currentPlayer = 0;
+    private ArrayList<PlayersHand> playersHands;
+    private PlayersListener playersListener;
 
     Players(Players otherPlayers) {
         amountOfPlayers = otherPlayers.amountOfPlayers;
@@ -17,12 +17,6 @@ public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
             playersHands.add(new PlayersHand(otherPlayers.playersHands.get(i)));
             playersHands.get(i).setPlayerListener(this);
         }
-//        if (amountOfPlayers == 1) {
-//            ++this.amountOfPlayers;
-//            playersHands.add(new Bot());
-//            playersHands.get(1).setPlayerListener(this);
-//            ((Bot) playersHands.get(1)).setBotListener(this);
-//        }
     }
 
     Players(int amountOfPlayers) {

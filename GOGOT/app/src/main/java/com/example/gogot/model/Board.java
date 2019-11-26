@@ -109,8 +109,8 @@ public class Board {
         gameBoard[playerPosition.x][playerPosition.y].setState(BoardCard.State.PLAYER);
     }
 
-    void collectCard(BoardCard cardToCollect, BoardCard newPosition,
-                     ArrayList<BoardCard> cardsToCollect) {
+    private void collectCard(BoardCard cardToCollect, BoardCard newPosition,
+                             ArrayList<BoardCard> cardsToCollect) {
         if (cardToCollect.getState() == newPosition.getState()) {
             cardToCollect.setState(BoardCard.State.NOTHING);
             cardsToCollect.add(cardToCollect);
