@@ -9,11 +9,14 @@ import android.transition.TransitionManager;
 import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
+import android.widget.GridLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gogot.model.entity.BoardCard;
 import com.example.gogot.model.entity.PlayCard;
@@ -22,6 +25,7 @@ import com.example.gogot.relation.MainContract;
 import com.example.gogot.R;
 import com.example.gogot.ui.custom.EndGameLayout;
 import com.example.gogot.ui.custom.GameBoardLayout;
+import com.example.gogot.ui.custom.RVAdapter;
 import com.example.gogot.ui.dialog.MenuDialog;
 import com.example.gogot.ui.custom.PlayerHandLayout;
 
@@ -87,7 +91,7 @@ public class GameActivity extends AppCompatActivity
             playerHandLayouts.add(findViewById(R.id.layout_player3_hand));
         }
         playerHandLayouts.forEach(playerHandLayout -> {
-            playerHandLayout.setListener(this);
+//            playerHandLayout.setListener(this);
             playerHandLayout.initHand();
         });
     }

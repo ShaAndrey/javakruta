@@ -94,7 +94,7 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="1" />
 
-    <com.example.gogot.ui.custom.PlayerHandLayout4x2
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/layout_player1_hand"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -106,7 +106,7 @@
         app:layout_constraintVertical_bias="0.5" />
 
 
-    <com.example.gogot.ui.custom.PlayerHandLayout4x2
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/layout_player2_hand"
         android:layout_width="0dp"
         android:layout_height="0dp"

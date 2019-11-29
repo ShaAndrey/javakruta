@@ -13,9 +13,14 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.constraintlayout.widget.Constraints;
 import androidx.constraintlayout.widget.Guideline;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.gogot.R;
 import com.example.gogot.model.entity.PlayCard;
 
+
+import java.util.List;
 
 import static androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.END;
 import static androidx.constraintlayout.widget.ConstraintSet.BOTTOM;
@@ -31,6 +36,7 @@ abstract public class PlayerHandLayout extends ConstraintLayout {
     protected int playerHandHeight;
     int padding = 10;
     ActivityPlayerHandListener activityPlayerHandListener;
+    List<PlayCard> inHandCards;
 
     public PlayerHandLayout(Context context) {
         super(context);
@@ -53,18 +59,12 @@ abstract public class PlayerHandLayout extends ConstraintLayout {
     abstract protected void initLayout();
 
     public void initHand() {
-        int horizontalGuidelinesCount = playerHandHeight + 1;
-        int verticalGuidelinesCount = playerHandWidth + 1;
-        horizontalGuidelines = new Guideline[horizontalGuidelinesCount];
-        verticalGuidelines = new Guideline[verticalGuidelinesCount];
-
-        for (int i = 0; i < horizontalGuidelinesCount; i++) {
-            horizontalGuidelines[i] = findViewWithTag("horizontalGuidelinePlayer" + i);
-        }
-        for (int i = 0; i < verticalGuidelinesCount; i++) {
-            verticalGuidelines[i] = findViewWithTag("verticalGuidelinePlayer" + i);
-        }
-        initializePlayerHand();
+        RecyclerView hand1 = findViewById(R.id.layout_player_hand);
+        hand1.setHasFixedSize(true);
+        GridLayoutManager gl = new GridLayoutManager(this, 4);
+        hand1.setLayoutManager(gl);
+        RVAdapter adapter = new RVAdapter(inHandCards);
+        rv.setAdapter(adapter);
     }
 
     void initializePlayerHand() {

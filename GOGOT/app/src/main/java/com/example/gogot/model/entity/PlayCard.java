@@ -1,6 +1,8 @@
 package com.example.gogot.model.entity;
 
 
+import androidx.recyclerview.widget.RecyclerView;
+
 public class PlayCard {
     public static enum State {
         NOTHING, PLAYER, DRAGON, OGRE, MINOTAUR, ELF, FAIRY, GNOME, GOBLIN;
