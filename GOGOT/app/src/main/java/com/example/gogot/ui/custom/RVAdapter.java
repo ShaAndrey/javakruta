@@ -1,5 +1,9 @@
 package com.example.gogot.ui.custom;
 
+import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.drawable.GradientDrawable;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -8,30 +12,110 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CardViewHolder> {
-    public static class CardViewHolder extends RecyclerView.ViewHolder {
-        ImageView cardImageView;
-        TextView amountTextView;
-        public CardViewHolder(@NonNull View itemView) {
-            super(itemView);
+import com.example.gogot.R;
+import com.example.gogot.model.entity.InHandCard;
+import com.example.gogot.model.entity.PlayCard;
 
-        }
-    }
+import java.util.ArrayList;
+import java.util.List;
+
+public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CardViewHolder> {
+    private List<InHandCard> cards;
+    private RVAdapterListener listener;
+    private int padding = 10;
 
     @NonNull
     @Override
     public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_card, parent, false);
+        return new CardViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
+        initializeImageView(holder.cardImageView, position);
+        initializeAmountView(holder.amountTextView, position);
+    }
 
+    private void initializeAmountView(TextView amountTextView, int position) {
+        amountTextView.setText(String.valueOf(cards.get(position).getAmount()));
+        amountTextView.setTextColor(Color.parseColor("#CCFFFF00"));
+        amountTextView.setPadding(padding, padding, padding, padding);
+        amountTextView.setTextSize(30);
+    }
+
+    private void initializeImageView(ImageView imageView, int position) {
+        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        imageView.setPadding(padding, padding, padding, padding);
+        GradientDrawable border = new GradientDrawable();
+        border.setColor(0xffEB5D0D);
+        if (cards.get(position).getDominatedStates()) {
+            border.setStroke(padding, 0xFFffd700);
+        } else {
+            border.setStroke(1, 0x66000000);
+        }
+        imageView.setBackground(border);
+        imageView.setImageResource(setImageToCard(cards.get(position)));
+    }
+
+    public void addCardsAmount(PlayCard.State stateOfCardsToAdd,
+                               int amountOfCardsToAdd) {
+        int ind = getIndexForState(stateOfCardsToAdd);
+        cards.get(ind).addToAmount(amountOfCardsToAdd);
+        notifyItemChanged(ind);
+    }
+
+    public void updatePlayerPoints(int playerPoints) {
+        int ind = getIndexForState(PlayCard.State.PLAYER);
+        cards.get(ind).setAmount(playerPoints);
+        notifyItemChanged(ind);
+    }
+
+    public void updateIllumination(boolean[] playerDominateStates) {
+        for (int i = 2; i < playerDominateStates.length; i++) {
+            cards.get(i - 1).setDominatedStates(playerDominateStates[i]);   // DANGER
+        }
+        notifyDataSetChanged();
+    }
+
+    public RVAdapter() {
+        cards = new ArrayList<>();
+        for (int i = 1; i < PlayCard.State.values().length; i++) {
+            cards.add(new InHandCard(i));
+        }
+    }
+
+
+    private int setImageToCard(PlayCard card) {
+        return listener.setImageToCard(card);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return cards.size();
     }
 
+    private int getIndexForState(PlayCard.State state) {
+        return state.ordinal() - 1;
+    }
+
+
+    class CardViewHolder extends RecyclerView.ViewHolder {
+        ImageView cardImageView;
+        TextView amountTextView;
+
+        CardViewHolder(View itemView) {
+            super(itemView);
+            cardImageView = itemView.findViewById(R.id.view);
+            amountTextView = itemView.findViewById(R.id.text);
+        }
+    }
+
+    public void setListener(RVAdapterListener listener) {
+        this.listener = listener;
+    }
+
+    public interface RVAdapterListener {
+        int setImageToCard(PlayCard card);
+    }
 }

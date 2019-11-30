@@ -103,7 +103,8 @@
         app:layout_constraintEnd_toEndOf="@+id/verticalGuidelinePlayers1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/horizontalGuidelineGameActivity1"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintVertical_bias="0.5"
+        />
 
 
     <androidx.recyclerview.widget.RecyclerView

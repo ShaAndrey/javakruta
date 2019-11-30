@@ -2,14 +2,13 @@ package com.example.gogot.ui.activity;
 
 import android.content.Intent;
 import android.graphics.Point;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.transition.ChangeBounds;
-import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
-import android.widget.GridLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,7 +26,6 @@ import com.example.gogot.ui.custom.EndGameLayout;
 import com.example.gogot.ui.custom.GameBoardLayout;
 import com.example.gogot.ui.custom.RVAdapter;
 import com.example.gogot.ui.dialog.MenuDialog;
-import com.example.gogot.ui.custom.PlayerHandLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +34,7 @@ import java.util.List;
 public class GameActivity extends AppCompatActivity
         implements MainContract.View,
         GameBoardLayout.ActivityListener,
-        PlayerHandLayout.ActivityPlayerHandListener,
+        RVAdapter.RVAdapterListener,
         MenuDialog.MenuDialogListener,
         EndGameLayout.EndGameLayoutListener {
 
@@ -48,7 +46,8 @@ public class GameActivity extends AppCompatActivity
     private GamePresenter presenter;
     private MenuDialog gameMenu;
 
-    private ArrayList<PlayerHandLayout> playerHandLayouts;
+    private List<RecyclerView> playerHandLayouts;
+    private List<RVAdapter> adapters = new ArrayList<>();
     private int amountOfPlayers;
     private boolean userInteractionBlocked;
 
@@ -91,8 +90,19 @@ public class GameActivity extends AppCompatActivity
             playerHandLayouts.add(findViewById(R.id.layout_player3_hand));
         }
         playerHandLayouts.forEach(playerHandLayout -> {
-//            playerHandLayout.setListener(this);
-            playerHandLayout.initHand();
+            playerHandLayout.setHasFixedSize(true);
+            GridLayoutManager gridLayoutManager = new
+                    GridLayoutManager(this, 4) {
+                        @Override
+                        public boolean canScrollVertically() {
+                            return false;
+                        }
+                    };
+            playerHandLayout.setLayoutManager(gridLayoutManager);
+            RVAdapter adapter = new RVAdapter();
+            adapter.setListener(this);
+            playerHandLayout.setAdapter(adapter);
+            adapters.add(adapter);
         });
     }
 
@@ -121,26 +131,29 @@ public class GameActivity extends AppCompatActivity
     @Override
     public void addCardsToPlayer(PlayCard.State stateOfCardsToAdd,
                                  int amountOfCardsToAdd, int playerInd) {
-        playerHandLayouts.get(playerInd).addCardsAmount(stateOfCardsToAdd, amountOfCardsToAdd);
+        adapters.get(playerInd).addCardsAmount(stateOfCardsToAdd, amountOfCardsToAdd);
     }
 
     @Override
     public void updatePlayerPoints(List<Integer> points) {
-        for (int i = 0; i < playerHandLayouts.size(); i++) {
-            playerHandLayouts.get(i).updatePlayerPoints(points.get(i));
+        for (int i = 0; i < adapters.size(); i++) {
+            adapters.get(i).updatePlayerPoints(points.get(i));
         }
     }
 
     @Override
     public void updatePlayersIllumination(List<boolean[]> playersDominateStates,
                                           int currentPlayer) {
-        for (int i = 0; i < playerHandLayouts.size(); i++) {
-            if ((currentPlayer + 1) % playerHandLayouts.size() == i) {
-                playerHandLayouts.get(i).updateIllumination
-                        (playersDominateStates.get(i), true);
+        for (int i = 0; i < adapters.size(); i++) {
+            adapters.get(i).updateIllumination
+                    (playersDominateStates.get(i));
+            GradientDrawable border = new GradientDrawable();
+            if ((currentPlayer + 1) % adapters.size() == i) {
+                border.setStroke(5, 0xFF0000FF);
+                playerHandLayouts.get(i).setBackground(border);
             } else {
-                playerHandLayouts.get(i).updateIllumination
-                        (playersDominateStates.get(i), false);
+                border.setStroke(1, 0x66000000);
+                playerHandLayouts.get(i).setBackground(border);
             }
         }
     }
@@ -207,31 +220,6 @@ public class GameActivity extends AppCompatActivity
         transition.setInterpolator(new LinearInterpolator());
         int animationDuration = 1500;
         transition.setDuration(animationDuration);
-        transition.addListener(new Transition.TransitionListener() {
-            @Override
-            public void onTransitionStart(Transition transition) {
-            }
-
-            @Override
-            public void onTransitionEnd(Transition transition) {
-
-            }
-
-            @Override
-            public void onTransitionCancel(Transition transition) {
-
-            }
-
-            @Override
-            public void onTransitionPause(Transition transition) {
-
-            }
-
-            @Override
-            public void onTransitionResume(Transition transition) {
-
-            }
-        });
         TransitionManager.beginDelayedTransition(gameActivityLayout, transition);
         constraintSet.applyTo(gameActivityLayout);
 
@@ -240,11 +228,6 @@ public class GameActivity extends AppCompatActivity
     @Override
     public void updateIlluminationAndCollectCards() {
         presenter.updateIlluminationAndCollectCards();
-    }
-
-    @Override
-    public int setImageToIndex(int index) {
-        return setImageToCard(new PlayCard(index));
     }
 
     @Override
