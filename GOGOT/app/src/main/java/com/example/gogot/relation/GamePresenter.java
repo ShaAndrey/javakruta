@@ -25,7 +25,7 @@ public class GamePresenter implements MainContract.Presenter {
     public void createView(int amountOfPlayers) {
         view.drawInitialBoard(model.getBoard().getBoardCards(),
                 new ArrayList<>(model.getBoard().getCellsAvailableToMove()));
-        view.drawPlayersHands();
+        view.drawPlayersHands(model.getPlayersCards());
     }
 
 
@@ -34,14 +34,13 @@ public class GamePresenter implements MainContract.Presenter {
         view.collectCards(model.getCardsToCollect());
         view.refreshBoard(model.getBoard().getBoardCards(),
                 new ArrayList<>(model.getBoard().getCellsAvailableToMove()));
-        view.addCardsToPlayer(model.getStateOfCardsToCollect(),
-                model.getAmountOfCardsToCollect(), model.getPlayerIndex());
-        view.updatePlayerPoints(model.getPoints());
-        view.updatePlayersIllumination(model.getPlayersDominateStates(), model.getPlayerIndex());
+        view.addCardsToPlayer(model.getStateOfCardsToCollect(), model.getPlayerIndex());
+        view.updatePlayerPoints();
+        view.updatePlayersIllumination(model.getPlayerIndex());
         model.nextPlayer();
-        if (model.isPlayer() && !model.isMovePossible()) {
+        if (model.isPlayer() && model.isMovePossible()) {
             view.revalidateBoardCellsListeners(model.getBoard().getBoardCards());
-        } else if (!model.isMovePossible()) {
+        } else if (model.isMovePossible()) {
             handleTurn(model.botPickPosition());
         } else {
             stopGame();

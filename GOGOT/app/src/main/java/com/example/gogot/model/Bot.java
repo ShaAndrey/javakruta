@@ -17,7 +17,6 @@ class Bot extends PlayersHand {
 
     Bot() {
         super();
-        dominateStates[0] = true;
         dominationEnsured = new boolean[9];
     }
 

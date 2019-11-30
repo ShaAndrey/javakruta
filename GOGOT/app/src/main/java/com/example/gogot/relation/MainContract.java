@@ -4,6 +4,7 @@ import android.graphics.Point;
 
 import com.example.gogot.model.Board;
 import com.example.gogot.model.entity.BoardCard;
+import com.example.gogot.model.entity.InHandCard;
 import com.example.gogot.model.entity.PlayCard;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public interface MainContract {
         void drawInitialBoard(BoardCard[][] gameBoard,
                               ArrayList<PlayCard> cardsToMove);
 
-        void drawPlayersHands();
+        void drawPlayersHands(List<List<InHandCard>> playersCards);
 
         void movePlayer(BoardCard playerCard, Point newPlayerPosition);
 
@@ -29,12 +30,11 @@ public interface MainContract {
         void refreshBoard(BoardCard[][] gameBoard,
                           ArrayList<PlayCard> cardsToMove);
 
-        void addCardsToPlayer(PlayCard.State stateOfCardsToAdd,
-                              int amountOfCardsToAdd, int playerInd);
-        void updatePlayerPoints(List<Integer> points);
+        void addCardsToPlayer(PlayCard.State stateOfCardsToAdd, int playerInd);
 
-        void updatePlayersIllumination(List<boolean[]> playersDominateStates,
-                                       int currentPlayer);
+        void updatePlayerPoints();
+
+        void updatePlayersIllumination(int currentPlayer);
 
         void invalidateBoardCellsListeners();
 
@@ -77,10 +77,10 @@ public interface MainContract {
 
         List<Integer> getPoints();
 
-        List<boolean[]> getPlayersDominateStates();
-
         boolean isPlayer();
 
         BoardCard botPickPosition();
+
+        List<List<InHandCard>> getPlayersCards();
     }
 }

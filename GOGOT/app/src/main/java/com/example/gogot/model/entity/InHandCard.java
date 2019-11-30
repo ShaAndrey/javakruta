@@ -2,7 +2,7 @@ package com.example.gogot.model.entity;
 
 public class InHandCard extends PlayCard {
     private int amount = 0;
-    private boolean dominatedState;
+    private boolean dominatesState;
 
     public InHandCard(int index) {
         super(index);
@@ -24,12 +24,12 @@ public class InHandCard extends PlayCard {
         this.amount += add;
     }
 
-    public void setDominatedStates(boolean dominatedState) {
-        this.dominatedState = dominatedState;
+    public void setDominatesState(boolean dominatedState) {
+        this.dominatesState = dominatedState;
     }
 
-    public boolean getDominatedStates() {
-        return dominatedState;
+    public boolean getDominatesState() {
+        return dominatesState;
     }
 
 

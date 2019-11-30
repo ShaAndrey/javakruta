@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gogot.model.entity.BoardCard;
+import com.example.gogot.model.entity.InHandCard;
 import com.example.gogot.model.entity.PlayCard;
 import com.example.gogot.relation.GamePresenter;
 import com.example.gogot.relation.MainContract;
@@ -80,7 +81,7 @@ public class GameActivity extends AppCompatActivity
     }
 
     @Override
-    public void drawPlayersHands() {
+    public void drawPlayersHands(List<List<InHandCard>> playersCards) {
         playerHandLayouts = new ArrayList<>();
         if (amountOfPlayers < 3) {
             playerHandLayouts.add(findViewById(R.id.layout_player1_hand));
@@ -102,15 +103,15 @@ public class GameActivity extends AppCompatActivity
                 playerHandLayouts.get(i).setBackground(border);
             }
             playerHandLayout.setHasFixedSize(true);
-            GridLayoutManager gridLayoutManager = new
-                    GridLayoutManager(this, 4) {
-                        @Override
-                        public boolean canScrollVertically() {
-                            return false;
-                        }
-                    };
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(this,
+                    (amountOfPlayers == 3 && i > 0) ? 3 : 4) {
+                @Override
+                public boolean canScrollVertically() {
+                    return false;
+                }
+            };
             playerHandLayout.setLayoutManager(gridLayoutManager);
-            RVAdapter adapter = new RVAdapter();
+            RVAdapter adapter = new RVAdapter(playersCards.get(i));
             adapter.setListener(this);
             playerHandLayout.setAdapter(adapter);
             adapters.add(adapter);
@@ -140,24 +141,21 @@ public class GameActivity extends AppCompatActivity
     }
 
     @Override
-    public void addCardsToPlayer(PlayCard.State stateOfCardsToAdd,
-                                 int amountOfCardsToAdd, int playerInd) {
-        adapters.get(playerInd).addCardsAmount(stateOfCardsToAdd, amountOfCardsToAdd);
+    public void addCardsToPlayer(PlayCard.State stateOfCardsToAdd, int playerInd) {
+        adapters.get(playerInd).addCardsAmount(stateOfCardsToAdd);
     }
 
     @Override
-    public void updatePlayerPoints(List<Integer> points) {
+    public void updatePlayerPoints() {
         for (int i = 0; i < adapters.size(); i++) {
-            adapters.get(i).updatePlayerPoints(points.get(i));
+            adapters.get(i).updatePlayerPoints();
         }
     }
 
     @Override
-    public void updatePlayersIllumination(List<boolean[]> playersDominateStates,
-                                          int currentPlayer) {
+    public void updatePlayersIllumination(int currentPlayer) {
         for (int i = 0; i < adapters.size(); i++) {
-            adapters.get(i).updateIllumination
-                    (playersDominateStates.get(i));
+            adapters.get(i).updateIllumination();
             GradientDrawable border = new GradientDrawable();
             if ((currentPlayer + 1) % adapters.size() == i) {
                 border.setStroke(padding, 0xFF0000FF);

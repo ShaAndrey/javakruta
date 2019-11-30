@@ -3,6 +3,7 @@ package com.example.gogot.model;
 import android.graphics.Point;
 
 import com.example.gogot.model.entity.BoardCard;
+import com.example.gogot.model.entity.InHandCard;
 import com.example.gogot.model.entity.PlayCard;
 import com.example.gogot.relation.MainContract;
 
@@ -77,10 +78,6 @@ public class GameModel implements MainContract.Model, Board.BoardListener, Playe
         return board.getStateOfCardsToCollect();
     }
 
-    @Override
-    public List<boolean[]> getPlayersDominateStates() {
-        return players.getPlayersDominateStates();
-    }
 
     @Override
     public boolean isPlayer() {
@@ -90,6 +87,11 @@ public class GameModel implements MainContract.Model, Board.BoardListener, Playe
     @Override
     public BoardCard botPickPosition() {
         return players.botPickPosition();
+    }
+
+    @Override
+    public List<List<InHandCard>> getPlayersCards() {
+        return players.getPlayersCards();
     }
 
     @Override

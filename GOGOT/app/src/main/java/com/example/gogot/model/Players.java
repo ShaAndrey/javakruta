@@ -1,6 +1,7 @@
 package com.example.gogot.model;
 
 import com.example.gogot.model.entity.BoardCard;
+import com.example.gogot.model.entity.InHandCard;
 import com.example.gogot.model.entity.PlayCard;
 
 import java.util.ArrayList;
@@ -54,7 +55,6 @@ public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
     @Override
     public void checkIfPlayerDominatesState(PlayCard.State state) {
         PlayersHand maxHand = new PlayersHand();
-        maxHand.initState(state);
         for (int i = 0; i < playersHands.size(); i++) {
             if (playersHands.get(i).getAmountForState(state) >
                     maxHand.getAmountForState(state)) {
@@ -65,16 +65,16 @@ public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
                 maxHand.getAmountForState(state)) {
             maxHand = playersHands.get(currentPlayer);
         }
-        if (!maxHand.checkDominateState(state.ordinal())) {
+        if (!maxHand.checkDominateState(state)) {
             int points = (state.ordinal() - state.ordinal() % 2) / 2 + 1;
             playersHands.forEach(playersHand -> {
-                if (playersHand.checkDominateState(state.ordinal())) {
-                    playersHand.setDominateState(state.ordinal(), false);
+                if (playersHand.checkDominateState(state)) {
+                    playersHand.setDominateState(state, false);
                     playersHand.addPoints(-points);
                 }
             });
             maxHand.addPoints(points);
-            maxHand.setDominateState(state.ordinal(), true);
+            maxHand.setDominateState(state, true);
         }
     }
 
@@ -84,15 +84,8 @@ public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
         return points;
     }
 
-    List<boolean[]> getPlayersDominateStates() {
-        List<boolean[]> playersDominateStates = new ArrayList<>();
-        playersHands.forEach(playersHand ->
-                playersDominateStates.add(playersHand.getDominateStates()));
-        return playersDominateStates;
-    }
-
     boolean isPlayer() {
-        return !playersHands.get(currentPlayer).checkDominateState(0);
+        return !playersHands.get(currentPlayer).checkDominateState(PlayCard.State.PLAYER);
     }
 
     BoardCard botPickPosition() {
@@ -131,5 +124,12 @@ public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
 
     interface PlayersListener {
         Board getGameBoard();
+    }
+
+    List<List<InHandCard>> getPlayersCards() {
+        List<List<InHandCard>> playersCards = new ArrayList<>();
+        playersHands.forEach(playersHand ->
+                playersCards.add(new ArrayList<>(playersHand.getInHandCards())));
+        return playersCards;
     }
 }

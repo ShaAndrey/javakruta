@@ -49,7 +49,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CardViewHolder> {
         imageView.setPadding(padding, padding, padding, padding);
         GradientDrawable border = new GradientDrawable();
         border.setColor(0xffEB5D0D);
-        if (cards.get(position).getDominatedStates()) {
+        if (cards.get(position).getDominatesState()) {
             border.setStroke(padding, 0xFFffd700);
         } else {
             border.setStroke(1, 0x66000000);
@@ -58,31 +58,22 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CardViewHolder> {
         imageView.setImageResource(setImageToCard(cards.get(position)));
     }
 
-    public void addCardsAmount(PlayCard.State stateOfCardsToAdd,
-                               int amountOfCardsToAdd) {
+    public void addCardsAmount(PlayCard.State stateOfCardsToAdd) {
         int ind = getIndexForState(stateOfCardsToAdd);
-        cards.get(ind).addToAmount(amountOfCardsToAdd);
         notifyItemChanged(ind);
     }
 
-    public void updatePlayerPoints(int playerPoints) {
+    public void updatePlayerPoints() {
         int ind = getIndexForState(PlayCard.State.PLAYER);
-        cards.get(ind).setAmount(playerPoints);
         notifyItemChanged(ind);
     }
 
-    public void updateIllumination(boolean[] playerDominateStates) {
-        for (int i = 2; i < playerDominateStates.length; i++) {
-            cards.get(i - 1).setDominatedStates(playerDominateStates[i]);   // DANGER
-        }
+    public void updateIllumination() {
         notifyDataSetChanged();
     }
 
-    public RVAdapter() {
-        cards = new ArrayList<>();
-        for (int i = 1; i < PlayCard.State.values().length; i++) {
-            cards.add(new InHandCard(i));
-        }
+    public RVAdapter(List<InHandCard> playersCards) {
+        cards = playersCards;
     }
 
 
@@ -96,7 +87,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CardViewHolder> {
     }
 
     private int getIndexForState(PlayCard.State state) {
-        return state.ordinal() - 1;
+        return state.ordinal();
     }
 
 
