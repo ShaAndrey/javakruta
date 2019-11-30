@@ -3,28 +3,13 @@ package com.example.gogot.model;
 import java.util.List;
 
 
-class Bot extends PlayersHand {
-    private Board board;
-    private Players players;
-    private double maxDifference;
-    private BotListener botListener;
-    private BoardCard cellToGo;
-    private boolean[] dominationEnsured;
+class Bot extends AbstractBot {
 
     Bot() {
         super();
-        dominateStates[0] = true;
-        dominationEnsured = new boolean[9];
     }
 
-    private void setBoard() {
-        board = new Board(botListener.getBoard());
-    }
-
-    private void setPlayers() {
-        players = new Players(botListener.getPlayers());
-    }
-
+    @Override
     BoardCard pickBestTurn() {
         setBoard();
         setPlayers();
@@ -44,13 +29,14 @@ class Bot extends PlayersHand {
         return cellToGo;
     }
 
-    private void checkCell(BoardCard boardCard) {
+    @Override
+    void checkCell(BoardCard boardCard) {
         BoardCard currentCellToGo = new BoardCard(boardCard);
         List<Integer> playersPoints = players.getPlayersPoints();
         double currentDifference = -playersPoints.get(1) + playersPoints.get(0);  // TODO: add flexibility
         makeTurn(boardCard);
         playersPoints = players.getPlayersPoints();
-        if (canInsureDomination(boardCard.getState())) {
+        if (canEnsureDomination(boardCard.getState())) {
             currentDifference += boardCard.getState().ordinal();
         }
         currentDifference += playersPoints.get(1) - playersPoints.get(0);  // TODO: add flexibility
@@ -60,7 +46,8 @@ class Bot extends PlayersHand {
         }
     }
 
-    boolean canInsureDomination(PlayCard.State state) {
+    @Override
+    boolean canEnsureDomination(PlayCard.State state) {
         List<Integer> playersAmountForState = players.getPlayersAmountForState(state);
         int sum = 0;
         for (int i = 0; i < playersAmountForState.size(); i++) {
@@ -76,19 +63,5 @@ class Bot extends PlayersHand {
         return false;
     }
 
-    private void makeTurn(BoardCard boardCard) {
-        board.movePlayer(boardCard);
-        players.addCardsToPlayer(board.getStateOfCardsToCollect(),
-                board.getAmountOfCardsToCollect());
-    }
 
-    interface BotListener {
-        Board getBoard();
-
-        Players getPlayers();
-    }
-
-    void setBotListener(Players players) {
-        botListener = players;
-    }
 }
