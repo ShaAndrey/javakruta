@@ -28,6 +28,9 @@ public class AdvancedBot extends AbstractBot {
             this.board = board;
             this.players = players;
         });
+        if (!players.isPlayer()) {
+            checkIfDominationIsEnsured(cellToGo.getState());
+        }
         return cellToGo;
     }
 
@@ -37,17 +40,20 @@ public class AdvancedBot extends AbstractBot {
         currentDifference = 0.0;
 
         if (amountOfCalculatedSteps == 2) {
-            CalculateNextStep(currentCellToGo, 1);
+            calculateNextStep(currentCellToGo);
             --amountOfCalculatedSteps;
+
             double savedCurrentDifference = currentDifference;
-            players.SwapTwoPlayers();
+            players.swapTwoPlayers();
             BoardCard nextBestTurn = pickBestTurn();
-            currentDifference = savedCurrentDifference;
-            CalculateNextStep(nextBestTurn, 0);
-            players.SwapTwoPlayers();
+            currentDifference = 0;
+            calculateNextStep(nextBestTurn);
+            currentDifference = savedCurrentDifference - currentDifference;
+
+            players.swapTwoPlayers();
             amountOfCalculatedSteps = 2;
         } else if (amountOfCalculatedSteps == 1) {
-            CalculateNextStep(currentCellToGo, 1);
+            calculateNextStep(currentCellToGo);
         }
 
         if (maxDifference <= currentDifference) {
@@ -57,14 +63,16 @@ public class AdvancedBot extends AbstractBot {
     }
 
     @Override
-    void CalculateNextStep(BoardCard boardCard, int playerIndex) {
+    void calculateNextStep(BoardCard boardCard) {
         List<Integer> playersPoints = players.getPlayersPoints();
-        currentDifference += -playersPoints.get(playerIndex) + playersPoints.get((playerIndex + 1) % playersPoints.size());
+        currentDifference += -playersPoints.get(1) + playersPoints.get((1 + 1) % playersPoints.size());
         makeTurn(boardCard);
         playersPoints = players.getPlayersPoints();
         if (canEnsureDomination(boardCard.getState())) {
-            currentDifference += boardCard.getState().ordinal() / 2;
+            currentDifference += boardCard.getState().ordinal();
+        } else if (dominationEnsured[boardCard.getState().ordinal()]) {
+            currentDifference -= 2;
         }
-        currentDifference += playersPoints.get(playerIndex) - playersPoints.get((playerIndex + 1) % playersPoints.size());
+        currentDifference += playersPoints.get(1) - playersPoints.get((1 + 1) % playersPoints.size());
     }
 }

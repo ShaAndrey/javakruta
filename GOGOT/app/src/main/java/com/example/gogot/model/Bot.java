@@ -31,20 +31,20 @@ class Bot extends AbstractBot {
 
     @Override
     void checkCell(BoardCard boardCard) {
-        CalculateNextStep(boardCard, 1);
+        calculateNextStep(boardCard);
     }
 
     @Override
-    void CalculateNextStep(BoardCard boardCard, int playerIndex) {
+    void calculateNextStep(BoardCard boardCard) {
         BoardCard currentCellToGo = new BoardCard(boardCard);
         List<Integer> playersPoints = players.getPlayersPoints();
-        double currentDifference = -playersPoints.get(playerIndex) + playersPoints.get((playerIndex + 1) % playersPoints.size());
+        double currentDifference = -playersPoints.get(1) + playersPoints.get((1 + 1) % playersPoints.size());
         makeTurn(boardCard);
         playersPoints = players.getPlayersPoints();
         if (canEnsureDomination(boardCard.getState())) {
             currentDifference += boardCard.getState().ordinal();
         }
-        currentDifference += playersPoints.get(playerIndex) - playersPoints.get((playerIndex + 1) % playersPoints.size());
+        currentDifference += playersPoints.get(1) - playersPoints.get((1 + 1) % playersPoints.size());
         if (maxDifference <= currentDifference) {
             maxDifference = currentDifference;
             cellToGo = currentCellToGo;

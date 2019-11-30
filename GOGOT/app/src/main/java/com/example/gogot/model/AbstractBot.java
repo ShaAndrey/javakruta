@@ -28,7 +28,7 @@ abstract class AbstractBot extends PlayersHand {
 
     abstract void checkCell(BoardCard boardCard);
 
-    abstract void CalculateNextStep(BoardCard boardCard, int playerIndex);
+    abstract void calculateNextStep(BoardCard boardCard);
 
     boolean canEnsureDomination(PlayCard.State state) {
         List<Integer> playersAmountForState = players.getPlayersAmountForState(state);
@@ -37,13 +37,16 @@ abstract class AbstractBot extends PlayersHand {
             sum += playersAmountForState.get(i);
         }
         int stateInd = state.ordinal();
-        if (playersAmountForState.get(players.getPlayerIndex()) > stateInd / 2 ||
-                (playersAmountForState.get(players.getPlayerIndex()) >= (stateInd + 1) / 2 &&
-                        sum == stateInd) && !dominationEnsured[stateInd]) {
-            dominationEnsured[stateInd] = true;
+        if ((playersAmountForState.get(players.getPlayerIndex()) > stateInd / 2 || (playersAmountForState.get(players.getPlayerIndex()) == stateInd / 2 + stateInd % 2 && sum == stateInd)) && !dominationEnsured[stateInd]) {
             return true;
         }
         return false;
+    }
+
+    void checkIfDominationIsEnsured(PlayCard.State state) {
+        if (canEnsureDomination(state)) {
+            dominationEnsured[state.ordinal()] = true;
+        }
     }
 
     void makeTurn(BoardCard boardCard) {
