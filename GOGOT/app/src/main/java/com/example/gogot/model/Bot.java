@@ -31,37 +31,23 @@ class Bot extends AbstractBot {
 
     @Override
     void checkCell(BoardCard boardCard) {
+        CalculateNextStep(boardCard, 1);
+    }
+
+    @Override
+    void CalculateNextStep(BoardCard boardCard, int playerIndex) {
         BoardCard currentCellToGo = new BoardCard(boardCard);
         List<Integer> playersPoints = players.getPlayersPoints();
-        double currentDifference = -playersPoints.get(1) + playersPoints.get(0);  // TODO: add flexibility
+        double currentDifference = -playersPoints.get(playerIndex) + playersPoints.get((playerIndex + 1) % playersPoints.size());
         makeTurn(boardCard);
         playersPoints = players.getPlayersPoints();
         if (canEnsureDomination(boardCard.getState())) {
             currentDifference += boardCard.getState().ordinal();
         }
-        currentDifference += playersPoints.get(1) - playersPoints.get(0);  // TODO: add flexibility
+        currentDifference += playersPoints.get(playerIndex) - playersPoints.get((playerIndex + 1) % playersPoints.size());
         if (maxDifference <= currentDifference) {
             maxDifference = currentDifference;
             cellToGo = currentCellToGo;
         }
     }
-
-    @Override
-    boolean canEnsureDomination(PlayCard.State state) {
-        List<Integer> playersAmountForState = players.getPlayersAmountForState(state);
-        int sum = 0;
-        for (int i = 0; i < playersAmountForState.size(); i++) {
-            sum += playersAmountForState.get(i);
-        }
-        int stateInd = state.ordinal();
-        if (playersAmountForState.get(0) > stateInd / 2 ||
-                (playersAmountForState.get(0) >= (stateInd + 1) / 2 &&
-                        sum == stateInd) && !dominationEnsured[stateInd]) {
-            dominationEnsured[stateInd] = true;
-            return true;
-        }
-        return false;
-    }
-
-
 }

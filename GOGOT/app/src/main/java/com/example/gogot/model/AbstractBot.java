@@ -1,10 +1,12 @@
 package com.example.gogot.model;
 
+import java.util.List;
+
 abstract class AbstractBot extends PlayersHand {
     Board board;
     Players players;
     double maxDifference;
-    BotListener botListener;
+    private BotListener botListener;
     BoardCard cellToGo;
     boolean[] dominationEnsured;
 
@@ -14,7 +16,9 @@ abstract class AbstractBot extends PlayersHand {
         dominationEnsured = new boolean[9];
     }
 
-    void setBoard() { board = new Board(botListener.getBoard()); }
+    void setBoard() {
+        board = new Board(botListener.getBoard());
+    }
 
     void setPlayers() {
         players = new Players(botListener.getPlayers());
@@ -24,7 +28,23 @@ abstract class AbstractBot extends PlayersHand {
 
     abstract void checkCell(BoardCard boardCard);
 
-    abstract boolean canEnsureDomination(PlayCard.State state);
+    abstract void CalculateNextStep(BoardCard boardCard, int playerIndex);
+
+    boolean canEnsureDomination(PlayCard.State state) {
+        List<Integer> playersAmountForState = players.getPlayersAmountForState(state);
+        int sum = 0;
+        for (int i = 0; i < playersAmountForState.size(); i++) {
+            sum += playersAmountForState.get(i);
+        }
+        int stateInd = state.ordinal();
+        if (playersAmountForState.get(0) > stateInd / 2 ||
+                (playersAmountForState.get(0) >= (stateInd + 1) / 2 &&
+                        sum == stateInd) && !dominationEnsured[stateInd]) {
+            dominationEnsured[stateInd] = true;
+            return true;
+        }
+        return false;
+    }
 
     void makeTurn(BoardCard boardCard) {
         board.movePlayer(boardCard);
