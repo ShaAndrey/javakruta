@@ -17,14 +17,10 @@ public class GamePresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void stopGame() {
-        view.stopGame();
-    }
-
-    @Override
     public void createView(int amountOfPlayers) {
         view.drawInitialBoard(model.getBoard().getBoardCards(),
                 new ArrayList<>(model.getBoard().getCellsAvailableToMove()));
+        view.initializePlayerHands();
         view.drawPlayersHands(model.getPlayersCards());
     }
 
@@ -38,12 +34,13 @@ public class GamePresenter implements MainContract.Presenter {
         view.updatePlayerPoints();
         view.updatePlayersIllumination(model.getPlayerIndex());
         model.nextPlayer();
-        if (model.isPlayer() && model.isMovePossible()) {
+        if (model.isPlayer() && !model.isMovePossible()) {
             view.revalidateBoardCellsListeners(model.getBoard().getBoardCards());
-        } else if (model.isMovePossible()) {
+        } else if (!model.isMovePossible()) {
             handleTurn(model.botPickPosition());
         } else {
-            stopGame();
+            view.drawPlayersHands(model.getPlayersCards());
+            view.stopGame();
         }
     }
 
