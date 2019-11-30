@@ -50,6 +50,7 @@ public class GameActivity extends AppCompatActivity
     private List<RVAdapter> adapters = new ArrayList<>();
     private int amountOfPlayers;
     private boolean userInteractionBlocked;
+    private int padding = 15;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +90,17 @@ public class GameActivity extends AppCompatActivity
             playerHandLayouts.add(findViewById(R.id.layout_player2_hand));
             playerHandLayouts.add(findViewById(R.id.layout_player3_hand));
         }
-        playerHandLayouts.forEach(playerHandLayout -> {
+        for (int i = 0; i < playerHandLayouts.size(); i++) {
+            RecyclerView playerHandLayout = playerHandLayouts.get(i);
+            playerHandLayouts.get(i).setPadding(padding, padding, padding, padding);
+            GradientDrawable border = new GradientDrawable();
+            if (0 == i) {
+                border.setStroke(padding, 0xFF0000FF);
+                playerHandLayouts.get(i).setBackground(border);
+            } else {
+                border.setStroke(1, 0x66000000);
+                playerHandLayouts.get(i).setBackground(border);
+            }
             playerHandLayout.setHasFixedSize(true);
             GridLayoutManager gridLayoutManager = new
                     GridLayoutManager(this, 4) {
@@ -103,7 +114,7 @@ public class GameActivity extends AppCompatActivity
             adapter.setListener(this);
             playerHandLayout.setAdapter(adapter);
             adapters.add(adapter);
-        });
+        }
     }
 
     @Override
@@ -149,7 +160,7 @@ public class GameActivity extends AppCompatActivity
                     (playersDominateStates.get(i));
             GradientDrawable border = new GradientDrawable();
             if ((currentPlayer + 1) % adapters.size() == i) {
-                border.setStroke(5, 0xFF0000FF);
+                border.setStroke(padding, 0xFF0000FF);
                 playerHandLayouts.get(i).setBackground(border);
             } else {
                 border.setStroke(1, 0x66000000);
