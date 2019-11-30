@@ -49,6 +49,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CardViewHolder> {
         imageView.setPadding(padding, padding, padding, padding);
         GradientDrawable border = new GradientDrawable();
         border.setColor(0xffEB5D0D);
+
         if (cards.get(position).getDominatesState()) {
             border.setStroke(padding, 0xFFffd700);
         } else {

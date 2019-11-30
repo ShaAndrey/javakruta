@@ -18,6 +18,7 @@ class Bot extends PlayersHand {
     Bot() {
         super();
         dominationEnsured = new boolean[9];
+        setDominateState(PlayCard.State.PLAYER, true);
     }
 
     private void setBoard() {

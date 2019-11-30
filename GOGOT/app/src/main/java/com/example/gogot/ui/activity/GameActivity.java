@@ -51,7 +51,7 @@ public class GameActivity extends AppCompatActivity
     private List<RVAdapter> adapters = new ArrayList<>();
     private int amountOfPlayers;
     private boolean userInteractionBlocked;
-    private int padding = 15;
+    private int padding = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,14 +94,6 @@ public class GameActivity extends AppCompatActivity
         for (int i = 0; i < playerHandLayouts.size(); i++) {
             RecyclerView playerHandLayout = playerHandLayouts.get(i);
             playerHandLayouts.get(i).setPadding(padding, padding, padding, padding);
-            GradientDrawable border = new GradientDrawable();
-            if (0 == i) {
-                border.setStroke(padding, 0xFF0000FF);
-                playerHandLayouts.get(i).setBackground(border);
-            } else {
-                border.setStroke(1, 0x66000000);
-                playerHandLayouts.get(i).setBackground(border);
-            }
             playerHandLayout.setHasFixedSize(true);
             GridLayoutManager gridLayoutManager = new GridLayoutManager(this,
                     (amountOfPlayers == 3 && i > 0) ? 3 : 4) {
@@ -116,6 +108,7 @@ public class GameActivity extends AppCompatActivity
             playerHandLayout.setAdapter(adapter);
             adapters.add(adapter);
         }
+        updatePlayersIllumination(0);
     }
 
     @Override
@@ -159,11 +152,10 @@ public class GameActivity extends AppCompatActivity
             GradientDrawable border = new GradientDrawable();
             if ((currentPlayer + 1) % adapters.size() == i) {
                 border.setStroke(padding, 0xFF0000FF);
-                playerHandLayouts.get(i).setBackground(border);
             } else {
-                border.setStroke(1, 0x66000000);
-                playerHandLayouts.get(i).setBackground(border);
+                border.setStroke(padding, 0x66000000);
             }
+            playerHandLayouts.get(i).setBackground(border);
         }
     }
 
