@@ -39,6 +39,8 @@ public interface MainContract {
         void invalidateBoardCellsListeners();
 
         void revalidateBoardCellsListeners(BoardCard[][] boardCards);
+
+        void initializePlayerHands();
     }
 
     interface Presenter {
@@ -46,9 +48,8 @@ public interface MainContract {
 
         void handleTurn(BoardCard boardCard);
 
-        void stopGame();
-
         void updateIlluminationAndCollectCards();
+
     }
 
     interface Model {

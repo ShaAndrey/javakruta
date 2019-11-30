@@ -48,7 +48,7 @@ public class GameActivity extends AppCompatActivity
     private MenuDialog gameMenu;
 
     private List<RecyclerView> playerHandLayouts;
-    private List<RVAdapter> adapters = new ArrayList<>();
+    private List<RVAdapter> adapters;
     private int amountOfPlayers;
     private boolean userInteractionBlocked;
     private int padding = 10;
@@ -81,7 +81,7 @@ public class GameActivity extends AppCompatActivity
     }
 
     @Override
-    public void drawPlayersHands(List<List<InHandCard>> playersCards) {
+    public void initializePlayerHands() {
         playerHandLayouts = new ArrayList<>();
         if (amountOfPlayers < 3) {
             playerHandLayouts.add(findViewById(R.id.layout_player1_hand));
@@ -91,6 +91,11 @@ public class GameActivity extends AppCompatActivity
             playerHandLayouts.add(findViewById(R.id.layout_player2_hand));
             playerHandLayouts.add(findViewById(R.id.layout_player3_hand));
         }
+    }
+
+    @Override
+    public void drawPlayersHands(List<List<InHandCard>> playersCards) {
+        adapters = new ArrayList<>();
         for (int i = 0; i < playerHandLayouts.size(); i++) {
             RecyclerView playerHandLayout = playerHandLayouts.get(i);
             playerHandLayouts.get(i).setPadding(padding, padding, padding, padding);
@@ -108,7 +113,7 @@ public class GameActivity extends AppCompatActivity
             playerHandLayout.setAdapter(adapter);
             adapters.add(adapter);
         }
-        updatePlayersIllumination(0);
+        updatePlayersIllumination(amountOfPlayers - 1);
     }
 
     @Override
