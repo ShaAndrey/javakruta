@@ -120,6 +120,12 @@ public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
         return this;
     }
 
+    void SwapTwoPlayers() {
+        PlayersHand current = playersHands.get(currentPlayer);
+        playersHands.set(currentPlayer, playersHands.get((currentPlayer + 1) % playersHands.size()));
+        playersHands.set((currentPlayer + 1) % playersHands.size(), current);
+    }
+
 
     void setPlayersListener(GameModel model) {
         playersListener = model;

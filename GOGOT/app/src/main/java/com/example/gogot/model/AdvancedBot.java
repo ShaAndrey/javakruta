@@ -5,7 +5,7 @@ import java.util.List;
 public class AdvancedBot extends AbstractBot {
 
     private int amountOfCalculatedSteps = 2;
-    private int currentDifference = 0;
+    private double currentDifference = 0.0;
 
     AdvancedBot() {
         super();
@@ -34,15 +34,17 @@ public class AdvancedBot extends AbstractBot {
     @Override
     void checkCell(BoardCard boardCard) {
         BoardCard currentCellToGo = new BoardCard(boardCard);
-        currentDifference = 0;
+        currentDifference = 0.0;
 
         if (amountOfCalculatedSteps == 2) {
             CalculateNextStep(currentCellToGo, 1);
             --amountOfCalculatedSteps;
-            int savedCurrentDifference = currentDifference;
+            double savedCurrentDifference = currentDifference;
+            players.SwapTwoPlayers();
             BoardCard nextBestTurn = pickBestTurn();
             currentDifference = savedCurrentDifference;
             CalculateNextStep(nextBestTurn, 0);
+            players.SwapTwoPlayers();
             amountOfCalculatedSteps = 2;
         } else if (amountOfCalculatedSteps == 1) {
             CalculateNextStep(currentCellToGo, 1);
@@ -56,13 +58,12 @@ public class AdvancedBot extends AbstractBot {
 
     @Override
     void CalculateNextStep(BoardCard boardCard, int playerIndex) {
-        BoardCard currentCellToGo = new BoardCard(boardCard);
         List<Integer> playersPoints = players.getPlayersPoints();
         currentDifference += -playersPoints.get(playerIndex) + playersPoints.get((playerIndex + 1) % playersPoints.size());
         makeTurn(boardCard);
         playersPoints = players.getPlayersPoints();
         if (canEnsureDomination(boardCard.getState())) {
-            currentDifference += boardCard.getState().ordinal();
+            currentDifference += boardCard.getState().ordinal() / 2;
         }
         currentDifference += playersPoints.get(playerIndex) - playersPoints.get((playerIndex + 1) % playersPoints.size());
     }

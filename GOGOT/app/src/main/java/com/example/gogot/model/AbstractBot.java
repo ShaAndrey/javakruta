@@ -37,8 +37,8 @@ abstract class AbstractBot extends PlayersHand {
             sum += playersAmountForState.get(i);
         }
         int stateInd = state.ordinal();
-        if (playersAmountForState.get(0) > stateInd / 2 ||
-                (playersAmountForState.get(0) >= (stateInd + 1) / 2 &&
+        if (playersAmountForState.get(players.getPlayerIndex()) > stateInd / 2 ||
+                (playersAmountForState.get(players.getPlayerIndex()) >= (stateInd + 1) / 2 &&
                         sum == stateInd) && !dominationEnsured[stateInd]) {
             dominationEnsured[stateInd] = true;
             return true;
