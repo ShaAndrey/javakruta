@@ -46,12 +46,17 @@ public class MenuDialog extends Dialog {
             this.dismiss();
             menuDialogListener.openSettings();
         });
+        Button restartGameButton = findViewById(R.id.restartGameButton);
+        restartGameButton.setOnClickListener(v->{
+            this.dismiss();
+            menuDialogListener.restartGame();
+        });
     }
-
 
     public interface MenuDialogListener {
         void openSettings();
         void exitGame();
+        void restartGame();
     }
 
 

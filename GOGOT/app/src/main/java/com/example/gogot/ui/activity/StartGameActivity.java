@@ -16,6 +16,7 @@ public class StartGameActivity extends AppCompatActivity {
 
     public static final int GAME_ACTIVITY_RESULT = 1001;
     public static final String NEED_TO_RESTART_GAME = "NEED_TO_RESTART";
+    public static final String NEED_TO_QUIT_TO_MAIN_MENU = "NEED_TO_QUIT_TO_MAIN_MENU";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +57,8 @@ public class StartGameActivity extends AppCompatActivity {
             if (data.getBooleanExtra(NEED_TO_RESTART_GAME, false)) {
                 int playerAmount = data.getIntExtra(AMOUNT_OF_PLAYERS, DEFAULT_PLAYER_AMOUNT);
                 openGameActivity(playerAmount);
+            } else if (data.getBooleanExtra(NEED_TO_QUIT_TO_MAIN_MENU, false)) {
+                finish();
             }
         }
     }

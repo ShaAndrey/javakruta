@@ -251,6 +251,13 @@ public class GameActivity extends AppCompatActivity
 
     @Override
     public void exitGame() {
+        exit();
+    }
+
+    void exit() {
+        Intent intent = new Intent();
+        intent.putExtra(StartGameActivity.NEED_TO_QUIT_TO_MAIN_MENU, true);
+        setResult(RESULT_OK, intent);
         finish();
     }
 
@@ -258,14 +265,30 @@ public class GameActivity extends AppCompatActivity
     @Override
     public void onNewGame() {
         Intent intent = new Intent();
-        intent.putExtra(StartGameActivity.NEED_TO_RESTART_GAME, true);
-        intent.putExtra(AMOUNT_OF_PLAYERS, amountOfPlayers);
         setResult(RESULT_OK, intent);
         finish();
     }
 
     @Override
     public void onExit() {
+        exit();
+    }
+
+    @Override
+    public void onRestartGame() {
+        restart();
+    }
+
+    @Override
+    public void restartGame() {
+        restart();
+    }
+
+    void restart() {
+        Intent intent = new Intent();
+        intent.putExtra(StartGameActivity.NEED_TO_RESTART_GAME, true);
+        intent.putExtra(AMOUNT_OF_PLAYERS, amountOfPlayers);
+        setResult(RESULT_OK, intent);
         finish();
     }
 
