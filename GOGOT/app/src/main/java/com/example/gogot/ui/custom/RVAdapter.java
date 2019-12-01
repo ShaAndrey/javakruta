@@ -60,13 +60,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CardViewHolder> {
     }
 
     public void addCardsAmount(PlayCard.State stateOfCardsToAdd) {
-        int ind = getIndexForState(stateOfCardsToAdd);
-        notifyItemChanged(ind);
+        notifyItemChanged(getIndexForState(stateOfCardsToAdd));
     }
 
     public void updatePlayerPoints() {
-        int ind = getIndexForState(PlayCard.State.PLAYER);
-        notifyItemChanged(ind);
+        notifyItemChanged(getIndexForState(PlayCard.State.PLAYER));
     }
 
     public void updateIllumination() {

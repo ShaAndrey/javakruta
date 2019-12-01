@@ -5,6 +5,7 @@ import com.example.gogot.model.entity.InHandCard;
 import com.example.gogot.model.entity.PlayCard;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
@@ -120,6 +121,23 @@ public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
 
     void setPlayersListener(GameModel model) {
         playersListener = model;
+    }
+
+    public List<Integer> getPlaces() {
+        List<Integer> points = new ArrayList<>(getPoints());
+        List<Integer> places = new ArrayList<>();
+        for (int i = 0; i < points.size(); i++) {
+            places.add(i);
+        }
+        for (int i = 0; i < points.size() - 1; ++i) {
+            for (int j = 0; j < points.size() - i - 1; ++j) {
+                if (points.get(j) < points.get(j + 1)) {
+                    Collections.swap(points, j, j + 1);
+                    Collections.swap(places, j, j + 1);
+                }
+            }
+        }
+        return places;
     }
 
     interface PlayersListener {

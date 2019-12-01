@@ -41,6 +41,8 @@ public interface MainContract {
         void revalidateBoardCellsListeners(BoardCard[][] boardCards);
 
         void initializePlayerHands();
+
+        void setEndGameIllumination(List<Integer> places);
     }
 
     interface Presenter {
@@ -83,5 +85,7 @@ public interface MainContract {
         BoardCard botPickPosition();
 
         List<List<InHandCard>> getPlayersCards();
+
+        List<Integer> getPlaces();
     }
 }
