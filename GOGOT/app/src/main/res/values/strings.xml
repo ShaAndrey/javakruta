@@ -11,4 +11,5 @@
     <string name="resume_game">Продолжить игру</string>
     <string name="game_ended">Игра окончена</string>
     <string name="you_cant_move_there">Вы не можете походить туда.</string>
+    <string name="donate_button">Помочь разработчикам.</string>
 </resources>
