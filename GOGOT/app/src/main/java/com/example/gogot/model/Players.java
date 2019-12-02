@@ -34,9 +34,9 @@ public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
         }
         if (amountOfPlayers == 1) {
             ++this.amountOfPlayers;
-            playersHands.add(new Bot());
+            playersHands.add(new AdvancedBot());
             playersHands.get(1).setPlayerListener(this);
-            ((Bot) playersHands.get(1)).setBotListener(this);
+            ((AdvancedBot) playersHands.get(1)).setBotListener(this);
         }
     }
 
@@ -90,8 +90,8 @@ public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
     }
 
     BoardCard botPickPosition() {
-        if (playersHands.get(currentPlayer) instanceof Bot) {
-            return ((Bot) playersHands.get(currentPlayer)).pickBestTurn();
+        if (playersHands.get(currentPlayer) instanceof AdvancedBot) {
+            return ((AdvancedBot) playersHands.get(currentPlayer)).pickBestTurn();
         }
         return null;
     }
@@ -116,6 +116,12 @@ public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
     @Override
     public Players getPlayers() {
         return this;
+    }
+
+    void swapTwoPlayers() {
+        PlayersHand current = playersHands.get(currentPlayer);
+        playersHands.set(currentPlayer, playersHands.get((currentPlayer + 1) % playersHands.size()));
+        playersHands.set((currentPlayer + 1) % playersHands.size(), current);
     }
 
 
