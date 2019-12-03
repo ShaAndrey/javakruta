@@ -1,8 +1,10 @@
 package com.example.gogot.model;
 
+import com.example.gogot.model.entity.BoardCard;
+
 import java.util.List;
 
-public class AdvancedBot extends AbstractBot {
+class AdvancedBot extends AbstractBot {
 
     private int amountOfCalculatedSteps = 2;
     private double currentDifference = 0.0;

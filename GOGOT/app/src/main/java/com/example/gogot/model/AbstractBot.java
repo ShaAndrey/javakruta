@@ -1,8 +1,12 @@
 package com.example.gogot.model;
 
+import com.example.gogot.model.entity.BoardCard;
+import com.example.gogot.model.entity.PlayCard;
+
 import java.util.List;
 
 abstract class AbstractBot extends PlayersHand {
+    GameModel gameModel;
     Board board;
     Players players;
     double maxDifference;
@@ -12,16 +16,16 @@ abstract class AbstractBot extends PlayersHand {
 
     AbstractBot() {
         super();
-        dominateStates[0] = true;
-        dominationEnsured = new boolean[9];
+        setDominateState(PlayCard.State.PLAYER, true);
+        dominationEnsured = new boolean[9];                         // fix required?
     }
 
     void setBoard() {
-        board = new Board(botListener.getBoard());
+        board = gameModel.getBoard();
     }
 
     void setPlayers() {
-        players = new Players(botListener.getPlayers());
+        players = gameModel.getPlayers();
     }
 
     abstract BoardCard pickBestTurn();
@@ -37,7 +41,10 @@ abstract class AbstractBot extends PlayersHand {
             sum += playersAmountForState.get(i);
         }
         int stateInd = state.ordinal();
-        if ((playersAmountForState.get(players.getPlayerIndex()) > stateInd / 2 || (playersAmountForState.get(players.getPlayerIndex()) == stateInd / 2 + stateInd % 2 && sum == stateInd)) && !dominationEnsured[stateInd]) {
+        if ((playersAmountForState.get(players.getPlayerIndex()) > stateInd / 2
+                || (playersAmountForState.get(players.getPlayerIndex())
+                == stateInd / 2 + stateInd % 2 &&
+                sum == stateInd)) && !dominationEnsured[stateInd]) {
             return true;
         }
         return false;
@@ -56,12 +63,17 @@ abstract class AbstractBot extends PlayersHand {
     }
 
     interface BotListener {
-        Board getBoard();
-
-        Players getPlayers();
+        GameModel getModel();
     }
 
-    void setBotListener(Players players) {
-        botListener = players;
+    void setBotListener(BotListener listener) {
+        botListener = listener;
+    }
+
+    void setGameModel() {
+        GameModel model = botListener.getModel();
+        gameModel = new GameModel(model);
+        setBoard();
+        setPlayers();
     }
 }

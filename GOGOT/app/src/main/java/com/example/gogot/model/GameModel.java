@@ -10,7 +10,8 @@ import com.example.gogot.relation.MainContract;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameModel implements MainContract.Model, Board.BoardListener, Players.PlayersListener {
+public class GameModel implements MainContract.Model,
+        Board.BoardListener, Players.PlayersListener {
 
     private Board board;
     private Players players;
@@ -26,6 +27,15 @@ public class GameModel implements MainContract.Model, Board.BoardListener, Playe
         board.setBoardListener(this);
         players = new Players(amountOfPlayers);
         players.setPlayersListener(this);
+    }
+
+
+    GameModel(GameModel otherModel) {
+        board = new Board(otherModel.board);
+        board.setBoardListener(this);
+        players = new Players(otherModel.players);
+        players.setPlayersListener(this);
+        boardSize = otherModel.boardSize;
     }
 
     @Override
@@ -100,6 +110,11 @@ public class GameModel implements MainContract.Model, Board.BoardListener, Playe
     }
 
     @Override
+    public Players getPlayers() {
+        return players;
+    }
+
+    @Override
     public List<Integer> getPoints() {
         return players.getPoints();
     }
@@ -110,7 +125,9 @@ public class GameModel implements MainContract.Model, Board.BoardListener, Playe
     }
 
     @Override
-    public Board getGameBoard() {
-        return getBoard();
+    public GameModel getModel() {
+        return this;
     }
+
+
 }

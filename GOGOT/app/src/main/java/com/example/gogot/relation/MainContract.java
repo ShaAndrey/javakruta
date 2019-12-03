@@ -3,6 +3,7 @@ package com.example.gogot.relation;
 import android.graphics.Point;
 
 import com.example.gogot.model.Board;
+import com.example.gogot.model.Players;
 import com.example.gogot.model.entity.BoardCard;
 import com.example.gogot.model.entity.InHandCard;
 import com.example.gogot.model.entity.PlayCard;
@@ -87,5 +88,7 @@ public interface MainContract {
         List<List<InHandCard>> getPlayersCards();
 
         List<Integer> getPlaces();
+
+        Players getPlayers();
     }
 }
