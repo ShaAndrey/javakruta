@@ -20,10 +20,9 @@ class Bot extends AbstractBot {
         cellToGo = new BoardCard(availableCells.get(0));
         maxDifference = -100;
         availableCells.forEach(boardCard -> {
-//            GameModel model = new GameModel(gameModel);
+            gameModel.getSnapShots().addSnapShot();
             checkCell(boardCard);
-            setGameModel();
-//            gameModel = model;
+            gameModel.getSnapShots().undo();
         });
         return cellToGo;
     }

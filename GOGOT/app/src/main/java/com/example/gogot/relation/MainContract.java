@@ -74,7 +74,6 @@ public interface MainContract {
 
         void nextPlayer();
 
-
         int getAmountOfCardsToCollect();
 
         PlayCard.State getStateOfCardsToCollect();

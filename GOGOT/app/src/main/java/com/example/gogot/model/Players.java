@@ -148,7 +148,48 @@ public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
     List<List<InHandCard>> getPlayersCards() {
         List<List<InHandCard>> playersCards = new ArrayList<>();
         playersHands.forEach(playersHand ->
+                playersCards.add(playersHand.getInHandCards()));
+        return playersCards;
+    }
+
+    List<List<InHandCard>> getPlayersCardsCopy() {
+        List<List<InHandCard>> playersCards = new ArrayList<>();
+        playersHands.forEach(playersHand ->
                 playersCards.add(new ArrayList<>(playersHand.getInHandCards())));
         return playersCards;
     }
+
+    public void setCurrentPlayer(int currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    public void setPlayersHandCards(List<List<InHandCard>> playersHandsCards) {
+        for (int i = 0; i < playersHands.size(); i++) {
+            playersHands.get(i).setInHandCards(playersHandsCards.get(i));
+        }
+    }
+
+    PlayersSnapShot createSnapShot() {
+        return new PlayersSnapShot();
+    }
+
+    class PlayersSnapShot {
+        private Players players;
+        private List<List<InHandCard>> playersCards;
+        private int currentPlayer;
+
+        PlayersSnapShot() {
+            this.players = Players.this;
+            this.playersCards = new ArrayList<>();
+            playersHands.forEach(playersHand ->
+                    this.playersCards.add(new ArrayList<>(playersHand.getInHandCardsCopy())));
+            this.currentPlayer = Players.this.currentPlayer;
+        }
+
+        void restore() {
+            players.setPlayersHandCards(this.playersCards);
+            players.setCurrentPlayer(this.currentPlayer);
+        }
+    }
+
 }

@@ -71,8 +71,7 @@ abstract class AbstractBot extends PlayersHand {
     }
 
     void setGameModel() {
-        GameModel model = botListener.getModel();
-        gameModel = new GameModel(model);
+        gameModel = botListener.getModel();
         setBoard();
         setPlayers();
     }

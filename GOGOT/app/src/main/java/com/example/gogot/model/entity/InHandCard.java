@@ -12,6 +12,17 @@ public class InHandCard extends PlayCard {
         super(state);
     }
 
+    public InHandCard(InHandCard card) {
+        super(card);
+        amount = card.amount;
+        dominatesState = card.dominatesState;
+    }
+
+    public void setInHandCard(InHandCard card) {
+        amount = card.amount;
+        dominatesState = card.dominatesState;
+    }
+
     public int getAmount() {
         return amount;
     }

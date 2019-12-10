@@ -32,7 +32,6 @@ class PlayersHand {
         playerListener.checkIfPlayerDominatesState(state);
     }
 
-
     interface PlayerListener {
         void checkIfPlayerDominatesState(PlayCard.State state);
     }
@@ -75,5 +74,20 @@ class PlayersHand {
 
     public List<InHandCard> getInHandCards() {
         return inHandCards;
+    }
+
+    public List<InHandCard> getInHandCardsCopy() {
+        List<InHandCard> inHandCards = new ArrayList<>();
+        this.inHandCards.forEach(inHandCard -> {
+            inHandCards.add(new InHandCard(inHandCard));
+        });
+        return inHandCards;
+    }
+
+    public void setInHandCards(List<InHandCard> inHandCards) {
+        List<InHandCard> handCards = this.inHandCards;
+        for (int i = 0, handCardsSize = handCards.size(); i < handCardsSize; i++) {
+            handCards.get(i).setInHandCard(inHandCards.get(i));
+        }
     }
 }
