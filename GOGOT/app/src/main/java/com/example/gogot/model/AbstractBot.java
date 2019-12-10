@@ -10,7 +10,6 @@ abstract class AbstractBot extends PlayersHand {
     Board board;
     Players players;
     double maxDifference;
-    private BotListener botListener;
     BoardCard cellToGo;
     boolean[] dominationEnsured;
 
@@ -62,16 +61,8 @@ abstract class AbstractBot extends PlayersHand {
                 board.getAmountOfCardsToCollect());
     }
 
-    interface BotListener {
-        GameModel getModel();
-    }
-
-    void setBotListener(BotListener listener) {
-        botListener = listener;
-    }
-
-    void setGameModel() {
-        gameModel = botListener.getModel();
+    void setGameModel(GameModel gameModel) {
+        this.gameModel = gameModel;
         setBoard();
         setPlayers();
     }

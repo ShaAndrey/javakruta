@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
+public class Players implements PlayersHand.PlayerListener {
 
     private int amountOfPlayers;
     private int currentPlayer = 0;
@@ -19,7 +19,7 @@ public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
         amountOfPlayers = otherPlayers.amountOfPlayers;
         currentPlayer = otherPlayers.currentPlayer;
         playersHands = new ArrayList<>();
-        for (int i = 0; i < amountOfPlayers; i++) {     // bot listener isn't set here
+        for (int i = 0; i < amountOfPlayers; i++) {
             playersHands.add(new PlayersHand(otherPlayers.playersHands.get(i)));
             playersHands.get(i).setPlayerListener(this);
         }
@@ -36,7 +36,6 @@ public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
             ++this.amountOfPlayers;
             playersHands.add(new Bot());
             playersHands.get(1).setPlayerListener(this);
-            ((Bot) playersHands.get(1)).setBotListener(this);
         }
     }
 
@@ -90,8 +89,9 @@ public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
     }
 
     BoardCard botPickPosition() {
-        if (playersHands.get(currentPlayer) instanceof Bot) {
-            return ((Bot) playersHands.get(currentPlayer)).pickBestTurn();
+        if (playersHands.get(currentPlayer) instanceof AbstractBot) {
+            ((AbstractBot) playersHands.get(currentPlayer)).setGameModel(playersListener.getModel());
+            return ((AbstractBot) playersHands.get(currentPlayer)).pickBestTurn();
         }
         return null;
     }
@@ -134,11 +134,6 @@ public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
             }
         }
         return places;
-    }
-
-    @Override
-    public GameModel getModel() {
-        return playersListener.getModel();
     }
 
     interface PlayersListener {

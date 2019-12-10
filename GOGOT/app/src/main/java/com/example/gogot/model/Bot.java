@@ -12,7 +12,6 @@ class Bot extends AbstractBot {
 
     @Override
     BoardCard pickBestTurn() {
-        setGameModel();
         List<BoardCard> availableCells = board.getCellsAvailableToMove();
         if (availableCells.isEmpty()) {
             return null;

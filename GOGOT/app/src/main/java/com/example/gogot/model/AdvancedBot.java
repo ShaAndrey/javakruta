@@ -15,8 +15,6 @@ class AdvancedBot extends AbstractBot {
 
     @Override
     BoardCard pickBestTurn() {
-        setBoard();
-        setPlayers();
         List<BoardCard> availableCells = board.getCellsAvailableToMove();
         if (availableCells.isEmpty()) {
             return null;
@@ -24,11 +22,9 @@ class AdvancedBot extends AbstractBot {
         cellToGo = new BoardCard(availableCells.get(0));
         maxDifference = -100;
         availableCells.forEach(boardCard -> {
-            Board board = new Board(this.board);
-            Players players = new Players(this.players);
+            gameModel.getSnapShots().addSnapShot();
             checkCell(boardCard);
-            this.board = board;
-            this.players = players;
+            gameModel.getSnapShots().undo();
         });
         if (!players.isPlayer()) {
             checkIfDominationIsEnsured(cellToGo.getState());
