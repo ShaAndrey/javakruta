@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.example.gogot.R;
+import com.example.gogot.ui.SettingsActivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -21,5 +22,11 @@ public class MainActivity extends AppCompatActivity {
                     StartGameActivity.class);
             startActivity(intent);
         });
+    }
+
+    void onSettings() {
+        Intent intent = new Intent(MainActivity.this,
+                SettingsActivity.class);
+        startActivity(intent);
     }
 }
