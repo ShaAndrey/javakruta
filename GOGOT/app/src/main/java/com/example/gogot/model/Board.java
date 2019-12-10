@@ -2,12 +2,16 @@ package com.example.gogot.model;
 
 import android.graphics.Point;
 
+import com.example.gogot.model.entity.BoardCard;
+import com.example.gogot.model.entity.PlayCard;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 
 
 public class Board {
+
     private BoardCard[][] gameBoard;
     private int height, width;
     private Point playerPosition;
@@ -154,4 +158,41 @@ public class Board {
         return stateOfCardsToCollect;
     }
 
+    BoardSnapshot createSnapShot() {
+        return new BoardSnapshot(this, gameBoard);
+    }
+
+    public void setGameBoard(BoardCard[][] gameBoard) {
+        this.gameBoard = gameBoard;
+    }
+
+    public void setPlayerPosition(Point playerPosition) {
+        this.playerPosition = playerPosition;
+    }
+
+    class BoardSnapshot {
+        private Board board;
+        private BoardCard[][] gameBoardCards;
+        private Point playerPosition;
+
+        BoardSnapshot(Board board,
+                      BoardCard[][] gameBoardCards) {
+            this.board = board;
+            this.gameBoardCards = new BoardCard[height][width];
+            for (int i = 0; i < height; ++i) {
+                for (int j = 0; j < width; ++j) {
+                    BoardCard nextCard = gameBoardCards[i][j];
+                    this.gameBoardCards[i][j] = new BoardCard(nextCard.state, i, j);
+                    if (nextCard.getState() == BoardCard.State.PLAYER) {
+                        this.playerPosition = new Point(i, j);
+                    }
+                }
+            }
+        }
+
+        void restore() {
+            board.setGameBoard(gameBoardCards);
+            board.setPlayerPosition(playerPosition);
+        }
+    }
 }

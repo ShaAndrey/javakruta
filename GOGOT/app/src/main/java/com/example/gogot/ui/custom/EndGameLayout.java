@@ -1,7 +1,6 @@
-package com.example.gogot.ui;
+package com.example.gogot.ui.custom;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.AttributeSet;
 import android.widget.Button;
 
@@ -29,18 +28,21 @@ public class EndGameLayout extends ConstraintLayout {
 
     void initLayout() {
         inflate(getContext(), R.layout.layout_end_game, this);
-        Button newGameButton = findViewById(R.id.buttonNewGame);
+        Button newGameButton = findViewById(R.id.button_new_game);
         newGameButton.setOnClickListener(v -> endGameLayoutListener.onNewGame());
         Button backToMainMenuButton = findViewById(R.id.backToMainMenuButton);
         backToMainMenuButton.setOnClickListener(v -> endGameLayoutListener.onExit());
+        Button restartGameButton = findViewById(R.id.button_restart_game);
+        restartGameButton.setOnClickListener(v -> endGameLayoutListener.onRestartGame());
     }
 
-    interface EndGameLayoutListener {
+    public interface EndGameLayoutListener {
         void onNewGame();
         void onExit();
+        void onRestartGame();
     }
 
-    void setListener(EndGameLayoutListener listener) {
+    public void setListener(EndGameLayoutListener listener) {
         endGameLayoutListener = listener;
     }
 }

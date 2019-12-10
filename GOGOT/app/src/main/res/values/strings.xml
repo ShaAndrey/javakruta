@@ -12,4 +12,6 @@
     <string name="game_ended">Игра окончена</string>
     <string name="you_cant_move_there">Вы не можете походить туда.</string>
     <string name="donate_button">Помочь разработчикам.</string>
+    <string name="restart_game">Начать заново</string>
+    <string name="play_one_more_time">Сыграть еще раз</string>
 </resources>

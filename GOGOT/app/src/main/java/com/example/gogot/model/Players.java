@@ -1,9 +1,15 @@
 package com.example.gogot.model;
 
+import com.example.gogot.model.entity.BoardCard;
+import com.example.gogot.model.entity.InHandCard;
+import com.example.gogot.model.entity.PlayCard;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
+public class Players implements PlayersHand.PlayerListener {
+
     private int amountOfPlayers;
     private int currentPlayer = 0;
     private ArrayList<PlayersHand> playersHands;
@@ -30,7 +36,6 @@ public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
             ++this.amountOfPlayers;
             playersHands.add(new Bot());
             playersHands.get(1).setPlayerListener(this);
-            ((Bot) playersHands.get(1)).setBotListener(this);
         }
     }
 
@@ -50,7 +55,6 @@ public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
     @Override
     public void checkIfPlayerDominatesState(PlayCard.State state) {
         PlayersHand maxHand = new PlayersHand();
-        maxHand.initState(state);
         for (int i = 0; i < playersHands.size(); i++) {
             if (playersHands.get(i).getAmountForState(state) >
                     maxHand.getAmountForState(state)) {
@@ -61,16 +65,16 @@ public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
                 maxHand.getAmountForState(state)) {
             maxHand = playersHands.get(currentPlayer);
         }
-        if (!maxHand.checkDominateState(state.ordinal())) {
+        if (!maxHand.checkDominateState(state)) {
             int points = (state.ordinal() - state.ordinal() % 2) / 2 + 1;
             playersHands.forEach(playersHand -> {
-                if (playersHand.checkDominateState(state.ordinal())) {
-                    playersHand.setDominateState(state.ordinal(), false);
+                if (playersHand.checkDominateState(state)) {
+                    playersHand.setDominateState(state, false);
                     playersHand.addPoints(-points);
                 }
             });
             maxHand.addPoints(points);
-            maxHand.setDominateState(state.ordinal(), true);
+            maxHand.setDominateState(state, true);
         }
     }
 
@@ -80,27 +84,16 @@ public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
         return points;
     }
 
-    List<boolean[]> getPlayersDominateStates() {
-        List<boolean[]> playersDominateStates = new ArrayList<>();
-        playersHands.forEach(playersHand ->
-                playersDominateStates.add(playersHand.getDominateStates()));
-        return playersDominateStates;
-    }
-
     boolean isPlayer() {
-        return !playersHands.get(currentPlayer).checkDominateState(0);
+        return !playersHands.get(currentPlayer).checkDominateState(PlayCard.State.PLAYER);
     }
 
     BoardCard botPickPosition() {
-        if (playersHands.get(currentPlayer) instanceof Bot) {
-            return ((Bot) playersHands.get(currentPlayer)).pickBestTurn();
+        if (playersHands.get(currentPlayer) instanceof AbstractBot) {
+            ((AbstractBot) playersHands.get(currentPlayer)).setGameModel(playersListener.getModel());
+            return ((AbstractBot) playersHands.get(currentPlayer)).pickBestTurn();
         }
         return null;
-    }
-
-    @Override
-    public Board getBoard() {
-        return playersListener.getGameBoard();
     }
 
     ArrayList<Integer> getPlayersPoints() {
@@ -115,9 +108,10 @@ public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
         return points;
     }
 
-    @Override
-    public Players getPlayers() {
-        return this;
+    void swapTwoPlayers() {
+        PlayersHand current = playersHands.get(currentPlayer);
+        playersHands.set(currentPlayer, playersHands.get((currentPlayer + 1) % playersHands.size()));
+        playersHands.set((currentPlayer + 1) % playersHands.size(), current);
     }
 
 
@@ -125,7 +119,72 @@ public class Players implements PlayersHand.PlayerListener, Bot.BotListener {
         playersListener = model;
     }
 
-    interface PlayersListener {
-        Board getGameBoard();
+    public List<Integer> getPlaces() {
+        List<Integer> points = new ArrayList<>(getPoints());
+        List<Integer> places = new ArrayList<>();
+        for (int i = 0; i < points.size(); i++) {
+            places.add(i);
+        }
+        for (int i = 0; i < points.size() - 1; ++i) {
+            for (int j = 0; j < points.size() - i - 1; ++j) {
+                if (points.get(j) < points.get(j + 1)) {
+                    Collections.swap(points, j, j + 1);
+                    Collections.swap(places, j, j + 1);
+                }
+            }
+        }
+        return places;
     }
+
+    interface PlayersListener {
+        GameModel getModel();
+    }
+
+    List<List<InHandCard>> getPlayersCards() {
+        List<List<InHandCard>> playersCards = new ArrayList<>();
+        playersHands.forEach(playersHand ->
+                playersCards.add(playersHand.getInHandCards()));
+        return playersCards;
+    }
+
+    List<List<InHandCard>> getPlayersCardsCopy() {
+        List<List<InHandCard>> playersCards = new ArrayList<>();
+        playersHands.forEach(playersHand ->
+                playersCards.add(new ArrayList<>(playersHand.getInHandCards())));
+        return playersCards;
+    }
+
+    public void setCurrentPlayer(int currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    public void setPlayersHandCards(List<List<InHandCard>> playersHandsCards) {
+        for (int i = 0; i < playersHands.size(); i++) {
+            playersHands.get(i).setInHandCards(playersHandsCards.get(i));
+        }
+    }
+
+    PlayersSnapShot createSnapShot() {
+        return new PlayersSnapShot();
+    }
+
+    class PlayersSnapShot {
+        private Players players;
+        private List<List<InHandCard>> playersCards;
+        private int currentPlayer;
+
+        PlayersSnapShot() {
+            this.players = Players.this;
+            this.playersCards = new ArrayList<>();
+            playersHands.forEach(playersHand ->
+                    this.playersCards.add(new ArrayList<>(playersHand.getInHandCardsCopy())));
+            this.currentPlayer = Players.this.currentPlayer;
+        }
+
+        void restore() {
+            players.setPlayersHandCards(this.playersCards);
+            players.setCurrentPlayer(this.currentPlayer);
+        }
+    }
+
 }

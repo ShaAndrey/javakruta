@@ -2,16 +2,22 @@ package com.example.gogot.model;
 
 import android.graphics.Point;
 
+import com.example.gogot.model.entity.BoardCard;
+import com.example.gogot.model.entity.InHandCard;
+import com.example.gogot.model.entity.PlayCard;
 import com.example.gogot.relation.MainContract;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
-public class GameModel implements MainContract.Model, Board.BoardListener, Players.PlayersListener {
+public class GameModel implements MainContract.Model,
+        Board.BoardListener, Players.PlayersListener {
+
     private Board board;
     private Players players;
     private int boardSize = 6;
-
+    private SnapShots snapShots;
 
     @Override
     public void nextPlayer() {
@@ -19,15 +25,27 @@ public class GameModel implements MainContract.Model, Board.BoardListener, Playe
     }
 
     public GameModel(int amountOfPlayers) {
+        snapShots = new SnapShots();
         board = new Board(boardSize, boardSize);
         board.setBoardListener(this);
         players = new Players(amountOfPlayers);
         players.setPlayersListener(this);
     }
 
+
+    GameModel(GameModel otherModel) {
+        board = new Board(otherModel.board);
+        board.setBoardListener(this);
+        players = new Players(otherModel.players);
+        players.setPlayersListener(this);
+        boardSize = otherModel.boardSize;
+    }
+
     @Override
     public ArrayList<BoardCard> handleTurn(BoardCard boardCard) {
-        return board.handleTurn(boardCard);
+        ArrayList<BoardCard> cardsToCollect = board.handleTurn(boardCard);
+        snapShots.addSnapShot();
+        return cardsToCollect;
     }
 
     @Override
@@ -75,10 +93,6 @@ public class GameModel implements MainContract.Model, Board.BoardListener, Playe
         return board.getStateOfCardsToCollect();
     }
 
-    @Override
-    public List<boolean[]> getPlayersDominateStates() {
-        return players.getPlayersDominateStates();
-    }
 
     @Override
     public boolean isPlayer() {
@@ -88,6 +102,21 @@ public class GameModel implements MainContract.Model, Board.BoardListener, Playe
     @Override
     public BoardCard botPickPosition() {
         return players.botPickPosition();
+    }
+
+    @Override
+    public List<List<InHandCard>> getPlayersCards() {
+        return players.getPlayersCards();
+    }
+
+    @Override
+    public List<Integer> getPlaces() {
+        return players.getPlaces();
+    }
+
+    @Override
+    public Players getPlayers() {
+        return players;
     }
 
     @Override
@@ -101,7 +130,31 @@ public class GameModel implements MainContract.Model, Board.BoardListener, Playe
     }
 
     @Override
-    public Board getGameBoard() {
-        return getBoard();
+    public GameModel getModel() {
+        return this;
+    }
+
+    class SnapShots {
+        private Stack<Board.BoardSnapshot> boardSnapshots;
+        private Stack<Players.PlayersSnapShot> playersSnapShots;
+
+        SnapShots() {
+            boardSnapshots = new Stack<>();
+            playersSnapShots = new Stack<>();
+        }
+
+        void addSnapShot() {
+            boardSnapshots.push(board.createSnapShot());
+            playersSnapShots.push(players.createSnapShot());
+        }
+
+        void undo() {
+            boardSnapshots.pop().restore();
+            playersSnapShots.pop().restore();
+        }
+    }
+
+    public SnapShots getSnapShots() {
+        return snapShots;
     }
 }

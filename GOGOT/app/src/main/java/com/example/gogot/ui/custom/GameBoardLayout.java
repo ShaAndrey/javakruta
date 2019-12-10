@@ -1,4 +1,4 @@
-package com.example.gogot.ui;
+package com.example.gogot.ui.custom;
 
 import android.content.Context;
 import android.graphics.Point;
@@ -17,8 +17,9 @@ import androidx.constraintlayout.widget.Constraints;
 import androidx.constraintlayout.widget.Guideline;
 
 import com.example.gogot.R;
-import com.example.gogot.model.BoardCard;
-import com.example.gogot.model.PlayCard;
+import com.example.gogot.model.entity.BoardCard;
+import com.example.gogot.model.entity.PlayCard;
+import com.example.gogot.ui.listener.TransitionEndListener;
 
 import java.util.ArrayList;
 
@@ -28,14 +29,18 @@ import static androidx.constraintlayout.widget.ConstraintSet.START;
 import static androidx.constraintlayout.widget.ConstraintSet.TOP;
 
 public class GameBoardLayout extends ConstraintLayout {
+
+    private static final int CARD_TRANSITION_DURATION = 1500;
+
     private Guideline[] horizontalGuidelines;
     private Guideline[] verticalGuidelines;
     private ImageView playerView;
-    private int boardSize;
+
     private ActivityListener activityBoardListener;
-    private int[][] viewId;
     private Point playerPosition;
     private Point newPlayerPosition;
+    private int boardSize;
+    private int[][] viewId;
 
 
     public GameBoardLayout(Context context) {
@@ -57,7 +62,7 @@ public class GameBoardLayout extends ConstraintLayout {
         inflate(getContext(), R.layout.layout_game_board, this);
     }
 
-    void initBoard(int boardSize, BoardCard[][] boardCards, ArrayList<PlayCard> cardsToMove) {
+    public void initBoard(int boardSize, BoardCard[][] boardCards, ArrayList<PlayCard> cardsToMove) {
         this.boardSize = boardSize;
         int guidelinesCount = boardSize + 1;
         horizontalGuidelines = new Guideline[guidelinesCount];
@@ -112,7 +117,7 @@ public class GameBoardLayout extends ConstraintLayout {
     }
 
 
-    interface ActivityListener {
+    public interface ActivityListener {
         int setImageToCard(PlayCard card);
 
         void startTurn(BoardCard boardCard);
@@ -120,11 +125,11 @@ public class GameBoardLayout extends ConstraintLayout {
         void updateIlluminationAndCollectCards();
     }
 
-    void setListener(ActivityListener activityListener) {
+    public void setListener(ActivityListener activityListener) {
         this.activityBoardListener = activityListener;
     }
 
-    void movePlayer(BoardCard playerCard, Point newPlayerPosition) {
+    public void movePlayer(BoardCard playerCard, Point newPlayerPosition) {
         this.newPlayerPosition = newPlayerPosition;
         ConstraintSet set = new ConstraintSet();
         set.clone(this);
@@ -134,31 +139,11 @@ public class GameBoardLayout extends ConstraintLayout {
         set.connect(playerView.getId(), END, verticalGuidelines[newPlayerPosition.y + 1].getId(), END);
         ChangeBounds transition = new ChangeBounds();
         transition.setInterpolator(new AnticipateOvershootInterpolator(1.0f));
-        int animationDuration = 1500;
-        transition.setDuration(animationDuration);
-        transition.addListener(new Transition.TransitionListener() {
-            @Override
-            public void onTransitionStart(Transition transition) {
-            }
-
+        transition.setDuration(CARD_TRANSITION_DURATION);
+        transition.addListener(new TransitionEndListener() {
             @Override
             public void onTransitionEnd(Transition transition) {
                 activityBoardListener.updateIlluminationAndCollectCards();
-            }
-
-            @Override
-            public void onTransitionCancel(Transition transition) {
-
-            }
-
-            @Override
-            public void onTransitionPause(Transition transition) {
-
-            }
-
-            @Override
-            public void onTransitionResume(Transition transition) {
-
             }
         });
         TransitionManager.beginDelayedTransition(this, transition);
@@ -166,11 +151,11 @@ public class GameBoardLayout extends ConstraintLayout {
     }
 
 
-    void removeIllumination(BoardCard[][] boardCards) {
+    public void removeIllumination(BoardCard[][] boardCards) {
         setIllumination(boardCards, null);
     }
 
-    void collectCards(ArrayList<BoardCard> cardsToCollect) {
+    public void collectCards(ArrayList<BoardCard> cardsToCollect) {
         cardsToCollect.forEach(boardCard -> {
             ImageView imageView = findViewById(viewId[boardCard.getRow()][boardCard.getColumn()]);
             imageView.setVisibility(View.INVISIBLE);
@@ -201,8 +186,8 @@ public class GameBoardLayout extends ConstraintLayout {
         }
     }
 
-    void refreshBoard(BoardCard[][] boardCards,
-                      ArrayList<PlayCard> cardsToMove) {
+    public void refreshBoard(BoardCard[][] boardCards,
+                             ArrayList<PlayCard> cardsToMove) {
         setIllumination(boardCards, cardsToMove);
     }
 
@@ -210,7 +195,7 @@ public class GameBoardLayout extends ConstraintLayout {
         imageView.setOnClickListener(v -> activityBoardListener.startTurn(boardCards[i][j]));
     }
 
-    void invalidateBoardCellsListeners() {
+    public void invalidateBoardCellsListeners() {
         for (int i = 0; i < viewId.length; i++) {
             for (int j = 0; j < viewId[0].length; j++) {
                 ImageView imageView = findViewById(viewId[i][j]);
@@ -219,7 +204,7 @@ public class GameBoardLayout extends ConstraintLayout {
         }
     }
 
-    void revalidateBoardCellsListeners(BoardCard[][] boardCards) {
+    public void revalidateBoardCellsListeners(BoardCard[][] boardCards) {
         for (int i = 0; i < viewId.length; i++) {
             for (int j = 0; j < viewId[0].length; j++) {
                 ImageView imageView = findViewById(viewId[i][j]);

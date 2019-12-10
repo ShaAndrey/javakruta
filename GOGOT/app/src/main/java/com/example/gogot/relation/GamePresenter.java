@@ -2,9 +2,8 @@ package com.example.gogot.relation;
 
 import android.graphics.Point;
 
-import com.example.gogot.model.BoardCard;
+import com.example.gogot.model.entity.BoardCard;
 import com.example.gogot.model.GameModel;
-import com.example.gogot.model.PlayCard;
 
 import java.util.ArrayList;
 
@@ -18,15 +17,11 @@ public class GamePresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void stopGame() {
-        view.stopGame();
-    }
-
-    @Override
     public void createView(int amountOfPlayers) {
         view.drawInitialBoard(model.getBoard().getBoardCards(),
                 new ArrayList<>(model.getBoard().getCellsAvailableToMove()));
-        view.drawPlayersHands();
+        view.initializePlayerHands();
+        view.drawPlayersHands(model.getPlayersCards());
     }
 
 
@@ -35,17 +30,18 @@ public class GamePresenter implements MainContract.Presenter {
         view.collectCards(model.getCardsToCollect());
         view.refreshBoard(model.getBoard().getBoardCards(),
                 new ArrayList<>(model.getBoard().getCellsAvailableToMove()));
-        view.addCardsToPlayer(model.getStateOfCardsToCollect(),
-                model.getAmountOfCardsToCollect(), model.getPlayerIndex());
-        view.updatePlayerPoints(model.getPoints());
-        view.updatePlayersIllumination(model.getPlayersDominateStates(), model.getPlayerIndex());
+        view.addCardsToPlayer(model.getStateOfCardsToCollect(), model.getPlayerIndex());
+        view.updatePlayerPoints();
+        view.updatePlayersIllumination(model.getPlayerIndex());
         model.nextPlayer();
         if (model.isPlayer() && model.isMovePossible()) {
             view.revalidateBoardCellsListeners(model.getBoard().getBoardCards());
         } else if (model.isMovePossible()) {
             handleTurn(model.botPickPosition());
         } else {
-            stopGame();
+            view.drawPlayersHands(model.getPlayersCards());
+            view.setEndGameIllumination(model.getPlaces());
+            view.stopGame();
         }
     }
 
