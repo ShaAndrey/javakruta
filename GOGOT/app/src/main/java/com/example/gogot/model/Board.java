@@ -95,7 +95,7 @@ public class Board {
         return cardsToCollect;
     }
 
-    void movePlayer(BoardCard newPosition) {
+    public void movePlayer(BoardCard newPosition) {
         cardsToCollect = new ArrayList<>();
         amountOfCardsToCollect = 1;
         stateOfCardsToCollect = newPosition.getState();
@@ -150,11 +150,11 @@ public class Board {
         boardListener = listener;
     }
 
-    int getAmountOfCardsToCollect() {
+    public int getAmountOfCardsToCollect() {
         return amountOfCardsToCollect;
     }
 
-    PlayCard.State getStateOfCardsToCollect() {
+    public PlayCard.State getStateOfCardsToCollect() {
         return stateOfCardsToCollect;
     }
 

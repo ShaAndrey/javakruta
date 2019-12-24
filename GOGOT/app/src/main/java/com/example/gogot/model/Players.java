@@ -1,5 +1,7 @@
 package com.example.gogot.model;
 
+import com.example.gogot.model.AI.AbstractBot;
+import com.example.gogot.model.AI.Bot;
 import com.example.gogot.model.entity.BoardCard;
 import com.example.gogot.model.entity.InHandCard;
 import com.example.gogot.model.entity.PlayCard;
@@ -39,12 +41,12 @@ public class Players implements PlayersHand.PlayerListener {
         }
     }
 
-    void addCardsToPlayer(PlayCard.State stateOfCardsToCollect, int amountOfCardsToCollect) {
+    public void addCardsToPlayer(PlayCard.State stateOfCardsToCollect, int amountOfCardsToCollect) {
         playersHands.get(currentPlayer).
                 addNCardsToHand(stateOfCardsToCollect, amountOfCardsToCollect);
     }
 
-    int getPlayerIndex() {
+    public int getPlayerIndex() {
         return currentPlayer;
     }
 
@@ -84,7 +86,7 @@ public class Players implements PlayersHand.PlayerListener {
         return points;
     }
 
-    boolean isPlayer() {
+    public boolean isPlayer() {
         return !playersHands.get(currentPlayer).checkDominateState(PlayCard.State.PLAYER);
     }
 
@@ -96,19 +98,19 @@ public class Players implements PlayersHand.PlayerListener {
         return null;
     }
 
-    ArrayList<Integer> getPlayersPoints() {
+    public ArrayList<Integer> getPlayersPoints() {
         ArrayList<Integer> points = new ArrayList<>();
         playersHands.forEach(playersHand -> points.add(playersHand.getPoints()));
         return points;
     }
 
-    ArrayList<Integer> getPlayersAmountForState(PlayCard.State state) {
+    public ArrayList<Integer> getPlayersAmountForState(PlayCard.State state) {
         ArrayList<Integer> points = new ArrayList<>();
         playersHands.forEach(playersHand -> points.add(playersHand.getAmountForState(state)));
         return points;
     }
 
-    void swapTwoPlayers() {
+    public void swapTwoPlayers() {
         PlayersHand current = playersHands.get(currentPlayer);
         playersHands.set(currentPlayer, playersHands.get((currentPlayer + 1) % playersHands.size()));
         playersHands.set((currentPlayer + 1) % playersHands.size(), current);

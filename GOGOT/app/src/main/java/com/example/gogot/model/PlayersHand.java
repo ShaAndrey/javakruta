@@ -9,11 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class PlayersHand {
+public class PlayersHand {
     protected List<InHandCard> inHandCards;
     private PlayerListener playerListener;
 
-    PlayersHand() {
+    public PlayersHand() {
         inHandCards = new ArrayList<>();
         PlayCard.State[] values = PlayCard.State.values();
         for (int i = 1; i < values.length; i++) {
@@ -56,7 +56,7 @@ class PlayersHand {
         return getCardByState(state).getDominatesState();
     }
 
-    void setDominateState(PlayCard.State state, boolean domination) {
+    public void setDominateState(PlayCard.State state, boolean domination) {
         getCardByState(state).setDominatesState(domination);
     }
 

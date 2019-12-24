@@ -1,5 +1,6 @@
-package com.example.gogot.model;
+package com.example.gogot.model.AI;
 
+import com.example.gogot.model.AI.AbstractBot;
 import com.example.gogot.model.entity.BoardCard;
 
 import java.util.List;
@@ -14,7 +15,7 @@ class AdvancedBot extends AbstractBot {
     }
 
     @Override
-    BoardCard pickBestTurn() {
+    public BoardCard pickBestTurn() {
         List<BoardCard> availableCells = board.getCellsAvailableToMove();
         if (availableCells.isEmpty()) {
             return null;

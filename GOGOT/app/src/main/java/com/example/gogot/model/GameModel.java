@@ -134,7 +134,7 @@ public class GameModel implements MainContract.Model,
         return this;
     }
 
-    class SnapShots {
+    public class SnapShots {
         private Stack<Board.BoardSnapshot> boardSnapshots;
         private Stack<Players.PlayersSnapShot> playersSnapShots;
 
@@ -143,12 +143,12 @@ public class GameModel implements MainContract.Model,
             playersSnapShots = new Stack<>();
         }
 
-        void addSnapShot() {
+        public void addSnapShot() {
             boardSnapshots.push(board.createSnapShot());
             playersSnapShots.push(players.createSnapShot());
         }
 
-        void undo() {
+        public void undo() {
             boardSnapshots.pop().restore();
             playersSnapShots.pop().restore();
         }

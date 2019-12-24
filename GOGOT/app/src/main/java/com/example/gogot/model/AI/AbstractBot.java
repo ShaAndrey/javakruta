@@ -1,11 +1,15 @@
-package com.example.gogot.model;
+package com.example.gogot.model.AI;
 
+import com.example.gogot.model.Board;
+import com.example.gogot.model.GameModel;
+import com.example.gogot.model.Players;
+import com.example.gogot.model.PlayersHand;
 import com.example.gogot.model.entity.BoardCard;
 import com.example.gogot.model.entity.PlayCard;
 
 import java.util.List;
 
-abstract class AbstractBot extends PlayersHand {
+abstract public class AbstractBot extends PlayersHand {
     GameModel gameModel;
     Board board;
     Players players;
@@ -27,7 +31,7 @@ abstract class AbstractBot extends PlayersHand {
         players = gameModel.getPlayers();
     }
 
-    abstract BoardCard pickBestTurn();
+    public abstract BoardCard pickBestTurn();
 
     abstract void checkCell(BoardCard boardCard);
 
@@ -56,12 +60,15 @@ abstract class AbstractBot extends PlayersHand {
     }
 
     void makeTurn(BoardCard boardCard) {
+        if(boardCard.getState().equals(PlayCard.State.NOTHING)) {
+            throw new RuntimeException("omg");
+        }
         board.movePlayer(boardCard);
         players.addCardsToPlayer(board.getStateOfCardsToCollect(),
                 board.getAmountOfCardsToCollect());
     }
 
-    void setGameModel(GameModel gameModel) {
+    public void setGameModel(GameModel gameModel) {
         this.gameModel = gameModel;
         setBoard();
         setPlayers();

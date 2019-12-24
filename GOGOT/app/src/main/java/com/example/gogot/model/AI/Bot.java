@@ -1,12 +1,13 @@
-package com.example.gogot.model;
+package com.example.gogot.model.AI;
 
+import com.example.gogot.model.AI.AbstractBot;
 import com.example.gogot.model.entity.BoardCard;
 
 import java.util.List;
 
-class Bot extends AbstractBot {
+public class Bot extends AbstractBot {
 
-    Bot() {
+    public Bot() {
         super();
     }
 
