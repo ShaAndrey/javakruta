@@ -103,21 +103,20 @@ public class Board {
         int rowMoveDirection = (playerPosition.x < newPosition.getRow()) ? 1 : -1;
         int columnMoveDirection = (playerPosition.y < newPosition.getColumn()) ? 1 : -1;
         for (int i = playerPosition.x; i != newPosition.getRow(); i += rowMoveDirection) {
-            collectCard(gameBoard[i][playerPosition.y], newPosition, cardsToCollect);
+            collectCard(gameBoard[i][playerPosition.y], newPosition);
         }
         for (int j = playerPosition.y; j != newPosition.getColumn(); j += columnMoveDirection) {
-            collectCard(gameBoard[playerPosition.x][j], newPosition, cardsToCollect);
+            collectCard(gameBoard[playerPosition.x][j], newPosition);
         }
         cardsToCollect.add(gameBoard[newPosition.getRow()][newPosition.getColumn()]);
         playerPosition = new Point(newPosition.getRow(), newPosition.getColumn());
         gameBoard[playerPosition.x][playerPosition.y].setState(BoardCard.State.PLAYER);
     }
 
-    private void collectCard(BoardCard cardToCollect, BoardCard newPosition,
-                             ArrayList<BoardCard> cardsToCollect) {
+    private void collectCard(BoardCard cardToCollect, BoardCard newPosition) {
         if (cardToCollect.getState() == newPosition.getState()) {
+            cardsToCollect.add(new BoardCard(cardToCollect));
             cardToCollect.setState(BoardCard.State.NOTHING);
-            cardsToCollect.add(cardToCollect);
             ++amountOfCardsToCollect;
         }
     }

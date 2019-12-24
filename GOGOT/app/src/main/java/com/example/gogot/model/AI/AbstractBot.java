@@ -60,9 +60,6 @@ abstract public class AbstractBot extends PlayersHand {
     }
 
     void makeTurn(BoardCard boardCard) {
-        if(boardCard.getState().equals(PlayCard.State.NOTHING)) {
-            throw new RuntimeException("omg");
-        }
         board.movePlayer(boardCard);
         players.addCardsToPlayer(board.getStateOfCardsToCollect(),
                 board.getAmountOfCardsToCollect());

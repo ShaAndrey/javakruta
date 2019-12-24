@@ -2,6 +2,7 @@ package com.example.gogot.model.AI;
 
 import com.example.gogot.model.AI.AbstractBot;
 import com.example.gogot.model.entity.BoardCard;
+import com.example.gogot.model.entity.PlayCard;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class Bot extends AbstractBot {
     }
 
     @Override
-    BoardCard pickBestTurn() {
+    public BoardCard pickBestTurn() {
         List<BoardCard> availableCells = board.getCellsAvailableToMove();
         if (availableCells.isEmpty()) {
             return null;
@@ -24,6 +25,9 @@ public class Bot extends AbstractBot {
             checkCell(boardCard);
             gameModel.getSnapShots().undo();
         });
+        if(cellToGo.getState().equals(PlayCard.State.NOTHING)) {
+            throw new RuntimeException("pickBestTurn");
+        }
         return cellToGo;
     }
 
