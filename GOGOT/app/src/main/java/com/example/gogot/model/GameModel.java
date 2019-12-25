@@ -115,6 +115,11 @@ public class GameModel implements MainContract.Model,
     }
 
     @Override
+    public ArrayList<Player> getPlayersForEndGame() {
+        return players.getPlayers();
+    }
+
+    @Override
     public Players getPlayers() {
         return players;
     }

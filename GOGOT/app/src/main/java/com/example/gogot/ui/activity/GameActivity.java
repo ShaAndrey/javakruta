@@ -1,57 +1,58 @@
 package com.example.gogot.ui.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.transition.ChangeBounds;
-import android.transition.TransitionManager;
 import android.view.KeyEvent;
 import android.view.WindowManager;
-import android.view.animation.LinearInterpolator;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.gogot.model.Player;
 import com.example.gogot.model.entity.BoardCard;
 import com.example.gogot.model.entity.InHandCard;
 import com.example.gogot.model.entity.PlayCard;
 import com.example.gogot.relation.GamePresenter;
 import com.example.gogot.relation.MainContract;
 import com.example.gogot.R;
-import com.example.gogot.ui.custom.EndGameLayout;
 import com.example.gogot.ui.custom.GameBoardLayout;
-import com.example.gogot.ui.custom.RVAdapter;
+import com.example.gogot.ui.custom.RVAdapterPlayerHand;
 import com.example.gogot.ui.dialog.MenuDialog;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.gogot.ui.activity.EndGameActivity.NEW_GAME;
+import static com.example.gogot.ui.activity.EndGameActivity.RESTART_GAME;
+import static com.example.gogot.ui.activity.EndGameActivity.TO_MAIN_MENU;
+
 
 public class GameActivity extends AppCompatActivity
         implements MainContract.View,
         GameBoardLayout.ActivityListener,
-        RVAdapter.RVAdapterListener,
-        MenuDialog.MenuDialogListener,
-        EndGameLayout.EndGameLayoutListener {
+        RVAdapterPlayerHand.RVAdapterListener,
+        MenuDialog.MenuDialogListener {
 
     public static final String AMOUNT_OF_PLAYERS = "AMOUNT_OF_PLAYERS";
+    public static final String ACTION_ON_END_GAME = "ACTION_ON_END_GAME";
+    public static final String PLAYERS = "PLAYERS";
     public static final int DEFAULT_PLAYER_AMOUNT = 1;
     public static final int PADDING = 10;
     public static final int PADDING_END_GAME = 20;
 
-    private ConstraintLayout gameActivityLayout;
+    public static final int END_GAME = 1;
+
     private GameBoardLayout gameBoard;
     private GamePresenter presenter;
     private MenuDialog gameMenu;
 
     private List<RecyclerView> playerHandLayouts;
-    private List<RVAdapter> adapters;
+    private List<RVAdapterPlayerHand> adapters;
     private int amountOfPlayers;
     private boolean userInteractionBlocked;
 
@@ -66,7 +67,6 @@ public class GameActivity extends AppCompatActivity
         presenter = new GamePresenter(this, amountOfPlayers);
 
         setContentView(R.layout.game_activity_layout);
-        gameActivityLayout = findViewById(R.id.game_activity_layout);
 
         presenter.createView(amountOfPlayers);
         gameMenu = new MenuDialog(this);
@@ -92,44 +92,59 @@ public class GameActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public void setEndGameIllumination(List<Integer> places) {
-        for (int i = 0; i < places.size(); i++) {
-            GradientDrawable border = new GradientDrawable();
-            playerHandLayouts.get(i).setPadding(PADDING_END_GAME, PADDING_END_GAME,
-                    PADDING_END_GAME, PADDING_END_GAME);
-            if (places.get(i) == 0) {
-                border.setStroke(PADDING_END_GAME, Color.parseColor("#d4af37"));
-            } else if (places.get(i) == 1) {
-                border.setStroke(PADDING_END_GAME, Color.parseColor("#C0C0C0"));
-            } else {
-                border.setStroke(PADDING_END_GAME, Color.parseColor("#cd7f32"));
-            }
-            playerHandLayouts.get(i).setBackground(border);
-        }
-
-    }
+//    @Override
+//    public void setEndGameIllumination(List<Integer> places) {
+//        for (int i = 0; i < places.size(); i++) {
+//            GradientDrawable border = new GradientDrawable();
+//            playerHandLayouts.get(i).setPadding(PADDING_END_GAME, PADDING_END_GAME,
+//                    PADDING_END_GAME, PADDING_END_GAME);
+//            if (places.get(i) == 0) {
+//                border.setStroke(PADDING_END_GAME, Color.parseColor("#d4af37"));
+//            } else if (places.get(i) == 1) {
+//                border.setStroke(PADDING_END_GAME, Color.parseColor("#C0C0C0"));
+//            } else {
+//                border.setStroke(PADDING_END_GAME, Color.parseColor("#cd7f32"));
+//            }
+//            playerHandLayouts.get(i).setBackground(border);
+//        }
+//    }
 
     @Override
     public void drawPlayersHands(List<List<InHandCard>> playersCards) {
         adapters = new ArrayList<>();
         for (int i = 0; i < playerHandLayouts.size(); i++) {
             RecyclerView playerHandLayout = playerHandLayouts.get(i);
-            playerHandLayouts.get(i).setPadding(PADDING, PADDING, PADDING, PADDING);
+            playerHandLayouts.get(i).setPadding
+                    (PADDING, PADDING, PADDING, PADDING);
             playerHandLayout.setHasFixedSize(true);
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4) {
-                @Override
-                public boolean canScrollVertically() {
-                    return false;
-                }
-            };
+            GridLayoutManager gridLayoutManager =
+                    new GridLayoutManager(this, 4) {
+                        @Override
+                        public boolean canScrollVertically() {
+                            return false;
+                        }
+                    };
             playerHandLayout.setLayoutManager(gridLayoutManager);
-            RVAdapter adapter = new RVAdapter(playersCards.get(i));
+            RVAdapterPlayerHand adapter = new RVAdapterPlayerHand
+                    (playersCards.get(i), setPicIdToPlayer(i));
             adapter.setListener(this);
             playerHandLayout.setAdapter(adapter);
             adapters.add(adapter);
         }
         updatePlayersIllumination(amountOfPlayers - 1);
+    }
+
+    private int setPicIdToPlayer(int i) {
+        switch (i) {
+            case 0:
+                return R.drawable.player0;
+            case 1:
+                return R.drawable.player1;
+            case 2:
+                return R.drawable.player2;
+            default:
+                return R.drawable.star;
+        }
     }
 
     @Override
@@ -203,73 +218,14 @@ public class GameActivity extends AppCompatActivity
     }
 
     @Override
-    public void stopGame() {
-        userInteractionBlocked = true;
-        EndGameLayout endGameLayout = findViewById(R.id.layout_end_game);
-        endGameLayout.setListener(this);
-        ConstraintSet constraintSet = new ConstraintSet();
-        constraintSet.clone(gameActivityLayout);
-        if (amountOfPlayers == 3) {
-            threePlayersEndGame(constraintSet);
-        } else {
-            twoPlayersEndGame(constraintSet);
+    public void stopGame(ArrayList<Player> players) {
+        Intent intent = new Intent(GameActivity.this,
+                EndGameActivity.class);
+        for (int i = 0; i < players.size(); i++) {
+            players.get(i).setPictureId(setPicIdToPlayer(i));
         }
-        ChangeBounds transition = new ChangeBounds();
-        transition.setInterpolator(new LinearInterpolator());
-        int animationDuration = 1500;
-        transition.setDuration(animationDuration);
-        TransitionManager.beginDelayedTransition(gameActivityLayout, transition);
-        constraintSet.applyTo(gameActivityLayout);
-    }
-
-    private void twoPlayersEndGame(ConstraintSet constraintSet) {
-        int id = playerHandLayouts.get(0).getId();
-        constraintSet.connect(id, ConstraintSet.TOP,
-                R.id.horizontalGuidelinePlayers3, ConstraintSet.TOP);
-        constraintSet.connect(id, ConstraintSet.END,
-                ConstraintSet.PARENT_ID, ConstraintSet.END);
-
-        id = playerHandLayouts.get(1).getId();
-        constraintSet.connect(id, ConstraintSet.BOTTOM,
-                R.id.horizontalGuidelinePlayers2, ConstraintSet.BOTTOM);
-        constraintSet.connect(id, ConstraintSet.START,
-                ConstraintSet.PARENT_ID, ConstraintSet.START);
-
-
-        id = R.id.layout_end_game;
-        constraintSet.connect(id, ConstraintSet.TOP,
-                R.id.horizontalGuidelinePlayers2, ConstraintSet.TOP);
-        constraintSet.connect(id, ConstraintSet.BOTTOM,
-                R.id.horizontalGuidelinePlayers3, ConstraintSet.BOTTOM);
-
-    }
-
-    private void threePlayersEndGame(ConstraintSet constraintSet) {
-        int id = playerHandLayouts.get(0).getId();
-        constraintSet.connect(id, ConstraintSet.TOP,
-                R.id.horizontalGuidelinePlayers7, ConstraintSet.TOP);
-        constraintSet.connect(id, ConstraintSet.END,
-                ConstraintSet.PARENT_ID, ConstraintSet.END);
-
-        id = playerHandLayouts.get(1).getId();
-        constraintSet.connect(id, ConstraintSet.BOTTOM,
-                R.id.horizontalGuidelinePlayers5, ConstraintSet.BOTTOM);
-        constraintSet.connect(id, ConstraintSet.START,
-                ConstraintSet.PARENT_ID, ConstraintSet.START);
-
-        id = playerHandLayouts.get(2).getId();
-        constraintSet.connect(id, ConstraintSet.TOP,
-                R.id.horizontalGuidelinePlayers5, ConstraintSet.TOP);
-        constraintSet.connect(id, ConstraintSet.BOTTOM,
-                R.id.horizontalGuidelinePlayers6, ConstraintSet.BOTTOM);
-        constraintSet.connect(id, ConstraintSet.END,
-                ConstraintSet.PARENT_ID, ConstraintSet.END);
-
-        id = R.id.layout_end_game;
-        constraintSet.connect(id, ConstraintSet.TOP,
-                R.id.horizontalGuidelinePlayers6, ConstraintSet.TOP);
-        constraintSet.connect(id, ConstraintSet.BOTTOM,
-                R.id.horizontalGuidelinePlayers7, ConstraintSet.BOTTOM);
+        intent.putParcelableArrayListExtra(PLAYERS, players);
+        startActivityForResult(intent, END_GAME);
     }
 
     @Override
@@ -307,22 +263,10 @@ public class GameActivity extends AppCompatActivity
         finish();
     }
 
-
-    @Override
     public void onNewGame() {
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
         finish();
-    }
-
-    @Override
-    public void onExit() {
-        exit();
-    }
-
-    @Override
-    public void onRestartGame() {
-        restart();
     }
 
     @Override
@@ -336,6 +280,26 @@ public class GameActivity extends AppCompatActivity
         intent.putExtra(AMOUNT_OF_PLAYERS, amountOfPlayers);
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == END_GAME && data != null) {
+            switch (data.getStringExtra(ACTION_ON_END_GAME)) {
+                case NEW_GAME:
+                    onNewGame();
+                    break;
+                case TO_MAIN_MENU:
+                    exit();
+                    break;
+                case RESTART_GAME:
+                    restart();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     @Override

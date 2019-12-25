@@ -153,15 +153,4 @@
         app:layout_constraintHorizontal_bias="0.2"/>
 
 
-    <com.example.gogot.ui.custom.EndGameLayout
-        android:id="@+id/layout_end_game"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:textSize="20pt"
-        app:layout_constraintBottom_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.5"/>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

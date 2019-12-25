@@ -16,6 +16,7 @@ public class Players implements PlayersHand.PlayerListener {
     private int currentPlayer = 0;
     private ArrayList<PlayersHand> playersHands;
     private PlayersListener playersListener;
+    ArrayList<Player> players;
 
     Players(Players otherPlayers) {
         amountOfPlayers = otherPlayers.amountOfPlayers;
@@ -93,8 +94,8 @@ public class Players implements PlayersHand.PlayerListener {
     BoardCard botPickPosition() {
         if (playersHands.get(currentPlayer) instanceof AbstractBot) {
             ((AbstractBot) playersHands.get(currentPlayer)).setGameModel(playersListener.getModel());
-            BoardCard a =((AbstractBot) playersHands.get(currentPlayer)).pickBestTurn();
-            if(a.getState().equals(PlayCard.State.NOTHING)) {
+            BoardCard a = ((AbstractBot) playersHands.get(currentPlayer)).pickBestTurn();
+            if (a.getState().equals(PlayCard.State.NOTHING)) {
                 throw new RuntimeException("botPickPosition");
             }
             return a;
@@ -125,7 +126,7 @@ public class Players implements PlayersHand.PlayerListener {
         playersListener = model;
     }
 
-    public List<Integer> getPlaces() {
+    List<Integer> getPlaces() {
         List<Integer> points = new ArrayList<>(getPoints());
         List<Integer> places = new ArrayList<>();
         for (int i = 0; i < points.size(); i++) {
@@ -140,6 +141,15 @@ public class Players implements PlayersHand.PlayerListener {
             }
         }
         return places;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        List<Integer> places = new ArrayList<>(getPlaces());
+        players = new ArrayList<>();
+        for (int i = 0; i < playersHands.size(); i++) {
+            players.add(new Player(places.get(i), playersHands.get(i).getPoints()));
+        }
+        return players;
     }
 
     interface PlayersListener {

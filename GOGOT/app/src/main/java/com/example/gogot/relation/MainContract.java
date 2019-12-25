@@ -3,6 +3,7 @@ package com.example.gogot.relation;
 import android.graphics.Point;
 
 import com.example.gogot.model.Board;
+import com.example.gogot.model.Player;
 import com.example.gogot.model.Players;
 import com.example.gogot.model.entity.BoardCard;
 import com.example.gogot.model.entity.InHandCard;
@@ -24,7 +25,7 @@ public interface MainContract {
 
         void youCantMoveThere();
 
-        void stopGame();
+        void stopGame(ArrayList<Player> players);
 
         void removeIllumination(BoardCard[][] boardCards);
 
@@ -42,8 +43,6 @@ public interface MainContract {
         void revalidateBoardCellsListeners(BoardCard[][] boardCards);
 
         void initializePlayerHands();
-
-        void setEndGameIllumination(List<Integer> places);
     }
 
     interface Presenter {
@@ -87,6 +86,8 @@ public interface MainContract {
         List<List<InHandCard>> getPlayersCards();
 
         List<Integer> getPlaces();
+
+        ArrayList<Player> getPlayersForEndGame();
 
         Players getPlayers();
     }

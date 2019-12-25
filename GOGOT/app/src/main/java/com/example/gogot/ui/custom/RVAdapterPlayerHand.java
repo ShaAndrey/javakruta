@@ -1,7 +1,6 @@
 package com.example.gogot.ui.custom;
 
 import android.graphics.Color;
-import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +15,13 @@ import com.example.gogot.R;
 import com.example.gogot.model.entity.InHandCard;
 import com.example.gogot.model.entity.PlayCard;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CardViewHolder> {
+public class RVAdapterPlayerHand extends RecyclerView.Adapter<RVAdapterPlayerHand.CardViewHolder> {
     private List<InHandCard> cards;
     private RVAdapterListener listener;
     private int padding = 10;
+    private int playerPicId;
 
     @NonNull
     @Override
@@ -56,7 +55,15 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CardViewHolder> {
             border.setStroke(1, 0x66000000);
         }
         imageView.setBackground(border);
-        imageView.setImageResource(setImageToCard(cards.get(position)));
+        if(position == 0) {
+            imageView.setImageResource(setImageToPlayerCard());
+        } else {
+            imageView.setImageResource(setImageToCard(cards.get(position)));
+        }
+    }
+
+    private int setImageToPlayerCard() {
+        return playerPicId;
     }
 
     public void addCardsAmount(PlayCard.State stateOfCardsToAdd) {
@@ -71,8 +78,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.CardViewHolder> {
         notifyDataSetChanged();
     }
 
-    public RVAdapter(List<InHandCard> playersCards) {
+    public RVAdapterPlayerHand(List<InHandCard> playersCards, int playerPicId) {
         cards = playersCards;
+        this.playerPicId = playerPicId;
     }
 
 
