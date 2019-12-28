@@ -38,8 +38,6 @@ public class RVAdapterPlayerHand extends RecyclerView.Adapter<RVAdapterPlayerHan
 
     private void initializeAmountView(TextView amountTextView, int position) {
         amountTextView.setText(String.valueOf(cards.get(position).getAmount()));
-        amountTextView.setTextColor(Color.parseColor("#CCFFFF00"));
-        amountTextView.setPadding(padding, padding, padding, padding);
         amountTextView.setTextSize(30);
     }
 
@@ -55,7 +53,7 @@ public class RVAdapterPlayerHand extends RecyclerView.Adapter<RVAdapterPlayerHan
             border.setStroke(1, 0x66000000);
         }
         imageView.setBackground(border);
-        if(position == 0) {
+        if (position == 0) {
             imageView.setImageResource(setImageToPlayerCard());
         } else {
             imageView.setImageResource(setImageToCard(cards.get(position)));

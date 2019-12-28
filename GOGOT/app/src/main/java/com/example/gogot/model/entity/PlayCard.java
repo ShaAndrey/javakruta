@@ -18,7 +18,7 @@ public class PlayCard {
         setState(state);
     }
 
-    PlayCard (PlayCard otherCard) {
+    PlayCard(PlayCard otherCard) {
         setState(otherCard.state);
     }
 

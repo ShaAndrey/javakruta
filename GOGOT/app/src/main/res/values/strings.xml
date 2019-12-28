@@ -13,4 +13,6 @@
     <string name="you_cant_move_there">Вы не можете походить туда.</string>
     <string name="restart_game">Начать заново</string>
     <string name="play_one_more_time">Сыграть еще раз</string>
+    <string name="place">место</string>
+    <string name="points">очков</string>
 </resources>

@@ -15,12 +15,17 @@ public class Bot extends AbstractBot {
     @Override
     public BoardCard pickBestTurn() {
         List<BoardCard> availableCells = board.getCellsAvailableToMove();
+        availableCells.forEach(boardCard ->
+                System.err.println("pickBestTurn: " + boardCard.getState()));
+
         if (availableCells.isEmpty()) {
             return null;
         }
         cellToGo = new BoardCard(availableCells.get(0));
         maxDifference = -100;
         availableCells.forEach(boardCard -> {
+            availableCells.forEach(boardCard1 ->
+                    System.err.println("forEach: " + boardCard1.getState()));
             gameModel.getSnapShots().addSnapShot();
             checkCell(boardCard);
             gameModel.getSnapShots().undo();

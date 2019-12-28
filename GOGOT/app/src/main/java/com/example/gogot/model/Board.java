@@ -86,6 +86,8 @@ public class Board {
                 availableCells.add(gameBoard[playerPosition.x][j]);
             }
         }
+        availableCells.forEach(boardCard ->
+                System.err.println("getCellsAvailableToMove: " + boardCard.getState()));
         return availableCells;
     }
 
@@ -115,8 +117,8 @@ public class Board {
 
     private void collectCard(BoardCard cardToCollect, BoardCard newPosition) {
         if (cardToCollect.getState() == newPosition.getState()) {
-            cardsToCollect.add(new BoardCard(cardToCollect));
             cardToCollect.setState(BoardCard.State.NOTHING);
+            cardsToCollect.add(cardToCollect);
             ++amountOfCardsToCollect;
         }
     }
@@ -161,10 +163,6 @@ public class Board {
         return new BoardSnapshot(this, gameBoard);
     }
 
-    public void setGameBoard(BoardCard[][] gameBoard) {
-        this.gameBoard = gameBoard;
-    }
-
     public void setPlayerPosition(Point playerPosition) {
         this.playerPosition = playerPosition;
     }
@@ -190,8 +188,16 @@ public class Board {
         }
 
         void restore() {
-            board.setGameBoard(gameBoardCards);
+            board.restoreGameBoard(gameBoardCards);
             board.setPlayerPosition(playerPosition);
+        }
+    }
+
+    private void restoreGameBoard(BoardCard[][] gameBoardCards) {
+        for (int i = 0; i < gameBoard.length; i++) {
+            for (int j = 0; j < gameBoard[i].length; j++) {
+                gameBoard[i][j].setState(gameBoardCards[i][j].getState());
+            }
         }
     }
 }

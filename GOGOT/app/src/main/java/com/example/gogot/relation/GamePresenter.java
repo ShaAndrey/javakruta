@@ -34,9 +34,9 @@ public class GamePresenter implements MainContract.Presenter {
         view.updatePlayerPoints();
         view.updatePlayersIllumination(model.getPlayerIndex());
         model.nextPlayer();
-        if (model.isPlayer() && !model.isMovePossible()) {
+        if (model.isPlayer() && model.isMovePossible()) {
             view.revalidateBoardCellsListeners(model.getBoard().getBoardCards());
-        } else if (!model.isMovePossible()) {
+        } else if (model.isMovePossible()) {
             handleTurn(model.botPickPosition());
         } else {
             view.drawPlayersHands(model.getPlayersCards());

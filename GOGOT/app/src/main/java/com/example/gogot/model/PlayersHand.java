@@ -16,7 +16,7 @@ public class PlayersHand {
     public PlayersHand() {
         inHandCards = new ArrayList<>();
         PlayCard.State[] values = PlayCard.State.values();
-        for (int i = 1; i < values.length; i++) {
+        for (int i = 1; i < values.length; ++i) {
             PlayCard.State state = values[i];
             inHandCards.add(new InHandCard(state));
         }
@@ -65,6 +65,8 @@ public class PlayersHand {
     }
 
     private InHandCard getCardByState(PlayCard.State state) {
+        System.out.println(getIndByState(state));
+        System.out.println(state);
         return inHandCards.get(getIndByState(state));
     }
 

@@ -39,7 +39,6 @@ public class RVAdapterEndGameTable extends
     public void onBindViewHolder
             (@NonNull RVAdapterEndGameTable.PlayerViewHolder holder,
              int position) {
-
         initPicture(holder.picture, position);
         initPlace(holder.place, position);
         initPoints(holder.points, position);
@@ -47,12 +46,14 @@ public class RVAdapterEndGameTable extends
 
     @SuppressLint("SetTextI18n")
     private void initPoints(TextView points, int position) {
-        points.setText("with " + Integer.toString(players.get(position).getPoints()) + " points");
+        points.setText(players.get(position).getPoints() + " "
+                + points.getContext().getString(R.string.points));
     }
 
     @SuppressLint("SetTextI18n")
     private void initPlace(TextView place, int position) {
-        place.setText(Integer.toString(players.get(position).getPlace() + 1) + " place");
+        place.setText((players.get(position).getPlace() + 1)
+                + " " + place.getContext().getString(R.string.place));
         place.setTextColor(Color.parseColor("#CCFFFF00"));
         place.setPadding(padding, padding, padding, padding);
         place.setTextSize(30);
@@ -66,8 +67,6 @@ public class RVAdapterEndGameTable extends
         picture.setBackground(border);
         picture.setImageResource(players.get(position).getPictureId());
     }
-
-
 
 
     class PlayerViewHolder extends RecyclerView.ViewHolder {
