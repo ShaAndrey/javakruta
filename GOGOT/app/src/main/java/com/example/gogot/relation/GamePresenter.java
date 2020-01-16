@@ -24,13 +24,12 @@ public class GamePresenter implements MainContract.Presenter {
         view.drawPlayersHands(model.getPlayersCards());
     }
 
-
     @Override
     public void updateIlluminationAndCollectCards() {
         view.collectCards(model.getCardsToCollect());
-        view.refreshBoard(model.getBoard().getBoardCards(),
-                new ArrayList<>(model.getBoard().getCellsAvailableToMove()));
-        view.addCardsToPlayer(model.getStateOfCardsToCollect(), model.getPlayerIndex());
+//        view.refreshBoard(model.getBoard().getBoardCards(),
+//                new ArrayList<>(model.getBoard().getCellsAvailableToMove()));
+//        view.addCardsToPlayer(model.getStateOfCardsToCollect(), model.getPlayerIndex());
         view.updatePlayerPoints();
         view.updatePlayersIllumination(model.getPlayerIndex());
         model.nextPlayer();
@@ -40,15 +39,15 @@ public class GamePresenter implements MainContract.Presenter {
             handleTurn(model.botPickPosition());
         } else {
             view.drawPlayersHands(model.getPlayersCards());
-//            view.setEndGameIllumination(model.getPlaces());
             view.stopGame(model.getPlayersForEndGame());
         }
     }
+
     @Override
     public void handleTurn(BoardCard boardCard) {
         if (model.isMovePossible(boardCard)) {
             view.invalidateBoardCellsListeners();
-            view.removeIllumination(model.getBoard().getBoardCards());
+//            view.removeIllumination(model.getBoard().getBoardCards());
             model.handleTurn(boardCard);
             view.movePlayer(model.getPlayerCard(),
                     new Point(boardCard.getRow(), boardCard.getColumn()));

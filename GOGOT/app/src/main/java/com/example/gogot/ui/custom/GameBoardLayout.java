@@ -99,7 +99,7 @@ public class GameBoardLayout extends ConstraintLayout {
         viewId[i][j] = imageView.getId();
         imageView.setImageResource(activityBoardListener.setImageToCard(boardCards[i][j]));
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        imageView.setPadding(5, 5, 5, 5);
+//        imageView.setPadding(5, 5, 5, 5);
         setListenerToView(imageView, boardCards, i, j);
         Constraints.LayoutParams params = new Constraints.LayoutParams(0, 0);
         addView(imageView, params);

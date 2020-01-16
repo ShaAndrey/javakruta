@@ -170,11 +170,6 @@ public class GameActivity extends AppCompatActivity
     }
 
     @Override
-    public void addCardsToPlayer(PlayCard.State stateOfCardsToAdd, int playerInd) {
-        adapters.get(playerInd).addCardsAmount(stateOfCardsToAdd);
-    }
-
-    @Override
     public void updatePlayerPoints() {
         for (int i = 0; i < adapters.size(); i++) {
             adapters.get(i).updatePlayerPoints();
@@ -309,21 +304,21 @@ public class GameActivity extends AppCompatActivity
             case NOTHING:
                 return R.drawable.star;
             case PLAYER:
-                return R.drawable.player;
+                return R.drawable.hero_frame2;
             case DRAGON:
-                return R.drawable.dragon;
+                return R.drawable.giant_frame;
             case OGRE:
-                return R.drawable.ogre;
+                return R.drawable.ghost_frame;
             case MINOTAUR:
-                return R.drawable.minotaur;
+                return R.drawable.dog_frame;
             case ELF:
-                return R.drawable.thom;
+                return R.drawable.skeleton_frame;
             case FAIRY:
-                return R.drawable.fairy;
+                return R.drawable.wizard_frame;
             case GNOME:
-                return R.drawable.gnome;
+                return R.drawable.warrior_frame;
             case GOBLIN:
-                return R.drawable.goblin;
+                return R.drawable.guy_frame;
         }
         return 0;
     }

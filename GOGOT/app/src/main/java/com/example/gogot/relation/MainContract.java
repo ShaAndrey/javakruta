@@ -32,7 +32,7 @@ public interface MainContract {
         void refreshBoard(BoardCard[][] gameBoard,
                           ArrayList<PlayCard> cardsToMove);
 
-        void addCardsToPlayer(PlayCard.State stateOfCardsToAdd, int playerInd);
+//        void addCardsToPlayer(PlayCard.State stateOfCardsToAdd, int playerInd);
 
         void updatePlayerPoints();
 
