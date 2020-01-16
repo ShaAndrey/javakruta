@@ -27,10 +27,6 @@ public class GamePresenter implements MainContract.Presenter {
     @Override
     public void updateIlluminationAndCollectCards() {
         view.collectCards(model.getCardsToCollect());
-//        view.refreshBoard(model.getBoard().getBoardCards(),
-//                new ArrayList<>(model.getBoard().getCellsAvailableToMove()));
-//        view.addCardsToPlayer(model.getStateOfCardsToCollect(), model.getPlayerIndex());
-        view.updatePlayerPoints();
         view.updatePlayersIllumination(model.getPlayerIndex());
         model.nextPlayer();
         if (model.isPlayer() && model.isMovePossible()) {
