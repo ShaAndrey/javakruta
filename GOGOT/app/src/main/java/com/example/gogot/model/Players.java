@@ -1,6 +1,9 @@
 package com.example.gogot.model;
 
+import android.widget.Advanceable;
+
 import com.example.gogot.model.AI.AbstractBot;
+import com.example.gogot.model.AI.AdvancedBot;
 import com.example.gogot.model.AI.Bot;
 import com.example.gogot.model.entity.BoardCard;
 import com.example.gogot.model.entity.InHandCard;
@@ -37,7 +40,7 @@ public class Players implements PlayersHand.PlayerListener {
         }
         if (amountOfPlayers == 1) {
             ++this.amountOfPlayers;
-            playersHands.add(new Bot());
+            playersHands.add(new AdvancedBot());
             playersHands.get(1).setPlayerListener(this);
         }
     }

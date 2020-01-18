@@ -5,12 +5,12 @@ import com.example.gogot.model.entity.BoardCard;
 
 import java.util.List;
 
-class AdvancedBot extends AbstractBot {
+public class AdvancedBot extends AbstractBot {
 
     private int amountOfCalculatedSteps = 2;
     private double currentDifference = 0.0;
 
-    AdvancedBot() {
+    public AdvancedBot() {
         super();
     }
 
@@ -36,7 +36,7 @@ class AdvancedBot extends AbstractBot {
     @Override
     void checkCell(BoardCard boardCard) {
         BoardCard currentCellToGo = new BoardCard(boardCard);
-        currentDifference = 0.0;
+        currentDifference = 0;
 
         if (amountOfCalculatedSteps == 2) {
             calculateNextStep(currentCellToGo);
