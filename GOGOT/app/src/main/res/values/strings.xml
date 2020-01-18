@@ -15,4 +15,6 @@
     <string name="play_one_more_time">Сыграть еще раз</string>
     <string name="place">место</string>
     <string name="points">очков</string>
+    <string name="easy">легко</string>
+    <string name="hard">сложно</string>
 </resources>

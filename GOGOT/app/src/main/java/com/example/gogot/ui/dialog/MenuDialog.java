@@ -20,14 +20,6 @@ public class MenuDialog extends Dialog {
         this.context = context;
     }
 
-    public MenuDialog(@NonNull Context context, int themeResId) {
-        super(context, themeResId);
-    }
-
-    protected MenuDialog(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
-        super(context, cancelable, cancelListener);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

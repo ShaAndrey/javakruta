@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gogot.R;
+import com.example.gogot.ui.dialog.BotDifficultiesDialog;
 
 import static com.example.gogot.ui.activity.GameActivity.*;
 
@@ -17,6 +18,13 @@ public class StartGameActivity extends AppCompatActivity {
     public static final int GAME_ACTIVITY_RESULT = 1001;
     public static final String NEED_TO_RESTART_GAME = "NEED_TO_RESTART";
     public static final String NEED_TO_QUIT_TO_MAIN_MENU = "NEED_TO_QUIT_TO_MAIN_MENU";
+    public static final String BOT_DIFFICULTY = "BOT_DIFFICULTY";
+    public enum BotDifficulties {
+        PLAYER,
+        EASY,
+        HARD
+    }
+    BotDifficultiesDialog botDifficultiesDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -26,17 +34,21 @@ public class StartGameActivity extends AppCompatActivity {
         getBackButton.setOnClickListener(v -> {
             finish();
         });
+        botDifficultiesDialog = new BotDifficultiesDialog(this);
     }
 
     private void openGameActivity(int amountOfPlayers) {
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra(AMOUNT_OF_PLAYERS, amountOfPlayers);
+//        intent.putExtra(BOT_DIFFICULTY, amountOfPlayers);
         startActivityForResult(intent, GAME_ACTIVITY_RESULT);
     }
 
     public void onStartGameClick(View view) {
         openGameActivity(getAmountOfPlayers(view));
     }
+
+
 
     private int getAmountOfPlayers(View view) {
         switch (view.getId()) {
@@ -61,5 +73,9 @@ public class StartGameActivity extends AppCompatActivity {
                 finish();
             }
         }
+    }
+
+    public void onСhooseDifficultyClick(View view) {
+        openGameActivity(getAmountOfPlayers(view));
     }
 }
