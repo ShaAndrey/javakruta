@@ -43,11 +43,17 @@ public class AdvancedBot extends AbstractBot {
             --amountOfCalculatedSteps;
 
             double savedCurrentDifference = currentDifference;
+            BoardCard savedCellToGo = cellToGo;
+            double savedMaxDifference = maxDifference;
+
             players.swapTwoPlayers();
             BoardCard nextBestTurn = pickBestTurn();
             currentDifference = 0;
             calculateNextStep(nextBestTurn);
+
             currentDifference = savedCurrentDifference - currentDifference;
+            cellToGo = savedCellToGo;
+            maxDifference = savedMaxDifference;
 
             players.swapTwoPlayers();
             amountOfCalculatedSteps = 2;
@@ -55,7 +61,7 @@ public class AdvancedBot extends AbstractBot {
             calculateNextStep(currentCellToGo);
         }
 
-        if (maxDifference <= currentDifference) {
+        if (maxDifference < currentDifference) {
             maxDifference = currentDifference;
             cellToGo = currentCellToGo;
         }
@@ -64,7 +70,7 @@ public class AdvancedBot extends AbstractBot {
     @Override
     void calculateNextStep(BoardCard boardCard) {
         List<Integer> playersPoints = players.getPlayersPoints();
-        currentDifference += -playersPoints.get(1) + playersPoints.get((1 + 1) % playersPoints.size());
+        currentDifference += -playersPoints.get(1) + playersPoints.get(0);
         makeTurn(boardCard);
         playersPoints = players.getPlayersPoints();
         if (canEnsureDomination(boardCard.getState())) {
@@ -72,6 +78,6 @@ public class AdvancedBot extends AbstractBot {
         } else if (dominationEnsured[boardCard.getState().ordinal()]) {
             currentDifference -= 2;
         }
-        currentDifference += playersPoints.get(1) - playersPoints.get((1 + 1) % playersPoints.size());
+        currentDifference += playersPoints.get(1) - playersPoints.get(0);
     }
 }

@@ -98,6 +98,7 @@ public class Players implements PlayersHand.PlayerListener {
         if (playersHands.get(currentPlayer) instanceof AbstractBot) {
             ((AbstractBot) playersHands.get(currentPlayer)).setGameModel(playersListener.getModel());
             BoardCard a = ((AbstractBot) playersHands.get(currentPlayer)).pickBestTurn();
+            System.err.println(a.getRow() + " " + a.getColumn());
             if (a.getState().equals(PlayCard.State.NOTHING)) {
                 throw new RuntimeException("botPickPosition");
             }
