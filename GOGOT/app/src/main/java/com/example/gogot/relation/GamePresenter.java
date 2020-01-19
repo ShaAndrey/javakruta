@@ -4,6 +4,7 @@ import android.graphics.Point;
 
 import com.example.gogot.model.entity.BoardCard;
 import com.example.gogot.model.GameModel;
+import com.example.gogot.ui.activity.StartGameActivity;
 
 import java.util.ArrayList;
 
@@ -11,9 +12,10 @@ public class GamePresenter implements MainContract.Presenter {
     private MainContract.Model model;
     private MainContract.View view;
 
-    public GamePresenter(MainContract.View view, int amountOfPlayers) {
+    public GamePresenter(MainContract.View view, int amountOfPlayers,
+                         StartGameActivity.BotDifficulty botDifficulty) {
         this.view = view;
-        this.model = new GameModel(amountOfPlayers);
+        this.model = new GameModel(amountOfPlayers, botDifficulty);
     }
 
     @Override

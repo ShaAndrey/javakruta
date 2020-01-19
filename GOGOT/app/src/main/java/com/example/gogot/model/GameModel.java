@@ -6,6 +6,7 @@ import com.example.gogot.model.entity.BoardCard;
 import com.example.gogot.model.entity.InHandCard;
 import com.example.gogot.model.entity.PlayCard;
 import com.example.gogot.relation.MainContract;
+import com.example.gogot.ui.activity.StartGameActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +25,11 @@ public class GameModel implements MainContract.Model,
         players.nextPlayer();
     }
 
-    public GameModel(int amountOfPlayers) {
+    public GameModel(int amountOfPlayers, StartGameActivity.BotDifficulty botDifficulty) {
         snapShots = new SnapShots();
         board = new Board(boardSize, boardSize);
         board.setBoardListener(this);
-        players = new Players(amountOfPlayers);
+        players = new Players(amountOfPlayers, botDifficulty);
         players.setPlayersListener(this);
     }
 

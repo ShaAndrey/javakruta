@@ -22,7 +22,6 @@ import com.example.gogot.relation.MainContract;
 import com.example.gogot.R;
 import com.example.gogot.ui.custom.GameBoardLayout;
 import com.example.gogot.ui.custom.RVAdapterPlayerHand;
-import com.example.gogot.ui.dialog.BotDifficultiesDialog;
 import com.example.gogot.ui.dialog.MenuDialog;
 
 import java.util.ArrayList;
@@ -31,6 +30,7 @@ import java.util.List;
 import static com.example.gogot.ui.activity.EndGameActivity.NEW_GAME;
 import static com.example.gogot.ui.activity.EndGameActivity.RESTART_GAME;
 import static com.example.gogot.ui.activity.EndGameActivity.TO_MAIN_MENU;
+import static com.example.gogot.ui.activity.StartGameActivity.BOT_DIFFICULTY;
 
 
 public class GameActivity extends AppCompatActivity
@@ -43,11 +43,7 @@ public class GameActivity extends AppCompatActivity
     public static final String ACTION_ON_END_GAME = "ACTION_ON_END_GAME";
     public static final String PLAYERS = "PLAYERS";
     public static final int DEFAULT_PLAYER_AMOUNT = 1;
-    public static final
-    StartGameActivity.BotDifficulty DEFAULT_BOT_DIFFICULTY =
-            StartGameActivity.BotDifficulty.PLAYER;
     public static final int PADDING = 10;
-    public static final int PADDING_END_GAME = 20;
 
     public static final int END_GAME = 1;
 
@@ -58,6 +54,7 @@ public class GameActivity extends AppCompatActivity
     private List<RecyclerView> playerHandLayouts;
     private List<RVAdapterPlayerHand> adapters;
     private int amountOfPlayers;
+    private StartGameActivity.BotDifficulty botDifficulty;
     private boolean userInteractionBlocked;
 
     @Override
@@ -67,8 +64,9 @@ public class GameActivity extends AppCompatActivity
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
         amountOfPlayers = getIntent().getIntExtra(AMOUNT_OF_PLAYERS, DEFAULT_PLAYER_AMOUNT);
-
-        presenter = new GamePresenter(this, amountOfPlayers);
+        botDifficulty = (StartGameActivity.BotDifficulty)
+                getIntent().getSerializableExtra(BOT_DIFFICULTY);
+        presenter = new GamePresenter(this, amountOfPlayers, botDifficulty);
 
         setContentView(R.layout.game_activity_layout);
 
@@ -277,6 +275,7 @@ public class GameActivity extends AppCompatActivity
         Intent intent = new Intent();
         intent.putExtra(StartGameActivity.NEED_TO_RESTART_GAME, true);
         intent.putExtra(AMOUNT_OF_PLAYERS, amountOfPlayers);
+        intent.putExtra(BOT_DIFFICULTY, botDifficulty);
         setResult(RESULT_OK, intent);
         finish();
     }

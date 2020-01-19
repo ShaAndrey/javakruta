@@ -8,6 +8,7 @@ import com.example.gogot.model.AI.Bot;
 import com.example.gogot.model.entity.BoardCard;
 import com.example.gogot.model.entity.InHandCard;
 import com.example.gogot.model.entity.PlayCard;
+import com.example.gogot.ui.activity.StartGameActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +32,7 @@ public class Players implements PlayersHand.PlayerListener {
         }
     }
 
-    Players(int amountOfPlayers) {
+    Players(int amountOfPlayers, StartGameActivity.BotDifficulty botDifficulty) {
         this.amountOfPlayers = amountOfPlayers;
         playersHands = new ArrayList<>();
         for (int i = 0; i < amountOfPlayers; i++) {
@@ -40,7 +41,16 @@ public class Players implements PlayersHand.PlayerListener {
         }
         if (amountOfPlayers == 1) {
             ++this.amountOfPlayers;
-            playersHands.add(new AdvancedBot());
+            switch (botDifficulty) {
+                case EASY:
+                    playersHands.add(new Bot());
+                    break;
+                case HARD:
+                    playersHands.add(new AdvancedBot());
+                    break;
+                default:
+                    throw new RuntimeException("botDifficulty");
+            }
             playersHands.get(1).setPlayerListener(this);
         }
     }
