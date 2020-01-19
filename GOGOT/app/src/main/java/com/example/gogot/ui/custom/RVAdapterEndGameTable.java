@@ -20,7 +20,6 @@ import java.util.List;
 public class RVAdapterEndGameTable extends
         RecyclerView.Adapter<RVAdapterEndGameTable.PlayerViewHolder> {
     private List<Player> players;
-    private int padding = 5;
 
     public RVAdapterEndGameTable(List<Player> players) {
         this.players = players;
