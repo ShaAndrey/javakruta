@@ -17,7 +17,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:onClick="onStartGameClick"/>
+        android:onClick="onChooseDifficultyClick"/>
 
     <Button
         android:id="@+id/oneVSOneButton"

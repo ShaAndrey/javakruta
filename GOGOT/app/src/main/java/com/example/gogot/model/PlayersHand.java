@@ -1,47 +1,34 @@
 package com.example.gogot.model;
 
+import com.example.gogot.model.entity.InHandCard;
+import com.example.gogot.model.entity.PlayCard;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-class PlayersHand {
-    private Map<PlayCard.State, Integer> inHandCards;
-    private int points;
+public class PlayersHand {
+    protected List<InHandCard> inHandCards;
     private PlayerListener playerListener;
-    boolean[] dominateStates;
 
-    PlayersHand() {
-        inHandCards = new HashMap<>();
-        ArrayList<PlayCard.State> states =
-                new ArrayList<>(Arrays.asList(PlayCard.State.values()));
-        states.forEach(state -> inHandCards.put(state, 0));
-        dominateStates = new boolean[9];
-        points = 0;
+    public PlayersHand() {
+        inHandCards = new ArrayList<>();
+        PlayCard.State[] values = PlayCard.State.values();
+        for (int i = 1; i < values.length; ++i) {
+            PlayCard.State state = values[i];
+            inHandCards.add(new InHandCard(state));
+        }
     }
 
     PlayersHand(PlayersHand otherHand) {
-        inHandCards = new HashMap<>();
-        ArrayList<PlayCard.State> states =
-                new ArrayList<>(Arrays.asList(PlayCard.State.values()));
-        states.forEach(state -> inHandCards.put(state,
-                otherHand.inHandCards.get(state)));
-        dominateStates = new boolean[9];
-        System.arraycopy(otherHand.dominateStates, 0, dominateStates, 0, dominateStates.length);
-        points = otherHand.points;
+        inHandCards = new ArrayList<>(otherHand.inHandCards);
     }
 
     void addNCardsToHand(PlayCard.State state, int n) {
-        int count = inHandCards.containsKey(state) ? inHandCards.get(state) : 0;
-        inHandCards.put(state, count + n);
-        points += n;
-        playerListener.checkIfPlayerDominatesState(state);
-    }
-
-    void removeCardFromHand(PlayCard.State state) {
-        int count = inHandCards.get(state);
-        inHandCards.put(state, count - 1);
-        --points;
+        getCardByState(state).addToAmount(n);
+        getPlayerCard().addToAmount(n);
         playerListener.checkIfPlayerDominatesState(state);
     }
 
@@ -50,38 +37,59 @@ class PlayersHand {
     }
 
     int getAmountForState(PlayCard.State state) {
-        return inHandCards.get(state);
+        return getCardByState(state).getAmount();
     }
 
     int getPoints() {
-        return points;
-    }
-
-    void setPoints(int points) {
-        this.points = points;
+        return getPlayerCard().getAmount();
     }
 
     void addPoints(int toAdd) {
-        this.points += toAdd;
+        getPlayerCard().addToAmount(toAdd);
     }
 
     void setPlayerListener(Players players) {
         playerListener = players;
     }
 
-    boolean checkDominateState(int i) {
-        return dominateStates[i];
+    boolean checkDominateState(PlayCard.State state) {
+        return getCardByState(state).getDominatesState();
     }
 
-    void setDominateState(int index, boolean value) {
-        dominateStates[index] = value;
+    public void setDominateState(PlayCard.State state, boolean domination) {
+        getCardByState(state).setDominatesState(domination);
     }
 
-    void initState(PlayCard.State state) {
-        inHandCards.put(state, 0);
+    private int getIndByState(PlayCard.State state) {
+        return state.ordinal() - 1;
     }
 
-    boolean[] getDominateStates() {
-        return dominateStates;
+    private InHandCard getCardByState(PlayCard.State state) {
+        System.out.println(getIndByState(state));
+        System.out.println(state);
+        return inHandCards.get(getIndByState(state));
+    }
+
+    private InHandCard getPlayerCard() {
+        return inHandCards.get(0);
+    }
+
+    public List<InHandCard> getInHandCards() {
+        return inHandCards;
+    }
+
+    public List<InHandCard> getInHandCardsCopy() {
+        List<InHandCard> inHandCards = new ArrayList<>();
+        this.inHandCards.forEach(inHandCard -> {
+            inHandCards.add(new InHandCard(inHandCard));
+        });
+        return inHandCards;
+    }
+
+    public void setInHandCards(List<InHandCard> inHandCards) {
+        List<InHandCard> handCards = this.inHandCards;
+        for (int i = 0, handCardsSize = handCards.size(); i < handCardsSize; i++) {
+            handCards.get(i).setInHandCard(inHandCards.get(i));
+        }
     }
 }

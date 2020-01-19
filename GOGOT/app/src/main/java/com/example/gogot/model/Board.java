@@ -2,12 +2,16 @@ package com.example.gogot.model;
 
 import android.graphics.Point;
 
+import com.example.gogot.model.entity.BoardCard;
+import com.example.gogot.model.entity.PlayCard;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 
 
 public class Board {
+
     private BoardCard[][] gameBoard;
     private int height, width;
     private Point playerPosition;
@@ -82,6 +86,8 @@ public class Board {
                 availableCells.add(gameBoard[playerPosition.x][j]);
             }
         }
+        availableCells.forEach(boardCard ->
+                System.err.println("getCellsAvailableToMove: " + boardCard.getState()));
         return availableCells;
     }
 
@@ -91,7 +97,7 @@ public class Board {
         return cardsToCollect;
     }
 
-    void movePlayer(BoardCard newPosition) {
+    public void movePlayer(BoardCard newPosition) {
         cardsToCollect = new ArrayList<>();
         amountOfCardsToCollect = 1;
         stateOfCardsToCollect = newPosition.getState();
@@ -99,18 +105,17 @@ public class Board {
         int rowMoveDirection = (playerPosition.x < newPosition.getRow()) ? 1 : -1;
         int columnMoveDirection = (playerPosition.y < newPosition.getColumn()) ? 1 : -1;
         for (int i = playerPosition.x; i != newPosition.getRow(); i += rowMoveDirection) {
-            collectCard(gameBoard[i][playerPosition.y], newPosition, cardsToCollect);
+            collectCard(gameBoard[i][playerPosition.y], newPosition);
         }
         for (int j = playerPosition.y; j != newPosition.getColumn(); j += columnMoveDirection) {
-            collectCard(gameBoard[playerPosition.x][j], newPosition, cardsToCollect);
+            collectCard(gameBoard[playerPosition.x][j], newPosition);
         }
         cardsToCollect.add(gameBoard[newPosition.getRow()][newPosition.getColumn()]);
         playerPosition = new Point(newPosition.getRow(), newPosition.getColumn());
         gameBoard[playerPosition.x][playerPosition.y].setState(BoardCard.State.PLAYER);
     }
 
-    private void collectCard(BoardCard cardToCollect, BoardCard newPosition,
-                             ArrayList<BoardCard> cardsToCollect) {
+    private void collectCard(BoardCard cardToCollect, BoardCard newPosition) {
         if (cardToCollect.getState() == newPosition.getState()) {
             cardToCollect.setState(BoardCard.State.NOTHING);
             cardsToCollect.add(cardToCollect);
@@ -146,12 +151,53 @@ public class Board {
         boardListener = listener;
     }
 
-    int getAmountOfCardsToCollect() {
+    public int getAmountOfCardsToCollect() {
         return amountOfCardsToCollect;
     }
 
-    PlayCard.State getStateOfCardsToCollect() {
+    public PlayCard.State getStateOfCardsToCollect() {
         return stateOfCardsToCollect;
     }
 
+    BoardSnapshot createSnapShot() {
+        return new BoardSnapshot(this, gameBoard);
+    }
+
+    public void setPlayerPosition(Point playerPosition) {
+        this.playerPosition = playerPosition;
+    }
+
+    class BoardSnapshot {
+        private Board board;
+        private BoardCard[][] gameBoardCards;
+        private Point playerPosition;
+
+        BoardSnapshot(Board board,
+                      BoardCard[][] gameBoardCards) {
+            this.board = board;
+            this.gameBoardCards = new BoardCard[height][width];
+            for (int i = 0; i < height; ++i) {
+                for (int j = 0; j < width; ++j) {
+                    BoardCard nextCard = gameBoardCards[i][j];
+                    this.gameBoardCards[i][j] = new BoardCard(nextCard.state, i, j);
+                    if (nextCard.getState() == BoardCard.State.PLAYER) {
+                        this.playerPosition = new Point(i, j);
+                    }
+                }
+            }
+        }
+
+        void restore() {
+            board.restoreGameBoard(gameBoardCards);
+            board.setPlayerPosition(playerPosition);
+        }
+    }
+
+    private void restoreGameBoard(BoardCard[][] gameBoardCards) {
+        for (int i = 0; i < gameBoard.length; i++) {
+            for (int j = 0; j < gameBoard[i].length; j++) {
+                gameBoard[i][j].setState(gameBoardCards[i][j].getState());
+            }
+        }
+    }
 }

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_end_game"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1EAF97"
+    android:orientation="vertical"
+    tools:context=".ui.activity.EndGameActivity">
+
+    <TextView
+        android:id="@+id/end_game_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/game_ended"
+        android:textColor="#18B8B8"
+        android:textSize="20pt"
+        app:layout_constraintBottom_toTopOf="@id/horizontalGuidelineEndGameActivity0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <Button
+        android:id="@+id/backToMainMenuButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onEndGameButtonClick"
+        android:text="@string/back_to_main_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_restart_game" />
+
+    <Button
+        android:id="@+id/button_new_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onEndGameButtonClick"
+        android:text="@string/new_game"
+        app:layout_constraintBottom_toTopOf="@+id/button_restart_game"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horizontalGuidelineEndGameActivity1" />
+
+    <Button
+        android:id="@+id/button_restart_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onEndGameButtonClick"
+        android:text="@string/play_one_more_time"
+        app:layout_constraintBottom_toTopOf="@+id/backToMainMenuButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_new_game" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/game_results_table"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalGuidelineEndGameActivity1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horizontalGuidelineEndGameActivity0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontalGuidelineEndGameActivity0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontalGuidelineEndGameActivity1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,8 +3,11 @@ package com.example.gogot.relation;
 import android.graphics.Point;
 
 import com.example.gogot.model.Board;
-import com.example.gogot.model.BoardCard;
-import com.example.gogot.model.PlayCard;
+import com.example.gogot.model.Player;
+import com.example.gogot.model.Players;
+import com.example.gogot.model.entity.BoardCard;
+import com.example.gogot.model.entity.InHandCard;
+import com.example.gogot.model.entity.PlayCard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +17,7 @@ public interface MainContract {
         void drawInitialBoard(BoardCard[][] gameBoard,
                               ArrayList<PlayCard> cardsToMove);
 
-        void drawPlayersHands();
+        void drawPlayersHands(List<List<InHandCard>> playersCards);
 
         void movePlayer(BoardCard playerCard, Point newPlayerPosition);
 
@@ -22,23 +25,24 @@ public interface MainContract {
 
         void youCantMoveThere();
 
-        void stopGame();
+        void stopGame(ArrayList<Player> players);
 
         void removeIllumination(BoardCard[][] boardCards);
 
         void refreshBoard(BoardCard[][] gameBoard,
                           ArrayList<PlayCard> cardsToMove);
 
-        void addCardsToPlayer(PlayCard.State stateOfCardsToAdd,
-                              int amountOfCardsToAdd, int playerInd);
-        void updatePlayerPoints(List<Integer> points);
+//        void addCardsToPlayer(PlayCard.State stateOfCardsToAdd, int playerInd);
 
-        void updatePlayersIllumination(List<boolean[]> playersDominateStates,
-                                       int currentPlayer);
+        void updatePlayerPoints();
+
+        void updatePlayersIllumination(int currentPlayer);
 
         void invalidateBoardCellsListeners();
 
         void revalidateBoardCellsListeners(BoardCard[][] boardCards);
+
+        void initializePlayerHands();
     }
 
     interface Presenter {
@@ -46,9 +50,8 @@ public interface MainContract {
 
         void handleTurn(BoardCard boardCard);
 
-        void stopGame();
-
         void updateIlluminationAndCollectCards();
+
     }
 
     interface Model {
@@ -70,17 +73,22 @@ public interface MainContract {
 
         void nextPlayer();
 
-
         int getAmountOfCardsToCollect();
 
         PlayCard.State getStateOfCardsToCollect();
 
         List<Integer> getPoints();
 
-        List<boolean[]> getPlayersDominateStates();
-
         boolean isPlayer();
 
         BoardCard botPickPosition();
+
+        List<List<InHandCard>> getPlayersCards();
+
+        List<Integer> getPlaces();
+
+        ArrayList<Player> getPlayersForEndGame();
+
+        Players getPlayers();
     }
 }

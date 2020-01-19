@@ -1,4 +1,4 @@
-package com.example.gogot.model;
+package com.example.gogot.model.entity;
 
 import android.graphics.Point;
 
@@ -8,12 +8,12 @@ public class BoardCard extends PlayCard {
 
     private Point position;
 
-    BoardCard(State state, int row, int column) {
+    public BoardCard(State state, int row, int column) {
         super(state);
         this.position = new Point(row, column);
     }
 
-    BoardCard (BoardCard otherCard) {
+    public BoardCard(BoardCard otherCard) {
         super(otherCard);
         position = otherCard.position;
     }

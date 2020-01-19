@@ -1,4 +1,4 @@
-package com.example.gogot.ui;
+package com.example.gogot.ui.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -20,14 +20,6 @@ public class MenuDialog extends Dialog {
         this.context = context;
     }
 
-    public MenuDialog(@NonNull Context context, int themeResId) {
-        super(context, themeResId);
-    }
-
-    protected MenuDialog(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
-        super(context, cancelable, cancelListener);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,16 +38,21 @@ public class MenuDialog extends Dialog {
             this.dismiss();
             menuDialogListener.openSettings();
         });
+        Button restartGameButton = findViewById(R.id.restartGameButton);
+        restartGameButton.setOnClickListener(v->{
+            this.dismiss();
+            menuDialogListener.restartGame();
+        });
     }
 
-
-    interface MenuDialogListener {
+    public interface MenuDialogListener {
         void openSettings();
         void exitGame();
+        void restartGame();
     }
 
 
-    void setListener(MenuDialogListener menuDialogListener) {
+    public void setListener(MenuDialogListener menuDialogListener) {
         this.menuDialogListener = menuDialogListener;
     }
 }
