@@ -94,23 +94,6 @@ public class GameActivity extends AppCompatActivity
         }
     }
 
-//    @Override
-//    public void setEndGameIllumination(List<Integer> places) {
-//        for (int i = 0; i < places.size(); i++) {
-//            GradientDrawable border = new GradientDrawable();
-//            playerHandLayouts.get(i).setPadding(PADDING_END_GAME, PADDING_END_GAME,
-//                    PADDING_END_GAME, PADDING_END_GAME);
-//            if (places.get(i) == 0) {
-//                border.setStroke(PADDING_END_GAME, Color.parseColor("#d4af37"));
-//            } else if (places.get(i) == 1) {
-//                border.setStroke(PADDING_END_GAME, Color.parseColor("#C0C0C0"));
-//            } else {
-//                border.setStroke(PADDING_END_GAME, Color.parseColor("#cd7f32"));
-//            }
-//            playerHandLayouts.get(i).setBackground(border);
-//        }
-//    }
-
     @Override
     public void drawPlayersHands(List<List<InHandCard>> playersCards) {
         adapters = new ArrayList<>();
@@ -321,7 +304,7 @@ public class GameActivity extends AppCompatActivity
             case GNOME:
                 return R.drawable.warrior_frame;
             case GOBLIN:
-                return R.drawable.guy_frame;
+                return R.drawable.goblin_frame;
         }
         return 0;
     }
