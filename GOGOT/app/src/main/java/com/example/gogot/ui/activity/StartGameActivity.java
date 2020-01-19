@@ -13,18 +13,26 @@ import com.example.gogot.ui.dialog.BotDifficultiesDialog;
 
 import static com.example.gogot.ui.activity.GameActivity.*;
 
-public class StartGameActivity extends AppCompatActivity {
+public class StartGameActivity extends AppCompatActivity
+    implements BotDifficultiesDialog.BotDifficultiesDialogListener {
 
     public static final int GAME_ACTIVITY_RESULT = 1001;
     public static final String NEED_TO_RESTART_GAME = "NEED_TO_RESTART";
     public static final String NEED_TO_QUIT_TO_MAIN_MENU = "NEED_TO_QUIT_TO_MAIN_MENU";
     public static final String BOT_DIFFICULTY = "BOT_DIFFICULTY";
-    public enum BotDifficulties {
+
+    @Override
+    public void setBotDifficulty(BotDifficulty botDifficulty) {
+        openGameActivity(getAmountOfPlayers(vsAIButton), botDifficulty);
+    }
+
+    public enum BotDifficulty {
         PLAYER,
         EASY,
         HARD
     }
     BotDifficultiesDialog botDifficultiesDialog;
+    View vsAIButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,19 +43,19 @@ public class StartGameActivity extends AppCompatActivity {
             finish();
         });
         botDifficultiesDialog = new BotDifficultiesDialog(this);
+        botDifficultiesDialog.setListener(this);
     }
 
-    private void openGameActivity(int amountOfPlayers) {
+    private void openGameActivity(int amountOfPlayers, BotDifficulty botDifficulty) {
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra(AMOUNT_OF_PLAYERS, amountOfPlayers);
-//        intent.putExtra(BOT_DIFFICULTY, amountOfPlayers);
+        intent.putExtra(BOT_DIFFICULTY, botDifficulty);
         startActivityForResult(intent, GAME_ACTIVITY_RESULT);
     }
 
     public void onStartGameClick(View view) {
-        openGameActivity(getAmountOfPlayers(view));
+        openGameActivity(getAmountOfPlayers(view), BotDifficulty.PLAYER);
     }
-
 
 
     private int getAmountOfPlayers(View view) {
@@ -68,14 +76,17 @@ public class StartGameActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == GAME_ACTIVITY_RESULT && data != null) {
             if (data.getBooleanExtra(NEED_TO_RESTART_GAME, false)) {
                 int playerAmount = data.getIntExtra(AMOUNT_OF_PLAYERS, DEFAULT_PLAYER_AMOUNT);
-                openGameActivity(playerAmount);
+                BotDifficulty botDifficulty = (BotDifficulty)
+                        data.getSerializableExtra(BOT_DIFFICULTY);
+                openGameActivity(playerAmount, botDifficulty);
             } else if (data.getBooleanExtra(NEED_TO_QUIT_TO_MAIN_MENU, false)) {
                 finish();
             }
         }
     }
 
-    public void onСhooseDifficultyClick(View view) {
-        openGameActivity(getAmountOfPlayers(view));
+    public void onChooseDifficultyClick(View view) {
+        vsAIButton = view;
+        botDifficultiesDialog.show();
     }
 }

@@ -22,6 +22,7 @@ import com.example.gogot.relation.MainContract;
 import com.example.gogot.R;
 import com.example.gogot.ui.custom.GameBoardLayout;
 import com.example.gogot.ui.custom.RVAdapterPlayerHand;
+import com.example.gogot.ui.dialog.BotDifficultiesDialog;
 import com.example.gogot.ui.dialog.MenuDialog;
 
 import java.util.ArrayList;
@@ -42,6 +43,9 @@ public class GameActivity extends AppCompatActivity
     public static final String ACTION_ON_END_GAME = "ACTION_ON_END_GAME";
     public static final String PLAYERS = "PLAYERS";
     public static final int DEFAULT_PLAYER_AMOUNT = 1;
+    public static final
+    StartGameActivity.BotDifficulty DEFAULT_BOT_DIFFICULTY =
+            StartGameActivity.BotDifficulty.PLAYER;
     public static final int PADDING = 10;
     public static final int PADDING_END_GAME = 20;
 

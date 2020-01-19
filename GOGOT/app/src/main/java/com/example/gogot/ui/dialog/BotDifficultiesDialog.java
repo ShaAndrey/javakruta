@@ -8,13 +8,13 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 
 import com.example.gogot.R;
+import com.example.gogot.ui.activity.StartGameActivity;
 
 public class BotDifficultiesDialog extends Dialog {
-    Context context;
+    BotDifficultiesDialogListener listener;
 
     public BotDifficultiesDialog(@NonNull Context context) {
         super(context);
-        this.context = context;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +23,20 @@ public class BotDifficultiesDialog extends Dialog {
         Button resumeGameButton = findViewById(R.id.easyButton);
         resumeGameButton.setOnClickListener(v -> {
             this.dismiss();
+            listener.setBotDifficulty(StartGameActivity.BotDifficulty.EASY);
         });
         Button backToMainMenuButton = findViewById(R.id.hardButton);
         backToMainMenuButton.setOnClickListener(v -> {
             this.dismiss();
+            listener.setBotDifficulty(StartGameActivity.BotDifficulty.HARD);
         });
+    }
+
+    public interface BotDifficultiesDialogListener {
+        void setBotDifficulty(StartGameActivity.BotDifficulty bd);
+    }
+
+    public void setListener(BotDifficultiesDialogListener listener) {
+        this.listener = listener;
     }
 }
