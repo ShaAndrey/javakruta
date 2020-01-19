@@ -37,7 +37,6 @@ public class AdvancedBot extends AbstractBot {
     void checkCell(BoardCard boardCard) {
         BoardCard currentCellToGo = new BoardCard(boardCard);
         currentDifference = 0;
-
         if (amountOfCalculatedSteps == 2) {
             calculateNextStep(currentCellToGo);
             --amountOfCalculatedSteps;
@@ -49,7 +48,9 @@ public class AdvancedBot extends AbstractBot {
             players.swapTwoPlayers();
             BoardCard nextBestTurn = pickBestTurn();
             currentDifference = 0;
-            calculateNextStep(nextBestTurn);
+            if(nextBestTurn != null) {
+                calculateNextStep(nextBestTurn);
+            }
 
             currentDifference = savedCurrentDifference - currentDifference;
             cellToGo = savedCellToGo;
@@ -60,7 +61,6 @@ public class AdvancedBot extends AbstractBot {
         } else if (amountOfCalculatedSteps == 1) {
             calculateNextStep(currentCellToGo);
         }
-
         if (maxDifference < currentDifference) {
             maxDifference = currentDifference;
             cellToGo = currentCellToGo;
