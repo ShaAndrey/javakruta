@@ -16,18 +16,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button newGameButton = findViewById(R.id.button_new_game);
-        newGameButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this,
-                    StartGameActivity.class);
-            startActivity(intent);
-        });
+        newGameButton.setOnClickListener(v -> onNewGame());
         Button settingsButton = findViewById(R.id.buttonSettings);
         settingsButton.setOnClickListener(v -> onSettings());
+        Button tutorialButton = findViewById(R.id.button_tutorial);
+        tutorialButton.setOnClickListener(v -> onTutorial());
     }
 
-    void onSettings() {
+    private void onTutorial() {
+        Intent intent = new Intent(MainActivity.this,
+                TutorialActivity.class);
+        startActivity(intent);
+    }
+
+    private void onSettings() {
         Intent intent = new Intent(MainActivity.this,
                 SettingsActivity.class);
         startActivity(intent);
     }
+
+    private void onNewGame() {
+        Intent intent = new Intent(MainActivity.this,
+                StartGameActivity.class);
+        startActivity(intent);
+    }
+
 }

@@ -300,9 +300,9 @@ public class GameActivity extends AppCompatActivity
             case MINOTAUR:
                 return R.drawable.dog_frame;
             case ELF:
-                return R.drawable.skeleton_frame;
-            case FAIRY:
                 return R.drawable.wizard_frame;
+            case FAIRY:
+                return R.drawable.skeleton_frame;
             case GNOME:
                 return R.drawable.warrior_frame;
             case GOBLIN:
