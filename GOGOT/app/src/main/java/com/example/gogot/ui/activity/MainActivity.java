@@ -21,5 +21,13 @@ public class MainActivity extends AppCompatActivity {
                     StartGameActivity.class);
             startActivity(intent);
         });
+        Button settingsButton = findViewById(R.id.buttonSettings);
+        settingsButton.setOnClickListener(v -> onSettings());
+    }
+
+    void onSettings() {
+        Intent intent = new Intent(MainActivity.this,
+                SettingsActivity.class);
+        startActivity(intent);
     }
 }

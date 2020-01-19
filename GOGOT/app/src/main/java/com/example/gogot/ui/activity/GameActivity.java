@@ -122,11 +122,11 @@ public class GameActivity extends AppCompatActivity
     private int setPicIdToPlayer(int i) {
         switch (i) {
             case 0:
-                return R.drawable.player0;
+                return R.drawable.player_girl_frame;
             case 1:
-                return R.drawable.player1;
+                return R.drawable.player_mustashe_frame;
             case 2:
-                return R.drawable.player2;
+                return R.drawable.player_beard_frame;
             default:
                 return R.drawable.star;
         }
@@ -228,7 +228,9 @@ public class GameActivity extends AppCompatActivity
 
     @Override
     public void openSettings() {
-        // TODO
+        Intent intent = new Intent(GameActivity.this,
+                SettingsActivity.class);
+        startActivity(intent);
     }
 
     @Override

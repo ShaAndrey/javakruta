@@ -54,17 +54,10 @@ public class RVAdapterEndGameTable extends
     private void initPlace(TextView place, int position) {
         place.setText((players.get(position).getPlace() + 1)
                 + " " + place.getContext().getString(R.string.place));
-        place.setTextColor(Color.parseColor("#CCFFFF00"));
-        place.setPadding(padding, padding, padding, padding);
-        place.setTextSize(30);
     }
 
     private void initPicture(ImageView picture, int position) {
         picture.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        picture.setPadding(padding, padding, padding, padding);
-        GradientDrawable border = new GradientDrawable();
-        border.setColor(0xffEB5D0D);
-        picture.setBackground(border);
         picture.setImageResource(players.get(position).getPictureId());
     }
 

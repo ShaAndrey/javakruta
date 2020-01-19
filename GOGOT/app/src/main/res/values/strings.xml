@@ -17,4 +17,5 @@
     <string name="points">очков</string>
     <string name="easy">легко</string>
     <string name="hard">сложно</string>
+    <string name="donate_button">Помочь разработчикам</string>
 </resources>
