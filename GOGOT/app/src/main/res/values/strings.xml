@@ -33,4 +33,7 @@
         Чем больше у класса представителей, тем больше очков стоит его знамя.\n
         Успехов!
     </string>
+    <string name="choose_picture">Выбор аватарки для игроков</string>
+    <string name="player">Игрок</string>
+    <string name="st_player">ый игрок</string>
 </resources>

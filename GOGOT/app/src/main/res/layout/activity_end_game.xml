@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#1EAF97"
     android:orientation="vertical"
-    tools:context=".ui.activity.EndGameActivity">
+    tools:context=".ui.game.activity.EndGameActivity">
 
     <TextView
         android:id="@+id/end_game_text_view"

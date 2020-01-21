@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#18B8B8"
     android:orientation="vertical"
-    tools:context=".ui.activity.GameActivity">
+    tools:context=".ui.game.activity.GameActivity">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizontalGuidelineGame3PlayerActivity0"
@@ -31,7 +31,7 @@
         app:layout_constraintBottom_toBottomOf="@id/horizontalGuidelineGame3PlayerActivity1"
         app:layout_constraintTop_toTopOf="@id/horizontalGuidelineGame3PlayerActivity0" />
 
-    <com.example.gogot.ui.custom.GameBoardLayout
+    <com.example.gogot.ui.game.custom.GameBoardLayout
         android:id="@+id/layout_game_board"
         android:layout_width="0dp"
         android:layout_height="0dp"
