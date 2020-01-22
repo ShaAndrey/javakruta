@@ -11,6 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gogot.R;
+import com.example.gogot.ui.settings.dialog.PictureChoiceDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RVAdapterPlayers extends
         RecyclerView.Adapter<RVAdapterPlayers.PlayerPictureViewHolder> {
@@ -24,7 +28,8 @@ public class RVAdapterPlayers extends
 
     @NonNull
     @Override
-    public PlayerPictureViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PlayerPictureViewHolder
+    onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).
                 inflate(R.layout.layout_player, parent, false);
         return new RVAdapterPlayers.PlayerPictureViewHolder(v);
@@ -32,9 +37,17 @@ public class RVAdapterPlayers extends
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull PlayerPictureViewHolder holder, int position) {
-        holder.playerTextView.setText(String.valueOf(position + 1));
+    public void onBindViewHolder(@NonNull PlayerPictureViewHolder holder,
+                                 int position) {
+        holder.playerTextView.setText(String.format(holder.playerTextView.getContext().
+                        getString(R.string.st_player), (position + 1)));
         holder.playerPicture.setImageResource(pictures[playersPics[position]]);
+        holder.playerPicture.setOnClickListener(v -> {
+            PictureChoiceDialog pictureChoiceDialog =
+                    new PictureChoiceDialog(holder.playerPicture.getContext(),
+                            pictures, playersPics, position);
+            pictureChoiceDialog.show();
+        });
     }
 
 
@@ -45,7 +58,6 @@ public class RVAdapterPlayers extends
 
     class PlayerPictureViewHolder extends RecyclerView.ViewHolder {
         ImageView playerPicture;
-        //        ImageView subsidiaryPicture;
         TextView playerTextView;
 
         PlayerPictureViewHolder(View itemView) {

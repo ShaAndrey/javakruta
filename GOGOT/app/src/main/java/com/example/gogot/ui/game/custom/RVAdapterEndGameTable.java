@@ -43,14 +43,16 @@ public class RVAdapterEndGameTable extends
 
     @SuppressLint("SetTextI18n")
     private void initPoints(TextView points, int position) {
-        points.setText(players.get(position).getPoints() + " "
-                + points.getContext().getString(R.string.points));
+        points.setText(
+                String.format(points.getContext().getString(R.string.points),
+                        players.get(position).getPoints()));
     }
 
     @SuppressLint("SetTextI18n")
     private void initPlace(TextView place, int position) {
-        place.setText((players.get(position).getPlace() + 1)
-                + " " + place.getContext().getString(R.string.place));
+        place.setText(
+                String.format(place.getContext().getString(R.string.place),
+                        (players.get(position).getPlace() + 1)));
     }
 
     private void initPicture(ImageView picture, int position) {
