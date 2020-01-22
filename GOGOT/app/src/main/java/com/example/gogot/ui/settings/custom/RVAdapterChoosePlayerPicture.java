@@ -15,6 +15,7 @@ public class RVAdapterChoosePlayerPicture
         extends RecyclerView.Adapter<RVAdapterChoosePlayerPicture.PlayerPictureViewHolder> {
     private int[] pictures;
     private int[] playersPics;
+    private RVAdapterChoosePlayerPictureListener listener;
 
 
     public RVAdapterChoosePlayerPicture(int[] pictures, int[] playersPics) {
@@ -36,10 +37,15 @@ public class RVAdapterChoosePlayerPicture
     public void onBindViewHolder(@NonNull RVAdapterChoosePlayerPicture.PlayerPictureViewHolder holder,
                                  int position) {
         holder.playerPicture.setImageResource(pictures[position]);
+        holder.playerPicture.setOnClickListener(v -> {
+            listener.setPictureToPlayer(position);
+            notifyDataSetChanged();
+        });
         boolean flag = false;
-        for (int ind : playersPics) {
+        for (int i = 0; i < playersPics.length; i++) {
+            int ind = playersPics[i];
             if (ind == position) {
-                holder.playerTextView.setText(String.valueOf(position + 1));
+                holder.playerTextView.setText(String.valueOf(i + 1));
                 holder.subsidiaryPicture.setImageResource(R.drawable.subsiduary_pic);
                 flag = true;
                 break;
@@ -48,9 +54,6 @@ public class RVAdapterChoosePlayerPicture
         if (!flag) {
             holder.playerTextView.setText("");
             holder.subsidiaryPicture.setImageResource(R.drawable.transparent);
-            holder.playerPicture.setOnClickListener(v -> {
-
-            });
         }
     }
 
@@ -72,5 +75,13 @@ public class RVAdapterChoosePlayerPicture
             playerTextView = itemView.findViewById(R.id.text_view_player);
             subsidiaryPicture = itemView.findViewById(R.id.subsidiary_image);
         }
+    }
+
+    public interface RVAdapterChoosePlayerPictureListener {
+        void setPictureToPlayer(int pos);
+    }
+
+    public void setListener(RVAdapterChoosePlayerPictureListener listener) {
+        this.listener = listener;
     }
 }

@@ -20,4 +20,9 @@ public class SettingsModel implements
     public int[] getPlayerPictures() {
         return playerPictures.getPlayerPictures();
     }
+
+    @Override
+    public void setPictureToPlayer(int pic, int player) {
+        playerPictures.setPicToPlayer(pic, player);
+    }
 }

@@ -13,13 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.gogot.R;
 import com.example.gogot.ui.settings.dialog.PictureChoiceDialog;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class RVAdapterPlayers extends
-        RecyclerView.Adapter<RVAdapterPlayers.PlayerPictureViewHolder> {
+        RecyclerView.Adapter<RVAdapterPlayers.
+                PlayerPictureViewHolder>
+        implements PictureChoiceDialog.PictureChoiceDialogListener {
     private int[] pictures;
     private int[] playersPics;
+    RVAdapterPlayersListener listener;
 
     public RVAdapterPlayers(int[] pictures, int[] playersPics) {
         this.pictures = pictures;
@@ -40,12 +40,13 @@ public class RVAdapterPlayers extends
     public void onBindViewHolder(@NonNull PlayerPictureViewHolder holder,
                                  int position) {
         holder.playerTextView.setText(String.format(holder.playerTextView.getContext().
-                        getString(R.string.st_player), (position + 1)));
+                getString(R.string.st_player), (position + 1)));
         holder.playerPicture.setImageResource(pictures[playersPics[position]]);
         holder.playerPicture.setOnClickListener(v -> {
             PictureChoiceDialog pictureChoiceDialog =
                     new PictureChoiceDialog(holder.playerPicture.getContext(),
                             pictures, playersPics, position);
+            pictureChoiceDialog.setListener(this);
             pictureChoiceDialog.show();
         });
     }
@@ -54,6 +55,12 @@ public class RVAdapterPlayers extends
     @Override
     public int getItemCount() {
         return playersPics.length;
+    }
+
+    @Override
+    public void setPictureToPlayer(int pic, int player) {
+        listener.setPictureToPlayer(pic, player);
+        notifyDataSetChanged();
     }
 
     class PlayerPictureViewHolder extends RecyclerView.ViewHolder {
@@ -65,5 +72,13 @@ public class RVAdapterPlayers extends
             playerPicture = itemView.findViewById(R.id.player_image);
             playerTextView = itemView.findViewById(R.id.text_view_player);
         }
+    }
+
+    public interface RVAdapterPlayersListener {
+        void setPictureToPlayer(int pic, int player);
+    }
+
+    public void setListener(RVAdapterPlayersListener listener) {
+        this.listener = listener;
     }
 }

@@ -13,9 +13,11 @@ import com.example.gogot.R;
 import com.example.gogot.relation.settings.SettingsMainContract;
 import com.example.gogot.relation.settings.SettingsPresenter;
 import com.example.gogot.ui.settings.custom.RVAdapterPlayers;
+import com.example.gogot.ui.settings.dialog.PictureChoiceDialog;
 
 public class SettingsActivity extends AppCompatActivity
-    implements SettingsMainContract.SettingsView {
+        implements SettingsMainContract.SettingsView,
+        RVAdapterPlayers.RVAdapterPlayersListener {
 
     private SettingsPresenter presenter;
 
@@ -51,6 +53,15 @@ public class SettingsActivity extends AppCompatActivity
                     }
                 };
         resultsTable.setLayoutManager(gridLayoutManager);
-        resultsTable.setAdapter(new RVAdapterPlayers(pictures, playersPictures));
+        RVAdapterPlayers adapter = new RVAdapterPlayers(pictures,
+                playersPictures);
+        adapter.setListener(this);
+        resultsTable.setAdapter(adapter);
+
+    }
+
+    @Override
+    public void setPictureToPlayer(int pic, int player) {
+        presenter.setPictureToPlayer(pic, player);
     }
 }

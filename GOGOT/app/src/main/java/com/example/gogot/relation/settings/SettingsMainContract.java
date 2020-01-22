@@ -7,11 +7,15 @@ public interface SettingsMainContract {
 
     interface SettingsPresenter {
         void setPlayersTable();
+
+        void setPictureToPlayer(int pic, int player);
     }
 
     interface SettingsModel {
         int[] getPictures();
 
         int[] getPlayerPictures();
+
+        void setPictureToPlayer(int pic, int player);
     }
 }

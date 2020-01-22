@@ -16,4 +16,9 @@ public class SettingsPresenter implements
     public void setPlayersTable() {
         view.setPlayersTable(model.getPictures(), model.getPlayerPictures());
     }
+
+    @Override
+    public void setPictureToPlayer(int pic, int player) {
+        model.setPictureToPlayer(pic, player);
+    }
 }

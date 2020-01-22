@@ -13,12 +13,12 @@ public class PlayerPictures {
         return pictures[playersPics[player]];
     }
 
-    void setPicToPlayer(int player, int pic) {
-        for (int i : playersPics) {
-            if(i == pic) {
-                return;
-            }
-        }
+    public void setPicToPlayer(int pic, int player) {
+//        for (int i : playersPics) {
+//            if(i == pic) {
+//                return;
+//            }
+//        }
         playersPics[player] = pic;
     }
 

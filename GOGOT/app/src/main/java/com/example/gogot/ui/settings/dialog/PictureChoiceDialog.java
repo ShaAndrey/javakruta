@@ -12,13 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gogot.R;
 import com.example.gogot.ui.settings.custom.RVAdapterChoosePlayerPicture;
-import com.example.gogot.ui.settings.custom.RVAdapterPlayers;
 
-public class PictureChoiceDialog extends Dialog {
+public class PictureChoiceDialog extends Dialog implements
+        RVAdapterChoosePlayerPicture.RVAdapterChoosePlayerPictureListener {
     private int[] pictures;
     private int[] playersPics;
     private Context context;
     private int player;
+    private PictureChoiceDialogListener listener;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -43,8 +44,10 @@ public class PictureChoiceDialog extends Dialog {
                     }
                 };
         resultsTable.setLayoutManager(gridLayoutManager);
-        resultsTable.setAdapter(new
-                RVAdapterChoosePlayerPicture(pictures, playersPics));
+        RVAdapterChoosePlayerPicture adapter = new
+                RVAdapterChoosePlayerPicture(pictures, playersPics);
+        adapter.setListener(this);
+        resultsTable.setAdapter(adapter);
     }
 
     public PictureChoiceDialog(@NonNull Context context,
@@ -56,5 +59,30 @@ public class PictureChoiceDialog extends Dialog {
         this.pictures = pictures;
         this.playersPics = playerPics;
         this.player = player;
+    }
+
+    @Override
+    public void setPictureToPlayer(int pos) {
+        boolean flag = true;
+        for (int player2 = 0; player2 < playersPics.length; player2++) {
+            int ind = playersPics[player2];
+            if (ind == pos) {
+                listener.setPictureToPlayer(playersPics[player], player2);
+                listener.setPictureToPlayer(pos, player);
+                flag = false;
+                break;
+            }
+        }
+        if(flag) {
+            listener.setPictureToPlayer(pos, player);
+        }
+    }
+
+    public interface PictureChoiceDialogListener {
+        void setPictureToPlayer(int pic, int player);
+    }
+
+    public void setListener(PictureChoiceDialogListener listener) {
+        this.listener = listener;
     }
 }
