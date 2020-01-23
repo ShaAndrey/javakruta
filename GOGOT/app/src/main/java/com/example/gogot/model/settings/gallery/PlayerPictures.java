@@ -14,11 +14,13 @@ public class PlayerPictures {
     }
 
     public void setPicToPlayer(int pic, int player) {
-//        for (int i : playersPics) {
-//            if(i == pic) {
-//                return;
-//            }
-//        }
+        for (int player2 = 0; player2 < playersPics.length; player2++) {
+            int ind = playersPics[player2];
+            if (ind == pic) {
+                playersPics[player2] = playersPics[player];
+                break;
+            }
+        }
         playersPics[player] = pic;
     }
 

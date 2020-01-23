@@ -63,19 +63,7 @@ public class PictureChoiceDialog extends Dialog implements
 
     @Override
     public void setPictureToPlayer(int pos) {
-        boolean flag = true;
-        for (int player2 = 0; player2 < playersPics.length; player2++) {
-            int ind = playersPics[player2];
-            if (ind == pos) {
-                listener.setPictureToPlayer(playersPics[player], player2);
-                listener.setPictureToPlayer(pos, player);
-                flag = false;
-                break;
-            }
-        }
-        if(flag) {
-            listener.setPictureToPlayer(pos, player);
-        }
+        listener.setPictureToPlayer(pos, player);
     }
 
     public interface PictureChoiceDialogListener {
