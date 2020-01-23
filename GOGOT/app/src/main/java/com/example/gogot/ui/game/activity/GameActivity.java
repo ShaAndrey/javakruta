@@ -2,7 +2,6 @@ package com.example.gogot.ui.game.activity;
 
 import android.content.Intent;
 import android.graphics.Point;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.WindowManager;
@@ -45,7 +44,6 @@ public class GameActivity extends AppCompatActivity
     public static final String ACTION_ON_END_GAME = "ACTION_ON_END_GAME";
     public static final String PLAYERS = "PLAYERS";
     public static final int DEFAULT_PLAYER_AMOUNT = 1;
-    public static final int PADDING = 10;
 
     public static final int END_GAME = 1;
 
@@ -101,8 +99,6 @@ public class GameActivity extends AppCompatActivity
         adapters = new ArrayList<>();
         for (int i = 0; i < playerHandLayouts.size(); i++) {
             RecyclerView playerHandLayout = playerHandLayouts.get(i);
-            playerHandLayouts.get(i).setPadding
-                    (PADDING, PADDING, PADDING, PADDING);
             playerHandLayout.setHasFixedSize(true);
             GridLayoutManager gridLayoutManager =
                     new GridLayoutManager(this, 4) {
@@ -158,13 +154,13 @@ public class GameActivity extends AppCompatActivity
     public void updatePlayersIllumination(int currentPlayer) {
         for (int i = 0; i < adapters.size(); i++) {
             adapters.get(i).updateIllumination();
-            GradientDrawable border = new GradientDrawable();
             if ((currentPlayer + 1) % adapters.size() == i) {
-                border.setStroke(PADDING, 0xFF0000FF);
+                playerHandLayouts.get(i).
+                        setBackgroundResource(R.drawable.background_cur_player);
             } else {
-                border.setStroke(PADDING, 0x66000000);
+                playerHandLayouts.get(i).
+                        setBackgroundResource(R.drawable.background_usual);
             }
-            playerHandLayouts.get(i).setBackground(border);
         }
     }
 
