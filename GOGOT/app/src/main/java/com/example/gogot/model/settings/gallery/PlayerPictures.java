@@ -2,6 +2,7 @@ package com.example.gogot.model.settings.gallery;
 
 import com.example.gogot.R;
 
+
 public class PlayerPictures {
     private static int[] pictures = {R.drawable.player_mustashe,
             R.drawable.player_beard,
