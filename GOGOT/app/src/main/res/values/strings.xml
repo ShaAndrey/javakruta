@@ -37,4 +37,5 @@
     <string name="player">Игрок</string>
     <string name="st_player">%1$dй игрок</string>
     <string name="choose_picture_for_player">Выберите аватарку для %1$dго игрока</string>
+    <string name="ok">Готово</string>
 </resources>

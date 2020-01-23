@@ -5,8 +5,10 @@ import com.example.gogot.R;
 public class PlayerPictures {
     int[] pictures = {R.drawable.player_mustashe,
             R.drawable.player_beard,
+            R.drawable.player_bald,
             R.drawable.player_girl,
-            R.drawable.player_bangs};
+            R.drawable.player_bangs,
+            R.drawable.player_curvy};
     int[] playersPics = {0, 1, 2};
 
     int getPicForPlayer(int player) {

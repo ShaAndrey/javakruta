@@ -13,15 +13,30 @@
         app:layout_constraintBottom_toTopOf="@id/player_picture_choice"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="1" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/player_picture_choice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/ok_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/choice_pic_textview"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintVertical_weight="4"/>
+
+    <Button
+        android:id="@+id/ok_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ok"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/player_picture_choice"
+        app:layout_constraintVertical_weight="1"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

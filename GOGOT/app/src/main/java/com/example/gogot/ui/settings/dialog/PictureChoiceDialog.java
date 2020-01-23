@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,6 +31,8 @@ public class PictureChoiceDialog extends Dialog implements
         dialogTextView.setText(String.format(context.getString
                         (R.string.choose_picture_for_player),
                 1 + player));
+        Button okButton = findViewById(R.id.ok_button);
+        okButton.setOnClickListener(v -> this.dismiss());
         createPicTable();
     }
 
