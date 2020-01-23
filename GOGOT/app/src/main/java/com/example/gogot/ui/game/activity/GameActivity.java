@@ -17,6 +17,7 @@ import com.example.gogot.model.game.Player;
 import com.example.gogot.model.game.entity.BoardCard;
 import com.example.gogot.model.game.entity.InHandCard;
 import com.example.gogot.model.game.entity.PlayCard;
+import com.example.gogot.model.settings.gallery.PlayerPictures;
 import com.example.gogot.relation.game.GamePresenter;
 import com.example.gogot.relation.game.MainContract;
 import com.example.gogot.R;
@@ -121,16 +122,7 @@ public class GameActivity extends AppCompatActivity
     }
 
     private int setPicIdToPlayer(int i) {
-        switch (i) {
-            case 0:
-                return R.drawable.player_girl_frame;
-            case 1:
-                return R.drawable.player_mustashe_frame;
-            case 2:
-                return R.drawable.player_beard_frame;
-            default:
-                return R.drawable.star;
-        }
+        return PlayerPictures.getPicForPlayer(i);
     }
 
     @Override

@@ -19,7 +19,7 @@ public class RVAdapterPlayers extends
         implements PictureChoiceDialog.PictureChoiceDialogListener {
     private int[] pictures;
     private int[] playersPics;
-    RVAdapterPlayersListener listener;
+    private RVAdapterPlayersListener listener;
 
     public RVAdapterPlayers(int[] pictures, int[] playersPics) {
         this.pictures = pictures;
