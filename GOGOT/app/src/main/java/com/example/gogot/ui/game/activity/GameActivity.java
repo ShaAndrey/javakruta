@@ -289,7 +289,6 @@ public class GameActivity extends AppCompatActivity
     @Override
     public int setImageToCard(PlayCard card) {
         switch (card.getState()) {
-            // TODO in each case setting the appropriate picture
             case NOTHING:
                 return R.drawable.star;
             case PLAYER:
@@ -307,7 +306,7 @@ public class GameActivity extends AppCompatActivity
             case GNOME:
                 return R.drawable.warrior_frame;
             case GOBLIN:
-                return R.drawable.goblin_frame;
+                return R.drawable.goblin_frame2;
         }
         return 0;
     }
