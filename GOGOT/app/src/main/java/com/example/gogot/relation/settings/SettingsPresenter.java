@@ -15,10 +15,12 @@ public class SettingsPresenter implements
     @Override
     public void setPlayersTable() {
         view.setPlayersTable(model.getPictures(), model.getPlayerPictures());
+
     }
 
     @Override
     public void setPictureToPlayer(int pic, int player) {
         model.setPictureToPlayer(pic, player);
+        view.saveConfig(model.getPlayerPictures());
     }
 }

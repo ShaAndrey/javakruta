@@ -5,24 +5,18 @@ import com.example.gogot.relation.settings.SettingsMainContract;
 
 public class SettingsModel implements
         SettingsMainContract.SettingsModel {
-    PlayerPictures playerPictures;
-
-    public SettingsModel() {
-        playerPictures = new PlayerPictures();
-    }
-
     @Override
     public int[] getPictures() {
-        return playerPictures.getPictures();
+        return PlayerPictures.getPictures();
     }
 
     @Override
     public int[] getPlayerPictures() {
-        return playerPictures.getPlayerPictures();
+        return PlayerPictures.getPlayerPictures();
     }
 
     @Override
     public void setPictureToPlayer(int pic, int player) {
-        playerPictures.setPicToPlayer(pic, player);
+        PlayerPictures.setPicToPlayer(pic, player);
     }
 }

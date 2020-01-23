@@ -2,6 +2,7 @@ package com.example.gogot.model.settings.gallery;
 
 import com.example.gogot.R;
 
+import java.util.Arrays;
 
 public class PlayerPictures {
     private static int[] pictures = {R.drawable.player_mustashe,
@@ -12,11 +13,17 @@ public class PlayerPictures {
             R.drawable.player_curvy};
     private static int[] playersPics = {0, 1, 2};
 
+    public static void loadPictures(int[] players) {
+        for (int i = 0; i < playersPics.length; i++) {
+            playersPics[i] = players[i];
+        }
+    }
+
     public static int getPicForPlayer(int player) {
         return pictures[playersPics[player]];
     }
 
-    public void setPicToPlayer(int pic, int player) {
+    public static void setPicToPlayer(int pic, int player) {
         for (int player2 = 0; player2 < playersPics.length; player2++) {
             int ind = playersPics[player2];
             if (ind == pic) {
@@ -27,11 +34,11 @@ public class PlayerPictures {
         playersPics[player] = pic;
     }
 
-    public int[] getPictures() {
+    public static int[] getPictures() {
         return pictures;
     }
 
-    public int[] getPlayerPictures() {
+    public static int[] getPlayerPictures() {
         return playersPics;
     }
 }

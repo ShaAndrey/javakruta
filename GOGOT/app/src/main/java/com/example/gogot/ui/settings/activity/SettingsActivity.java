@@ -10,15 +10,17 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.example.gogot.R;
+import com.example.gogot.model.settings.FileReaderWriter;
+import com.example.gogot.model.settings.gallery.PlayerPictures;
 import com.example.gogot.relation.settings.SettingsMainContract;
 import com.example.gogot.relation.settings.SettingsPresenter;
 import com.example.gogot.ui.settings.custom.RVAdapterPlayers;
-import com.example.gogot.ui.settings.dialog.PictureChoiceDialog;
 
 public class SettingsActivity extends AppCompatActivity
         implements SettingsMainContract.SettingsView,
         RVAdapterPlayers.RVAdapterPlayersListener {
 
+    public static final String FILE_NAME = "player_pics.txt";
     private SettingsPresenter presenter;
 
     @Override
@@ -29,6 +31,9 @@ public class SettingsActivity extends AppCompatActivity
         donateButton.setOnClickListener(v -> onDonateButton());
         presenter = new SettingsPresenter(this);
         presenter.setPlayersTable();
+        PlayerPictures.loadPictures(FileReaderWriter.
+                readFile(getApplicationContext(),
+                        FILE_NAME));
     }
 
     void onDonateButton() {
@@ -57,11 +62,18 @@ public class SettingsActivity extends AppCompatActivity
                 playersPictures);
         adapter.setListener(this);
         resultsTable.setAdapter(adapter);
+    }
 
+    @Override
+    public void saveConfig(int[] playerPictures) {
+        FileReaderWriter.writeToFile(getApplicationContext(),
+                FILE_NAME,
+                playerPictures);
     }
 
     @Override
     public void setPictureToPlayer(int pic, int player) {
         presenter.setPictureToPlayer(pic, player);
     }
+
 }

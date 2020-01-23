@@ -3,6 +3,8 @@ package com.example.gogot.relation.settings;
 public interface SettingsMainContract {
     interface SettingsView {
         void setPlayersTable(int[] pictures, int[] playersPictures);
+
+        void saveConfig(int[] playerPictures);
     }
 
     interface SettingsPresenter {
