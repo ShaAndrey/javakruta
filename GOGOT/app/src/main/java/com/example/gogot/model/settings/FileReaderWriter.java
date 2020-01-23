@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 public class FileReaderWriter {
+
     public static void writeToFile(Context context, String fileName, int[] data) {
         FileOutputStream fos = null;
         try {
@@ -37,21 +38,23 @@ public class FileReaderWriter {
     }
 
     public static int[] readFile(Context context, String fileName) {
-        int[] result = new int[3];                              // TODO add flexibility
-        try (InputStream inputStream = context.openFileInput(fileName);) {
+        int[] result = {0, 1, 2};                              // TODO add flexibility
+        try (InputStream inputStream = context.openFileInput(fileName)) {
             int i = 0;
             if (inputStream != null) {
                 InputStreamReader inputStreamReader =
                         new InputStreamReader(inputStream);
                 BufferedReader bufferedReader =
                         new BufferedReader(inputStreamReader);
-                String receiveString = "";
+                String receiveString;
 
                 while ((receiveString = bufferedReader.readLine()) != null) {
                     result[i] = Integer.parseInt(receiveString);
                     ++i;
                 }
             }
+        } catch (FileNotFoundException e) {
+            writeToFile(context, fileName, result);
         } catch (IOException e) {
             e.printStackTrace();
         }
