@@ -4,7 +4,7 @@
     android:id="@+id/layout_player_cell"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#1EAA97">
+    android:background="@drawable/background3">
 
     <ImageView
         android:id="@+id/player_picture"
@@ -26,7 +26,10 @@
         app:layout_constraintRight_toLeftOf="@id/player_picture"
         app:layout_constraintHorizontal_weight="3"
         app:layout_constraintTop_toTopOf="parent"
-        style="@style/TextViewPrimary"
+        style="@style/TextViewPrimaryCell"
+        app:autoSizeMinTextSize="1sp"
+        app:autoSizeMaxTextSize="30sp"
+        app:autoSizeTextType="uniform"
         />
 
     <TextView
@@ -39,7 +42,10 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_weight="4"
         app:layout_constraintDimensionRatio="2:1"
-        style="@style/TextViewPrimary"
+        app:autoSizeMinTextSize="1sp"
+        app:autoSizeMaxTextSize="30sp"
+        app:autoSizeTextType="uniform"
+        style="@style/TextViewPrimaryCell"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

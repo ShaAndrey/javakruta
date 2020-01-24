@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.settings.activity.SettingsActivity">
+    tools:context=".ui.settings.activity.SettingsActivity"
+    android:background="@drawable/background4">
 
     <Button
         android:id="@+id/buttonDonate"

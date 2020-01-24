@@ -59,4 +59,12 @@ public class EndGameActivity extends AppCompatActivity {
         setResult(RESULT_OK, intent);
         finish();
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra(GameActivity.ACTION_ON_END_GAME, TO_MAIN_MENU);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
 }

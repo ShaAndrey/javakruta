@@ -5,7 +5,7 @@
     android:id="@+id/game_activity_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#18B8B8"
+    android:background="@drawable/background2"
     android:orientation="vertical"
     tools:context=".ui.game.activity.GameActivity">
 
@@ -27,7 +27,7 @@
         android:id="@+id/boardView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@drawable/table"
+        android:background="@drawable/background3"
         app:layout_constraintBottom_toBottomOf="@id/horizontalGuidelineGameActivity1"
         app:layout_constraintTop_toTopOf="@id/horizontalGuidelineGameActivity0" />
 
@@ -119,41 +119,40 @@
         android:id="@+id/layout_player1_hand"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:padding="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="2:1"
         app:layout_constraintEnd_toEndOf="@+id/verticalGuidelinePlayers1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/horizontalGuidelineGameActivity1"
-        app:layout_constraintVertical_bias="0.5"
-        android:padding="3dp"
-        />
+        app:layout_constraintVertical_bias="0.5" />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/layout_player2_hand"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:padding="3dp"
         app:layout_constraintBottom_toTopOf="@+id/horizontalGuidelineGameActivity0"
         app:layout_constraintDimensionRatio="2:1"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="@+id/verticalGuidelinePlayers1"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.2"
-        app:layout_constraintHorizontal_bias="0.8"
-        android:padding="3dp"/>
+        app:layout_constraintVertical_bias="0.2" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/layout_player3_hand"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:padding="3dp"
         app:layout_constraintBottom_toBottomOf="@id/horizontalGuidelineGameActivity0"
         app:layout_constraintDimensionRatio="2:1"
         app:layout_constraintEnd_toEndOf="@id/verticalGuidelinePlayers1"
+        app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.8"
-        app:layout_constraintHorizontal_bias="0.2"
-        android:padding="3dp"/>
+        app:layout_constraintVertical_bias="0.8" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
