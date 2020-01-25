@@ -280,7 +280,7 @@ public class GameActivity extends AppCompatActivity
             case NOTHING:
                 return R.drawable.star;
             case PLAYER:
-                return R.drawable.hero_frame2;
+                return R.drawable.king_frame;
             case DRAGON:
                 return R.drawable.giant_frame;
             case OGRE:
