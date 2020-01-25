@@ -33,6 +33,8 @@ public class SettingsActivity extends AppCompatActivity
         setContentView(R.layout.activity_settings);
         Button donateButton = findViewById(R.id.buttonDonate);
         donateButton.setOnClickListener(v -> onDonateButton());
+        Button okButton = findViewById(R.id.ok_button);
+        okButton.setOnClickListener(v -> onBackPressed());
         presenter = new SettingsPresenter(this);
         presenter.setPlayersTable();
         PlayerPictures.loadPictures(FileReaderWriter.

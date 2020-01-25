@@ -27,13 +27,6 @@ public interface MainContract {
 
         void stopGame(ArrayList<Player> players);
 
-        void removeIllumination(BoardCard[][] boardCards);
-
-        void refreshBoard(BoardCard[][] gameBoard,
-                          ArrayList<PlayCard> cardsToMove);
-
-        void updatePlayerPoints();
-
         void updatePlayersIllumination(int currentPlayer);
 
         void invalidateBoardCellsListeners();
@@ -60,8 +53,6 @@ public interface MainContract {
 
         Board getBoard();
 
-        Point getPlayerPosition();
-
         BoardCard getPlayerCard();
 
         ArrayList<BoardCard> getCardsToCollect();
@@ -69,12 +60,6 @@ public interface MainContract {
         int getPlayerIndex();
 
         void nextPlayer();
-
-        int getAmountOfCardsToCollect();
-
-        PlayCard.State getStateOfCardsToCollect();
-
-        List<Integer> getPoints();
 
         boolean isPlayer();
 

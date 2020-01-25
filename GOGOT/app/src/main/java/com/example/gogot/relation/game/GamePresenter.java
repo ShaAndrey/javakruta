@@ -45,7 +45,6 @@ public class GamePresenter implements MainContract.GamePresenter {
     public void handleTurn(BoardCard boardCard) {
         if (model.isMovePossible(boardCard)) {
             view.invalidateBoardCellsListeners();
-//            view.removeIllumination(model.getBoard().getBoardCards());
             model.handleTurn(boardCard);
             view.movePlayer(model.getPlayerCard(),
                     new Point(boardCard.getRow(), boardCard.getColumn()));

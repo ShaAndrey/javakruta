@@ -15,6 +15,7 @@
         <item name="android:shadowRadius">1.8</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:layout_margin">5dp</item>
+        <item name="android:padding">5dp</item>
     </style>
 
     <style name="TextViewPrimaryCell">
@@ -26,8 +27,8 @@
         <item name="android:shadowRadius">1.8</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:layout_margin">5dp</item>
+        <item name="android:padding">5dp</item>
         <item name="android:maxLines">1</item>
-
     </style>
 
     <style name="TextViewSettings">
@@ -37,7 +38,7 @@
         <item name="android:shadowDx">1.7</item>
         <item name="android:shadowDy">1.5</item>
         <item name="android:shadowRadius">1.8</item>
-        <item name="android:textColor">@android:color/holo_blue_dark</item>
+        <item name="android:textColor">@android:color/white</item>
         <item name="android:layout_margin">5dp</item>
         <item name="android:textSize">25sp</item>
     </style>
@@ -48,7 +49,7 @@
         <item name="android:shadowDx">1.7</item>
         <item name="android:shadowDy">1.5</item>
         <item name="android:shadowRadius">1.8</item>
-        <item name="android:textColor">@android:color/holo_blue_dark</item>
+        <item name="android:textColor">@android:color/white</item>
         <item name="android:layout_margin">5dp</item>
         <item name="android:textSize">40sp</item>
     </style>
@@ -59,7 +60,7 @@
         <item name="android:shadowDx">1.7</item>
         <item name="android:shadowDy">1.5</item>
         <item name="android:shadowRadius">1.8</item>
-        <item name="android:textColor">@android:color/holo_blue_dark</item>
+        <item name="android:textColor">@android:color/white</item>
         <item name="android:layout_margin">5dp</item>
         <item name="android:textSize">15sp</item>
     </style>

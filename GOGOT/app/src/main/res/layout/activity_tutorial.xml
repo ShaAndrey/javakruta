@@ -8,7 +8,7 @@
     android:background="@drawable/background9">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/rools"
+        android:id="@+id/rules"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:text="@string/rools"

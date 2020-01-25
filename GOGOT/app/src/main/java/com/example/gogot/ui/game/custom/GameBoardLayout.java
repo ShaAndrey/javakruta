@@ -90,7 +90,6 @@ public class GameBoardLayout extends ConstraintLayout {
         }
         playerView = new ImageView(getContext());
         initializeImageView(playerView, boardCards, playerPosition.x, playerPosition.y);
-        setIllumination(boardCards, cardsToMove);
     }
 
     private void initializeImageView(ImageView imageView,
@@ -99,7 +98,6 @@ public class GameBoardLayout extends ConstraintLayout {
         viewId[i][j] = imageView.getId();
         imageView.setImageResource(activityBoardListener.setImageToCard(boardCards[i][j]));
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-//        imageView.setPadding(5, 5, 5, 5);
         setListenerToView(imageView, boardCards, i, j);
         Constraints.LayoutParams params = new Constraints.LayoutParams(0, 0);
         addView(imageView, params);
@@ -151,10 +149,6 @@ public class GameBoardLayout extends ConstraintLayout {
     }
 
 
-    public void removeIllumination(BoardCard[][] boardCards) {
-        setIllumination(boardCards, null);
-    }
-
     public void collectCards(ArrayList<BoardCard> cardsToCollect) {
         cardsToCollect.forEach(boardCard -> {
             ImageView imageView = findViewById(viewId[boardCard.getRow()][boardCard.getColumn()]);
@@ -165,30 +159,6 @@ public class GameBoardLayout extends ConstraintLayout {
                 viewId[playerPosition.x][playerPosition.y];
         viewId[playerPosition.x][playerPosition.y] = curId;
         playerPosition = newPlayerPosition;
-    }
-
-    void setIllumination(BoardCard[][] boardCards,
-                         ArrayList<PlayCard> cardsToMove) {
-        for (int i = 0; i < boardSize; i++) {
-            for (int j = 0; j < boardSize; j++) {
-                GradientDrawable border = new GradientDrawable();
-                border.setColor(0xffEB5D0D);
-                if (cardsToMove != null && cardsToMove.contains(boardCards[i][j])) {
-                    border.setStroke(5, 0xFF00FF00);
-                } else if (boardCards[i][j].getState().equals(PlayCard.State.PLAYER)) {
-                    border.setStroke(5, 0xFF0000FF);
-                } else {
-                    border.setStroke(1, 0x66000000);
-                }
-                ImageView imageView = findViewById(viewId[i][j]);
-                imageView.setBackground(border);
-            }
-        }
-    }
-
-    public void refreshBoard(BoardCard[][] boardCards,
-                             ArrayList<PlayCard> cardsToMove) {
-        setIllumination(boardCards, cardsToMove);
     }
 
     void setListenerToView(ImageView imageView, BoardCard[][] boardCards, int i, int j) {

@@ -80,22 +80,6 @@ public class GameModel implements MainContract.GameModel,
     }
 
     @Override
-    public Point getPlayerPosition() {
-        return board.getPlayerPosition();
-    }
-
-    @Override
-    public int getAmountOfCardsToCollect() {
-        return board.getAmountOfCardsToCollect();
-    }
-
-    @Override
-    public PlayCard.State getStateOfCardsToCollect() {
-        return board.getStateOfCardsToCollect();
-    }
-
-
-    @Override
     public boolean isPlayer() {
         return players.isPlayer();
     }
@@ -123,11 +107,6 @@ public class GameModel implements MainContract.GameModel,
     @Override
     public Players getPlayers() {
         return players;
-    }
-
-    @Override
-    public List<Integer> getPoints() {
-        return players.getPoints();
     }
 
     @Override
