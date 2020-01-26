@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.game.activity.EndGameActivity"
-    android:background="@drawable/background10">
+    android:background="@drawable/background10_min">
 
     <TextView
         android:id="@+id/end_game_text_view"
@@ -73,7 +73,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/horizontalGuidelineEndGameActivity0"
-        android:background="@drawable/background10"/>
+        android:background="@drawable/background10_min"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizontalGuidelineEndGameActivity0"

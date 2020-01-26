@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.settings.activity.SettingsActivity"
-    android:background="@drawable/background4">
+    android:background="@drawable/background4_min_min">
 
     <Button
         android:id="@+id/buttonDonate"

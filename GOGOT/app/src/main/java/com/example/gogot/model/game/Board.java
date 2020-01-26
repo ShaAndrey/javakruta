@@ -86,8 +86,6 @@ public class Board {
                 availableCells.add(gameBoard[playerPosition.x][j]);
             }
         }
-        availableCells.forEach(boardCard ->
-                System.err.println("getCellsAvailableToMove: " + boardCard.getState()));
         return availableCells;
     }
 
@@ -163,7 +161,7 @@ public class Board {
         return new BoardSnapshot(this, gameBoard);
     }
 
-    public void setPlayerPosition(Point playerPosition) {
+    private void setPlayerPosition(Point playerPosition) {
         this.playerPosition = playerPosition;
     }
 

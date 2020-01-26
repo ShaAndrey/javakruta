@@ -3,7 +3,6 @@
     package="com.example.gogot">
 
     <application
-        android:allowBackup="true"
         android:icon="@mipmap/app_logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/app_logo_round"
@@ -26,6 +25,7 @@
         <activity android:name=".ui.settings.activity.SettingsActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.game.activity.TutorialActivity"
+            android:largeHeap="true"
             android:screenOrientation="portrait"/>
     </application>
 

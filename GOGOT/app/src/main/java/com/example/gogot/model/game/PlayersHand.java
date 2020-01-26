@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayersHand {
-    protected List<InHandCard> inHandCards;
+    private List<InHandCard> inHandCards;
     private PlayerListener playerListener;
 
     public PlayersHand() {
@@ -53,7 +53,7 @@ public class PlayersHand {
         return getCardByState(state).getDominatesState();
     }
 
-    public void setDominateState(PlayCard.State state, boolean domination) {
+    protected void setDominateState(PlayCard.State state, boolean domination) {
         getCardByState(state).setDominatesState(domination);
     }
 
@@ -62,8 +62,6 @@ public class PlayersHand {
     }
 
     private InHandCard getCardByState(PlayCard.State state) {
-        System.out.println(getIndByState(state));
-        System.out.println(state);
         return inHandCards.get(getIndByState(state));
     }
 
@@ -71,19 +69,18 @@ public class PlayersHand {
         return inHandCards.get(0);
     }
 
-    public List<InHandCard> getInHandCards() {
+    List<InHandCard> getInHandCards() {
         return inHandCards;
     }
 
-    public List<InHandCard> getInHandCardsCopy() {
+    List<InHandCard> getInHandCardsCopy() {
         List<InHandCard> inHandCards = new ArrayList<>();
-        this.inHandCards.forEach(inHandCard -> {
-            inHandCards.add(new InHandCard(inHandCard));
-        });
+        this.inHandCards.forEach(inHandCard ->
+                inHandCards.add(new InHandCard(inHandCard)));
         return inHandCards;
     }
 
-    public void setInHandCards(List<InHandCard> inHandCards) {
+    void setInHandCards(List<InHandCard> inHandCards) {
         List<InHandCard> handCards = this.inHandCards;
         for (int i = 0, handCardsSize = handCards.size(); i < handCardsSize; i++) {
             handCards.get(i).setInHandCard(inHandCards.get(i));

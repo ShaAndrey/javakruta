@@ -4,7 +4,7 @@
     android:id="@+id/layout_pictures_dialog"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background3">
+    android:background="@drawable/background3_min">
 
     <TextView
         android:id="@+id/choice_pic_textview"

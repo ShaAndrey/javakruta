@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.game.activity.MainActivity"
-    android:background="@drawable/background2">
+    android:background="@drawable/background2_min_min"
+    >
 
     <Button
         android:id="@+id/buttonSettings"

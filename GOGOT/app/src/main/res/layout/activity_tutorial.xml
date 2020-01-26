@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.game.activity.MainActivity"
-    android:background="@drawable/background9">
+    android:background="@drawable/background9_min_min_min">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/rules"

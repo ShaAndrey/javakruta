@@ -18,7 +18,7 @@ public class Players implements PlayersHand.PlayerListener {
     private int currentPlayer = 0;
     private ArrayList<PlayersHand> playersHands;
     private PlayersListener playersListener;
-    ArrayList<Player> players;
+    private ArrayList<Player> players;
 
     Players(Players otherPlayers) {
         amountOfPlayers = otherPlayers.amountOfPlayers;
@@ -92,7 +92,7 @@ public class Players implements PlayersHand.PlayerListener {
         }
     }
 
-    List<Integer> getPoints() {
+    private List<Integer> getPoints() {
         List<Integer> points = new ArrayList<>();
         playersHands.forEach(playersHand -> points.add(playersHand.getPoints()));
         return points;
@@ -106,7 +106,6 @@ public class Players implements PlayersHand.PlayerListener {
         if (playersHands.get(currentPlayer) instanceof AbstractBot) {
             ((AbstractBot) playersHands.get(currentPlayer)).setGameModel(playersListener.getModel());
             BoardCard a = ((AbstractBot) playersHands.get(currentPlayer)).pickBestTurn();
-            System.err.println(a.getRow() + " " + a.getColumn());
             if (a.getState().equals(PlayCard.State.NOTHING)) {
                 throw new RuntimeException("botPickPosition");
             }
@@ -182,11 +181,11 @@ public class Players implements PlayersHand.PlayerListener {
         return playersCards;
     }
 
-    public void setCurrentPlayer(int currentPlayer) {
+    private void setCurrentPlayer(int currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
 
-    public void setPlayersHandCards(List<List<InHandCard>> playersHandsCards) {
+    private void setPlayersHandCards(List<List<InHandCard>> playersHandsCards) {
         for (int i = 0; i < playersHands.size(); i++) {
             playersHands.get(i).setInHandCards(playersHandsCards.get(i));
         }
