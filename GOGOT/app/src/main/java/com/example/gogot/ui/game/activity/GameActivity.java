@@ -24,6 +24,7 @@ import com.example.gogot.ui.game.custom.GameBoardLayout;
 import com.example.gogot.ui.game.custom.RVAdapterPlayerHand;
 import com.example.gogot.ui.game.dialog.MenuDialog;
 import com.example.gogot.ui.settings.activity.SettingsActivity;
+import com.example.gogot.ui.settings.custom.RVAdapterPlayers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,7 @@ public class GameActivity extends AppCompatActivity
     public static final int DEFAULT_PLAYER_AMOUNT = 1;
 
     public static final int END_GAME = 1;
+    public static final int SETTINGS = 2;
 
     private GameBoardLayout gameBoard;
     private GamePresenter presenter;
@@ -202,7 +204,7 @@ public class GameActivity extends AppCompatActivity
     public void openSettings() {
         Intent intent = new Intent(GameActivity.this,
                 SettingsActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, SETTINGS);
     }
 
     @Override
@@ -253,6 +255,11 @@ public class GameActivity extends AppCompatActivity
                     break;
                 default:
                     break;
+            }
+        }
+        if(requestCode == SETTINGS) {
+            for (int i = 0; i < adapters.size(); i++) {
+                adapters.get(i).updatePlayersPic(setPicIdToPlayer(i));
             }
         }
     }

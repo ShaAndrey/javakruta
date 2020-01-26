@@ -56,12 +56,13 @@ public class RVAdapterPlayerHand extends RecyclerView.Adapter<RVAdapterPlayerHan
         return playerPicId;
     }
 
-    public void updatePlayerPoints() {
-        notifyItemChanged(getIndexForState(PlayCard.State.PLAYER));
-    }
-
     public void updateIllumination() {
         notifyDataSetChanged();
+    }
+
+    public void updatePlayersPic(int picId) {
+        playerPicId = picId;
+        notifyItemChanged(0);
     }
 
     public RVAdapterPlayerHand(List<InHandCard> playersCards, int playerPicId) {
