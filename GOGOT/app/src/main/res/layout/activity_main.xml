@@ -4,12 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.MainActivity">
+    tools:context=".ui.game.activity.MainActivity"
+    android:background="@drawable/background2_min_min"
+    >
 
     <Button
         android:id="@+id/buttonSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/buttons_background"
+        style="@style/TextViewPrimaryCell"
         android:text="@string/settings"
         app:layout_constraintBottom_toTopOf="@id/button_tutorial"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,6 +25,8 @@
         android:id="@+id/button_new_game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/buttons_background"
+        style="@style/TextViewPrimaryCell"
         android:text="@string/new_game"
         app:layout_constraintBottom_toTopOf="@+id/buttonSettings"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,6 +38,8 @@
         android:id="@+id/button_tutorial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/buttons_background"
+        style="@style/TextViewPrimaryCell"
         android:text="@string/tutorial"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

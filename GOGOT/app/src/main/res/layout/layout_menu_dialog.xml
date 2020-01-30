@@ -3,12 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/linearLayout2"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background3_min">
 
     <Button
         android:id="@+id/resumeGameButton"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/buttons_background"
+        style="@style/TextViewPrimary"
         android:text="@string/resume_game"
         app:layout_constraintBottom_toTopOf="@id/restartGameButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,17 +23,21 @@
         android:id="@+id/restartGameButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/buttons_background"
+        style="@style/TextViewPrimary"
         android:text="@string/restart_game"
         app:layout_constraintBottom_toTopOf="@id/backToMainMenuButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/resumeGameButton" />
+        app:layout_constraintTop_toBottomOf="@id/resumeGameButton" />
 
     <Button
         android:id="@+id/backToMainMenuButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/buttons_background"
+        style="@style/TextViewPrimary"
         android:text="@string/back_to_main_menu"
         app:layout_constraintBottom_toTopOf="@+id/settingsButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,6 +49,8 @@
         android:id="@+id/settingsButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/buttons_background"
+        style="@style/TextViewPrimary"
         android:text="@string/settings"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

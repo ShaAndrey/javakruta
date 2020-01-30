@@ -5,9 +5,9 @@
     android:id="@+id/activity_end_game"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1EAF97"
     android:orientation="vertical"
-    tools:context=".ui.activity.EndGameActivity">
+    tools:context=".ui.game.activity.EndGameActivity"
+    android:background="@drawable/background10_min">
 
     <TextView
         android:id="@+id/end_game_text_view"
@@ -26,6 +26,8 @@
         android:id="@+id/backToMainMenuButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/buttons_background"
+        style="@style/TextViewPrimaryCell"
         android:onClick="onEndGameButtonClick"
         android:text="@string/back_to_main_menu"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -38,6 +40,8 @@
         android:id="@+id/button_new_game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/buttons_background"
+        style="@style/TextViewPrimaryCell"
         android:onClick="onEndGameButtonClick"
         android:text="@string/new_game"
         app:layout_constraintBottom_toTopOf="@+id/button_restart_game"
@@ -50,6 +54,8 @@
         android:id="@+id/button_restart_game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/buttons_background"
+        style="@style/TextViewPrimaryCell"
         android:onClick="onEndGameButtonClick"
         android:text="@string/play_one_more_time"
         app:layout_constraintBottom_toTopOf="@+id/backToMainMenuButton"
@@ -66,7 +72,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/horizontalGuidelineEndGameActivity0" />
+        app:layout_constraintTop_toBottomOf="@id/horizontalGuidelineEndGameActivity0"
+        android:background="@drawable/background10_min"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizontalGuidelineEndGameActivity0"

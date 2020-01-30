@@ -4,17 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.MainActivity">
+    tools:context=".ui.game.activity.MainActivity"
+    android:background="@drawable/background9_min_min_min">
 
-    <TextView
-        android:id="@+id/rools"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/rules"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:text="@string/rools"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        style="@style/TextViewPrimary"
+        app:autoSizeMinTextSize="5sp"
+        app:autoSizeMaxTextSize="30sp"
+        app:autoSizeTextType="uniform"
         />
 
 

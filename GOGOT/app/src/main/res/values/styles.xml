@@ -1,23 +1,69 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="TextViewPrimary">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:shadowColor">@android:color/background_dark</item>
         <item name="android:shadowDx">1.7</item>
         <item name="android:shadowDy">1.5</item>
         <item name="android:shadowRadius">1.8</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:layout_margin">5dp</item>
-        <item name="android:textSize">30sp</item>
+        <item name="android:padding">5dp</item>
     </style>
+
+    <style name="TextViewPrimaryCell">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:shadowColor">@android:color/background_dark</item>
+        <item name="android:shadowDx">1.7</item>
+        <item name="android:shadowDy">1.5</item>
+        <item name="android:shadowRadius">1.8</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="TextViewSettings">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:shadowColor">@android:color/background_dark</item>
+        <item name="android:shadowDx">1.7</item>
+        <item name="android:shadowDy">1.5</item>
+        <item name="android:shadowRadius">1.8</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:textSize">25sp</item>
+    </style>
+    <style name="TextViewSettingsLarge">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:shadowColor">@android:color/background_dark</item>
+        <item name="android:shadowDx">1.7</item>
+        <item name="android:shadowDy">1.5</item>
+        <item name="android:shadowRadius">1.8</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:textSize">40sp</item>
+    </style>
+    <style name="TextViewSettingsSmall">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:shadowColor">@android:color/background_dark</item>
+        <item name="android:shadowDx">1.7</item>
+        <item name="android:shadowDy">1.5</item>
+        <item name="android:shadowRadius">1.8</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
 
 </resources>

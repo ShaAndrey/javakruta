@@ -3,13 +3,12 @@
     package="com.example.gogot">
 
     <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/app_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.MainActivity"
+        <activity android:name=".ui.game.activity.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,15 +16,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.GameActivity"
+        <activity android:name=".ui.game.activity.GameActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.activity.StartGameActivity"
+        <activity android:name=".ui.game.activity.StartGameActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.activity.EndGameActivity"
+        <activity android:name=".ui.game.activity.EndGameActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.activity.SettingsActivity"
+        <activity android:name=".ui.settings.activity.SettingsActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.activity.TutorialActivity"
+        <activity android:name=".ui.game.activity.TutorialActivity"
+            android:largeHeap="true"
             android:screenOrientation="portrait"/>
     </application>
 
