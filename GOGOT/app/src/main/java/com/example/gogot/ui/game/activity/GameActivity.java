@@ -2,6 +2,7 @@ package com.example.gogot.ui.game.activity;
 
 import android.content.Intent;
 import android.graphics.Point;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.WindowManager;
@@ -58,6 +59,7 @@ public class GameActivity extends AppCompatActivity
     private int amountOfPlayers;
     private StartGameActivity.BotDifficulty botDifficulty;
     private boolean userInteractionBlocked;
+    private MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +78,22 @@ public class GameActivity extends AppCompatActivity
         gameMenu = new MenuDialog(this);
         gameMenu.setListener(this);
         userInteractionBlocked = false;
+        mp = MediaPlayer.create(GameActivity.this,
+                R.raw.background_music_game);
+        mp.setLooping(true);
+        mp.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mp.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mp.start();
     }
 
     @Override
