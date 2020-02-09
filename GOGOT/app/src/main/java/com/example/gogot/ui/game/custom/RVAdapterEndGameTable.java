@@ -42,17 +42,32 @@ public class RVAdapterEndGameTable extends
     }
 
     @SuppressLint("SetTextI18n")
-    private void initPoints(TextView points, int position) {
-        points.setText(
-                String.format(points.getContext().getString(R.string.points),
-                        players.get(position).getPoints()));
+    private void initPoints(TextView pointsText, int position) {
+        int points = players.get(position).getPoints();
+        if (points >= 5 && points <= 20) {
+            pointsText.setText(
+                    String.format(pointsText.getContext().
+                            getString(R.string.pointss), points));
+        } else if (points % 10 == 1) {
+            pointsText.setText(
+                    String.format(pointsText.getContext().
+                            getString(R.string.point), points));
+        } else if (points % 10 >= 2 && points % 10 <= 4) {
+            pointsText.setText(
+                    String.format(pointsText.getContext().
+                            getString(R.string.points), points));
+        } else {
+            pointsText.setText(
+                    String.format(pointsText.getContext().
+                            getString(R.string.pointss), points));
+        }
     }
 
     @SuppressLint("SetTextI18n")
     private void initPlace(TextView place, int position) {
         place.setText(
                 String.format(place.getContext().getString(R.string.place),
-                        (players.get(position).getPlace() + 1)));
+                        (players.get(position).getPlace())));
     }
 
     private void initPicture(ImageView picture, int position) {

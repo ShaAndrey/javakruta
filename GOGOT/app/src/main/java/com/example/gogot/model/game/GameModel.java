@@ -95,11 +95,6 @@ public class GameModel implements MainContract.GameModel,
     }
 
     @Override
-    public List<Integer> getPlaces() {
-        return players.getPlaces();
-    }
-
-    @Override
     public ArrayList<Player> getPlayersForEndGame() {
         return players.getPlayers();
     }

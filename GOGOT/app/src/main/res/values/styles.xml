@@ -62,8 +62,23 @@
         <item name="android:shadowRadius">1.8</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:layout_margin">5dp</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="TextViewSettingsTiny">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:shadowColor">@android:color/background_dark</item>
+        <item name="android:shadowDx">1.7</item>
+        <item name="android:shadowDy">1.5</item>
+        <item name="android:shadowRadius">1.8</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_margin">5dp</item>
         <item name="android:textSize">15sp</item>
     </style>
 
+    <style name="MyCheckBox" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/colorCheckBox</item>
+        <item name="colorControlActivated">@color/colorCheckBox</item>
+    </style>
 
 </resources>

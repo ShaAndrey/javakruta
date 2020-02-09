@@ -8,6 +8,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.example.gogot.R;
+import com.example.gogot.model.settings.Sounds;
+import com.example.gogot.relation.game.MainContract;
 import com.example.gogot.ui.settings.activity.SettingsActivity;
 
 

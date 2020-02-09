@@ -2,6 +2,7 @@ package com.example.gogot.ui.game.activity;
 
 import android.content.Intent;
 import android.graphics.Point;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.WindowManager;
@@ -16,6 +17,7 @@ import com.example.gogot.model.game.Player;
 import com.example.gogot.model.game.entity.BoardCard;
 import com.example.gogot.model.game.entity.InHandCard;
 import com.example.gogot.model.game.entity.PlayCard;
+import com.example.gogot.model.settings.Sounds;
 import com.example.gogot.model.settings.gallery.PlayerPictures;
 import com.example.gogot.relation.game.GamePresenter;
 import com.example.gogot.relation.game.MainContract;
@@ -58,6 +60,8 @@ public class GameActivity extends AppCompatActivity
     private int amountOfPlayers;
     private StartGameActivity.BotDifficulty botDifficulty;
     private boolean userInteractionBlocked;
+    private Sounds music;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +80,20 @@ public class GameActivity extends AppCompatActivity
         gameMenu = new MenuDialog(this);
         gameMenu.setListener(this);
         userInteractionBlocked = false;
+        music = new Sounds();
+        music.playGameMusik(GameActivity.this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        music.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        music.onResume();
     }
 
     @Override
@@ -116,7 +134,7 @@ public class GameActivity extends AppCompatActivity
             playerHandLayout.setAdapter(adapter);
             adapters.add(adapter);
         }
-        updatePlayersIllumination(amountOfPlayers - 1);
+        updatePlayersIllumination(playerHandLayouts.size() - 1);
     }
 
     private int setPicIdToPlayer(int i) {
@@ -257,7 +275,7 @@ public class GameActivity extends AppCompatActivity
                     break;
             }
         }
-        if(requestCode == SETTINGS) {
+        if (requestCode == SETTINGS) {
             for (int i = 0; i < adapters.size(); i++) {
                 adapters.get(i).updatePlayersPic(setPicIdToPlayer(i));
             }

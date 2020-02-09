@@ -67,8 +67,6 @@ public interface MainContract {
 
         List<List<InHandCard>> getPlayersCards();
 
-        List<Integer> getPlaces();
-
         ArrayList<Player> getPlayersForEndGame();
 
         Players getPlayers();

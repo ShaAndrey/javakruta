@@ -9,20 +9,26 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 
 import com.example.gogot.R;
 import com.example.gogot.model.settings.FileReaderWriter;
+import com.example.gogot.model.settings.Sounds;
 import com.example.gogot.model.settings.gallery.PlayerPictures;
 import com.example.gogot.relation.settings.SettingsMainContract;
 import com.example.gogot.relation.settings.SettingsPresenter;
 import com.example.gogot.ui.settings.custom.RVAdapterPlayers;
+import com.example.gogot.ui.settings.custom.RVAdapterTimerSettings;
 
 public class SettingsActivity extends AppCompatActivity
         implements SettingsMainContract.SettingsView,
         RVAdapterPlayers.RVAdapterPlayersListener {
 
-    public static final String FILE_NAME = "player_pics.txt";
+    public static final String PLAYER_PICS_TXT = "player_pics.txt";
+    public static final String MUSIC_TXT = "music.txt";
     private SettingsPresenter presenter;
+    private RVAdapterTimerSettings rvAdapterTimerSettings;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,15 +37,53 @@ public class SettingsActivity extends AppCompatActivity
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_settings);
+
         Button donateButton = findViewById(R.id.buttonDonate);
         donateButton.setOnClickListener(v -> onDonateButton());
         Button okButton = findViewById(R.id.ok_button);
         okButton.setOnClickListener(v -> onBackPressed());
+
         presenter = new SettingsPresenter(this);
         presenter.setPlayersTable();
+        int[] def = {0, 1, 2};
         PlayerPictures.loadPictures(FileReaderWriter.
-                readFile(getApplicationContext(),
-                        FILE_NAME));
+                readPlacesFile(getApplicationContext(),
+                        PLAYER_PICS_TXT, def));
+        presenter.setTimers();
+        setCheckBoxes();
+    }
+
+    void setCheckBoxes() {
+        CheckBox enableTimers = findViewById(R.id.check_box_is_timer_set);
+        enableTimers.setOnClickListener(v -> {
+            presenter.setTimersOn(enableTimers.isChecked());
+            rvAdapterTimerSettings.notifyDataSetChanged();
+        });
+        CheckBox isEqual = findViewById(R.id.check_box_equal_time);
+        isEqual.setOnClickListener(v -> {
+            presenter.setTimersEqual(isEqual.isChecked());
+            rvAdapterTimerSettings.notifyDataSetChanged();
+        });
+        CheckBox musicCheckBox = findViewById(R.id.check_box_music);
+        int[] def = {1};
+        if (FileReaderWriter.
+                readPlacesFile(getApplicationContext(),
+                        MUSIC_TXT, def)[0] == 1) {
+            Sounds.setIsMusikOn(true);
+        } else {
+            Sounds.setIsMusikOn(false);
+        }
+        musicCheckBox.setChecked(Sounds.getIsMusicOn());
+        musicCheckBox.setOnClickListener(v -> {
+            presenter.switchMusic(musicCheckBox.isChecked());
+            if(musicCheckBox.isChecked()) {
+                final int[] deff = {1};
+                FileReaderWriter.writeToFile(SettingsActivity.this, MUSIC_TXT, deff);
+            } else {
+                final int[] deff = {0};
+                FileReaderWriter.writeToFile(SettingsActivity.this, MUSIC_TXT, deff);
+            }
+        });
     }
 
     void onDonateButton() {
@@ -54,8 +98,8 @@ public class SettingsActivity extends AppCompatActivity
 
     @Override
     public void setPlayersTable(int[] pictures, int[] playersPictures) {
-        RecyclerView resultsTable = findViewById(R.id.players_pictures);
-        resultsTable.setHasFixedSize(true);
+        RecyclerView playersTable = findViewById(R.id.players_pictures);
+        playersTable.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager =
                 new GridLayoutManager(this, 3) {
                     @Override
@@ -63,18 +107,34 @@ public class SettingsActivity extends AppCompatActivity
                         return false;
                     }
                 };
-        resultsTable.setLayoutManager(gridLayoutManager);
+        playersTable.setLayoutManager(gridLayoutManager);
         RVAdapterPlayers adapter = new RVAdapterPlayers(pictures,
                 playersPictures);
         adapter.setListener(this);
-        resultsTable.setAdapter(adapter);
+        playersTable.setAdapter(adapter);
     }
 
     @Override
     public void saveConfig(int[] playerPictures) {
         FileReaderWriter.writeToFile(getApplicationContext(),
-                FILE_NAME,
-                playerPictures);
+                PLAYER_PICS_TXT, playerPictures);
+    }
+
+    @Override
+    public void setTimers(long[] timers, Boolean timersOn, Boolean isEqual) {
+        RecyclerView playerTimers = findViewById(R.id.players_timers);
+        playerTimers.setHasFixedSize(true);
+        GridLayoutManager gridLayoutManager =
+                new GridLayoutManager(this, 3) {
+                    @Override
+                    public boolean canScrollVertically() {
+                        return false;
+                    }
+                };
+        playerTimers.setLayoutManager(gridLayoutManager);
+        rvAdapterTimerSettings = new
+                RVAdapterTimerSettings(timers, timersOn, isEqual);
+        playerTimers.setAdapter(rvAdapterTimerSettings);
     }
 
     @Override

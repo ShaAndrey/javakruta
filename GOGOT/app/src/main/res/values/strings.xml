@@ -14,7 +14,10 @@
     <string name="restart_game">Начать заново</string>
     <string name="play_one_more_time">Сыграть еще раз</string>
     <string name="place">%1$dе место</string>
-    <string name="points">%1$d очков</string>
+    <string name="pointss">%1$d очков</string>
+    <string name="point">%1$d очко</string>
+    <string name="points">%1$d очка</string>
+
     <string name="easy">легко</string>
     <string name="hard">сложно</string>
     <string name="donate_button">Помочь разработчикам</string>
@@ -33,9 +36,15 @@
         Чем больше у класса представителей, тем больше очков стоит его знамя.\n \n
         \t Успехов!
     </string>
-    <string name="choose_picture">Выбор аватарки для игроков</string>
+    <string name="choose_picture">Выбор аватарок для игроков:</string>
     <string name="player">Игрок</string>
     <string name="st_player">%1$dй игрок</string>
     <string name="choose_picture_for_player">Выберите аватарку для %1$dго игрока</string>
     <string name="ok">Готово</string>
+    <string name="timer_settings">Настройки таймера(скоро):</string>
+    <string name="equal_time">Равное время для всех игроков.</string>
+    <string name="timer_is_set">Игра с таймером</string>
+    <string name="cancel">Отмена</string>
+    <string name="music">Музыка</string>
+    <string name="choose_time_for_player">Выберете время для %1$dго игрока</string>
 </resources>

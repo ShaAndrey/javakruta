@@ -14,10 +14,10 @@
         android:background="@drawable/buttons_background"
         style="@style/TextViewPrimaryCell"
         android:text="@string/donate_button"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/ok_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/horizontalGuidelineSettingsActivity1"
+        app:layout_constraintTop_toBottomOf="@id/check_box_music"
         app:layout_constraintVertical_bias="0.3"/>
 
     <TextView
@@ -43,19 +43,57 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/horizontalGuidelineSettingsActivity0" />
 
+    <TextView
+        android:id="@+id/timer_settings"
+        style="@style/TextViewSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/timer_settings"
+        app:layout_constraintBottom_toTopOf="@id/check_box_is_timer_set"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/horizontalGuidelineSettingsActivity1"
+        app:layout_constraintVertical_bias="1" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/players_timers"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalGuidelineSettingsActivity3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horizontalGuidelineSettingsActivity2" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizontalGuidelineSettingsActivity0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.25" />
+        app:layout_constraintGuide_percent="0.05" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizontalGuidelineSettingsActivity1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.35" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontalGuidelineSettingsActivity2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.55" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontalGuidelineSettingsActivity3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75" />
 
     <Button
         android:id="@+id/ok_button"
@@ -69,5 +107,51 @@
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonDonate" />
+
+    <CheckBox
+        android:id="@+id/check_box_equal_time"
+        style="@style/TextViewSettingsSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="@string/equal_time"
+        android:theme="@style/MyCheckBox"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalGuidelineSettingsActivity2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/check_box_is_timer_set"
+        android:enabled="false" />
+
+    <CheckBox
+        android:id="@+id/check_box_is_timer_set"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/timer_is_set"
+        app:layout_constraintBottom_toTopOf="@+id/check_box_equal_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/timer_settings"
+        style="@style/TextViewSettingsSmall"
+        android:theme="@style/MyCheckBox"
+        android:enabled="false"
+        />
+
+    <CheckBox
+        android:id="@+id/check_box_music"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/music"
+        app:layout_constraintBottom_toTopOf="@+id/buttonDonate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horizontalGuidelineSettingsActivity3"
+        style="@style/TextViewSettingsSmall"
+        android:theme="@style/MyCheckBox"
+        android:checked="true"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
