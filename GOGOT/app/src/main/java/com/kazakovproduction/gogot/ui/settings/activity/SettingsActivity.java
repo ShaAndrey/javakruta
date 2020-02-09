@@ -20,12 +20,13 @@ import com.kazakovproduction.gogot.relation.settings.SettingsPresenter;
 import com.kazakovproduction.gogot.ui.settings.custom.RVAdapterPlayers;
 import com.kazakovproduction.gogot.ui.settings.custom.RVAdapterTimerSettings;
 
+import static com.kazakovproduction.gogot.ui.game.activity.MainActivity.MUSIC_TXT;
+import static com.kazakovproduction.gogot.ui.game.activity.MainActivity.PLAYER_PICS_TXT;
+
 public class SettingsActivity extends AppCompatActivity
         implements SettingsMainContract.SettingsView,
         RVAdapterPlayers.RVAdapterPlayersListener {
 
-    public static final String PLAYER_PICS_TXT = "player_pics.txt";
-    public static final String MUSIC_TXT = "music.txt";
     private SettingsPresenter presenter;
     private RVAdapterTimerSettings rvAdapterTimerSettings;
 
@@ -45,10 +46,6 @@ public class SettingsActivity extends AppCompatActivity
 
         presenter = new SettingsPresenter(this);
         presenter.setPlayersTable();
-        int[] def = {0, 1, 2};
-        PlayerPictures.loadPictures(FileReaderWriter.
-                readPlacesFile(getApplicationContext(),
-                        PLAYER_PICS_TXT, def));
         presenter.setTimers();
         setCheckBoxes();
     }
@@ -65,14 +62,6 @@ public class SettingsActivity extends AppCompatActivity
             rvAdapterTimerSettings.notifyDataSetChanged();
         });
         CheckBox musicCheckBox = findViewById(R.id.check_box_music);
-        int[] def = {1};
-        if (FileReaderWriter.
-                readPlacesFile(getApplicationContext(),
-                        MUSIC_TXT, def)[0] == 1) {
-            Sounds.setIsMusikOn(true);
-        } else {
-            Sounds.setIsMusikOn(false);
-        }
         musicCheckBox.setChecked(Sounds.getIsMusicOn());
         musicCheckBox.setOnClickListener(v -> {
             presenter.switchMusic(musicCheckBox.isChecked());

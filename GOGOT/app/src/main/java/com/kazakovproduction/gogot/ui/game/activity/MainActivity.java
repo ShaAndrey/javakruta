@@ -8,10 +8,17 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.kazakovproduction.gogot.R;
+import com.kazakovproduction.gogot.model.settings.FileReaderWriter;
+import com.kazakovproduction.gogot.model.settings.Sounds;
+import com.kazakovproduction.gogot.model.settings.gallery.PlayerPictures;
 import com.kazakovproduction.gogot.ui.settings.activity.SettingsActivity;
 
 
 public class MainActivity extends AppCompatActivity {
+
+
+    public static final String PLAYER_PICS_TXT = "player_pics.txt";
+    public static final String MUSIC_TXT = "music.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +33,23 @@ public class MainActivity extends AppCompatActivity {
         settingsButton.setOnClickListener(v -> onSettings());
         Button tutorialButton = findViewById(R.id.button_tutorial);
         tutorialButton.setOnClickListener(v -> onTutorial());
+        loadSettings();
+    }
+
+    private void loadSettings() {
+        int[] def = {0, 1, 2};
+        PlayerPictures.loadPictures(FileReaderWriter.
+                readPlacesFile(getApplicationContext(),
+                        PLAYER_PICS_TXT, def));
+
+        int[] deff = {1};
+        if (FileReaderWriter.
+                readPlacesFile(getApplicationContext(),
+                        MUSIC_TXT, deff)[0] == 1) {
+            Sounds.setIsMusikOn(true);
+        } else {
+            Sounds.setIsMusikOn(false);
+        }
     }
 
     private void onTutorial() {
