@@ -51,8 +51,8 @@ public class SettingsActivity extends AppCompatActivity
                 readPlacesFile(getApplicationContext(),
                         FILE_NAME));
 
-//        presenter.setTimers();
-//        setCheckBoxes();
+        presenter.setTimers();
+        setCheckBoxes();
     }
 
     void setCheckBoxes() {
