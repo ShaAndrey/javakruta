@@ -19,6 +19,8 @@ public interface SettingsMainContract {
         void setTimersOn(boolean checked);
 
         void setTimersEqual(boolean checked);
+
+        void switchMusic(boolean isOn);
     }
 
     interface SettingsModel {
@@ -37,5 +39,7 @@ public interface SettingsMainContract {
         void setTimersOn(boolean checked);
 
         void setTimersEqual(boolean checked);
+
+        void switchMusic(boolean isOn);
     }
 }

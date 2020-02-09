@@ -17,6 +17,7 @@ import com.example.gogot.model.game.Player;
 import com.example.gogot.model.game.entity.BoardCard;
 import com.example.gogot.model.game.entity.InHandCard;
 import com.example.gogot.model.game.entity.PlayCard;
+import com.example.gogot.model.settings.Sounds;
 import com.example.gogot.model.settings.gallery.PlayerPictures;
 import com.example.gogot.relation.game.GamePresenter;
 import com.example.gogot.relation.game.MainContract;
@@ -59,7 +60,8 @@ public class GameActivity extends AppCompatActivity
     private int amountOfPlayers;
     private StartGameActivity.BotDifficulty botDifficulty;
     private boolean userInteractionBlocked;
-    private MediaPlayer mp;
+    private Sounds music;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,22 +80,20 @@ public class GameActivity extends AppCompatActivity
         gameMenu = new MenuDialog(this);
         gameMenu.setListener(this);
         userInteractionBlocked = false;
-        mp = MediaPlayer.create(GameActivity.this,
-                R.raw.background_music_game);
-        mp.setLooping(true);
-        mp.start();
+        music = new Sounds();
+        music.playGameMusik(GameActivity.this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mp.pause();
+        music.onPause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mp.start();
+        music.onResume();
     }
 
     @Override

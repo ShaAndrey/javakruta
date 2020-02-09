@@ -46,4 +46,9 @@ public class SettingsModel implements
     public void setTimersEqual(boolean checked) {
         Timers.setIsEqual(checked);
     }
+
+    @Override
+    public void switchMusic(boolean isOn) {
+        Sounds.setIsMusikOn(isOn);
+    }
 }

@@ -37,4 +37,9 @@ public class SettingsPresenter implements
     public void setTimersEqual(boolean checked) {
         model.setTimersEqual(checked);
     }
+
+    @Override
+    public void switchMusic(boolean isOn) {
+        model.switchMusic(isOn);
+    }
 }

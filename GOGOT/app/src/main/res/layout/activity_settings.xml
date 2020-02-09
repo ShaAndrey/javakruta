@@ -14,10 +14,10 @@
         android:background="@drawable/buttons_background"
         style="@style/TextViewPrimaryCell"
         android:text="@string/donate_button"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/ok_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/horizontalGuidelineSettingsActivity3"
+        app:layout_constraintTop_toBottomOf="@id/check_box_music"
         app:layout_constraintVertical_bias="0.3"/>
 
     <TextView
@@ -45,16 +45,16 @@
 
     <TextView
         android:id="@+id/timer_settings"
+        style="@style/TextViewSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/timer_settings"
         app:layout_constraintBottom_toTopOf="@id/check_box_is_timer_set"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/horizontalGuidelineSettingsActivity1"
-        style="@style/TextViewSettings"
-        app:layout_constraintVertical_bias="1"
-        app:layout_constraintHorizontal_bias="0.1"/>
+        app:layout_constraintVertical_bias="1" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/players_timers"
@@ -120,7 +120,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/check_box_is_timer_set" />
+        app:layout_constraintTop_toBottomOf="@id/check_box_is_timer_set"
+        android:enabled="false" />
 
     <CheckBox
         android:id="@+id/check_box_is_timer_set"
@@ -134,6 +135,22 @@
         app:layout_constraintTop_toBottomOf="@id/timer_settings"
         style="@style/TextViewSettingsSmall"
         android:theme="@style/MyCheckBox"
+        android:enabled="false"
+        />
+
+    <CheckBox
+        android:id="@+id/check_box_music"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/music"
+        app:layout_constraintBottom_toTopOf="@+id/buttonDonate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horizontalGuidelineSettingsActivity3"
+        style="@style/TextViewSettingsSmall"
+        android:theme="@style/MyCheckBox"
+        android:checked="true"
         />
 
 

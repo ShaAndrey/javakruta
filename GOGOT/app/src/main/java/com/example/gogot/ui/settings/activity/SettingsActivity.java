@@ -13,11 +13,15 @@ import android.widget.CheckBox;
 
 import com.example.gogot.R;
 import com.example.gogot.model.settings.FileReaderWriter;
+import com.example.gogot.model.settings.Sounds;
 import com.example.gogot.model.settings.gallery.PlayerPictures;
 import com.example.gogot.relation.settings.SettingsMainContract;
 import com.example.gogot.relation.settings.SettingsPresenter;
+import com.example.gogot.ui.game.activity.MainActivity;
 import com.example.gogot.ui.settings.custom.RVAdapterPlayers;
 import com.example.gogot.ui.settings.custom.RVAdapterTimerSettings;
+
+import java.util.Set;
 
 public class SettingsActivity extends AppCompatActivity
         implements SettingsMainContract.SettingsView,
@@ -26,6 +30,20 @@ public class SettingsActivity extends AppCompatActivity
     public static final String FILE_NAME = "player_pics.txt";
     private SettingsPresenter presenter;
     private RVAdapterTimerSettings rvAdapterTimerSettings;
+    private Sounds music;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        music.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        music.onPause();
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +66,9 @@ public class SettingsActivity extends AppCompatActivity
 
         presenter.setTimers();
         setCheckBoxes();
+
+        music = new Sounds();
+        music.playSettingsMusic(SettingsActivity.this);
     }
 
     void setCheckBoxes() {
@@ -61,6 +82,10 @@ public class SettingsActivity extends AppCompatActivity
             presenter.setTimersEqual(isEqual.isChecked());
             rvAdapterTimerSettings.notifyDataSetChanged();
         });
+        CheckBox musicCheckBox = findViewById(R.id.check_box_music);
+        musicCheckBox.setChecked(Sounds.getIsMusicOn());
+        musicCheckBox.setOnClickListener(v ->
+                presenter.switchMusic(musicCheckBox.isChecked()));
     }
 
     void onDonateButton() {
