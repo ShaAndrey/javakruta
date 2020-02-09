@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.gogot">
+    package="com.kazakovproduction.gogot">
 
     <application
         android:icon="@mipmap/app_logo"
@@ -8,7 +8,7 @@
         android:roundIcon="@mipmap/app_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.game.activity.MainActivity"
+        <activity android:name="com.kazakovproduction.gogot.ui.game.activity.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,15 +16,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.game.activity.GameActivity"
+        <activity android:name="com.kazakovproduction.gogot.ui.game.activity.GameActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.game.activity.StartGameActivity"
+        <activity android:name="com.kazakovproduction.gogot.ui.game.activity.StartGameActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.game.activity.EndGameActivity"
+        <activity android:name="com.kazakovproduction.gogot.ui.game.activity.EndGameActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.settings.activity.SettingsActivity"
+        <activity android:name="com.kazakovproduction.gogot.ui.settings.activity.SettingsActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.game.activity.TutorialActivity"
+        <activity android:name="com.kazakovproduction.gogot.ui.game.activity.TutorialActivity"
             android:largeHeap="true"
             android:screenOrientation="portrait"/>
     </application>
