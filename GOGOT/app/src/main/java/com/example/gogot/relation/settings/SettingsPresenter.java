@@ -23,4 +23,18 @@ public class SettingsPresenter implements
         model.setPictureToPlayer(pic, player);
         view.saveConfig(model.getPlayerPictures());
     }
+
+    public void setTimers() {
+        view.setTimers(model.getTimers(), model.getTimersState(), model.getIsTimersEqual());
+    }
+
+    @Override
+    public void setTimersOn(boolean checked) {
+        model.setTimersOn(checked);
+    }
+
+    @Override
+    public void setTimersEqual(boolean checked) {
+        model.setTimersEqual(checked);
+    }
 }

@@ -41,78 +41,12 @@
         app:layout_constraintTop_toTopOf="@id/horizontalGuidelineGameActivity0"
         app:layout_constraintVertical_bias="0.5" />
 
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/horizontalGuidelinePlayers0"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/horizontalGuidelinePlayers2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.35" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/horizontalGuidelinePlayers3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.65" />
-
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/horizontalGuidelinePlayers5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.25" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/horizontalGuidelinePlayers6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/horizontalGuidelinePlayers7"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.75" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/horizontalGuidelinePlayers4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="1" />
-
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/verticalGuidelinePlayers0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/verticalGuidelinePlayers1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.50" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/verticalGuidelinePlayers2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="1" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/layout_player1_hand"

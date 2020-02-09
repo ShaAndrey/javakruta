@@ -9,6 +9,7 @@ import com.example.gogot.model.game.entity.PlayCard;
 import com.example.gogot.ui.game.activity.StartGameActivity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -137,19 +138,16 @@ public class Players implements PlayersHand.PlayerListener {
         playersListener = model;
     }
 
-    List<Integer> getPlaces() {
+
+    private List<Integer> getPlaces() {
         List<Integer> points = new ArrayList<>(getPoints());
-        List<Integer> places = new ArrayList<>();
-        for (int i = 0; i < points.size(); i++) {
-            places.add(i);
-        }
-        for (int i = 0; i < points.size() - 1; ++i) {
-            for (int j = 0; j < points.size() - i - 1; ++j) {
-                if (points.get(j) < points.get(j + 1)) {
-                    Collections.swap(points, j, j + 1);
-                    Collections.swap(places, j, j + 1);
-                }
-            }
+        List<Integer> places = Arrays.asList(0, 0, 0);
+        int place = 1;
+        for (int i = 0; i < points.size(); ++i) {
+            int pos = points.indexOf(points.stream().max(Integer::compareTo).
+                    orElseThrow(RuntimeException::new));
+            places.set(pos, place++);
+            points.set(pos, -1);
         }
         return places;
     }

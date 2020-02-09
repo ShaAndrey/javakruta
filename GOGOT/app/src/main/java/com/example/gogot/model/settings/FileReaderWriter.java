@@ -37,7 +37,7 @@ public class FileReaderWriter {
         }
     }
 
-    public static int[] readFile(Context context, String fileName) {
+    public static int[] readPlacesFile(Context context, String fileName) {
         int[] result = {0, 1, 2};                              // TODO add flexibility
         try (InputStream inputStream = context.openFileInput(fileName)) {
             int i = 0;

@@ -6,4 +6,5 @@
     <color name="colorDomination">#FFffd700</color>
     <color name="colorUsual">#66000000</color>
     <color name="colorCurrentPlayer">#FF0000FF</color>
+    <color name="colorCheckBox">#cfc6b8</color>
 </resources>

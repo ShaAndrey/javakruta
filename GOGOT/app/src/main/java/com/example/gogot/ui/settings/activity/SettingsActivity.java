@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 
 import com.example.gogot.R;
 import com.example.gogot.model.settings.FileReaderWriter;
@@ -16,6 +17,7 @@ import com.example.gogot.model.settings.gallery.PlayerPictures;
 import com.example.gogot.relation.settings.SettingsMainContract;
 import com.example.gogot.relation.settings.SettingsPresenter;
 import com.example.gogot.ui.settings.custom.RVAdapterPlayers;
+import com.example.gogot.ui.settings.custom.RVAdapterTimerSettings;
 
 public class SettingsActivity extends AppCompatActivity
         implements SettingsMainContract.SettingsView,
@@ -23,6 +25,7 @@ public class SettingsActivity extends AppCompatActivity
 
     public static final String FILE_NAME = "player_pics.txt";
     private SettingsPresenter presenter;
+    private RVAdapterTimerSettings rvAdapterTimerSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,15 +34,33 @@ public class SettingsActivity extends AppCompatActivity
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_settings);
+
         Button donateButton = findViewById(R.id.buttonDonate);
         donateButton.setOnClickListener(v -> onDonateButton());
         Button okButton = findViewById(R.id.ok_button);
         okButton.setOnClickListener(v -> onBackPressed());
+
         presenter = new SettingsPresenter(this);
         presenter.setPlayersTable();
         PlayerPictures.loadPictures(FileReaderWriter.
-                readFile(getApplicationContext(),
+                readPlacesFile(getApplicationContext(),
                         FILE_NAME));
+
+        presenter.setTimers();
+        setCheckBoxes();
+    }
+
+    void setCheckBoxes() {
+        CheckBox enableTimers = findViewById(R.id.check_box_is_timer_set);
+        enableTimers.setOnClickListener(v -> {
+            presenter.setTimersOn(enableTimers.isChecked());
+            rvAdapterTimerSettings.notifyDataSetChanged();
+        });
+        CheckBox isEqual = findViewById(R.id.check_box_equal_time);
+        isEqual.setOnClickListener(v -> {
+            presenter.setTimersEqual(isEqual.isChecked());
+            rvAdapterTimerSettings.notifyDataSetChanged();
+        });
     }
 
     void onDonateButton() {
@@ -54,8 +75,8 @@ public class SettingsActivity extends AppCompatActivity
 
     @Override
     public void setPlayersTable(int[] pictures, int[] playersPictures) {
-        RecyclerView resultsTable = findViewById(R.id.players_pictures);
-        resultsTable.setHasFixedSize(true);
+        RecyclerView playersTable = findViewById(R.id.players_pictures);
+        playersTable.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager =
                 new GridLayoutManager(this, 3) {
                     @Override
@@ -63,18 +84,34 @@ public class SettingsActivity extends AppCompatActivity
                         return false;
                     }
                 };
-        resultsTable.setLayoutManager(gridLayoutManager);
+        playersTable.setLayoutManager(gridLayoutManager);
         RVAdapterPlayers adapter = new RVAdapterPlayers(pictures,
                 playersPictures);
         adapter.setListener(this);
-        resultsTable.setAdapter(adapter);
+        playersTable.setAdapter(adapter);
     }
 
     @Override
     public void saveConfig(int[] playerPictures) {
         FileReaderWriter.writeToFile(getApplicationContext(),
-                FILE_NAME,
-                playerPictures);
+                FILE_NAME, playerPictures);
+    }
+
+    @Override
+    public void setTimers(long[] timers, Boolean timersOn, Boolean isEqual) {
+        RecyclerView playerTimers = findViewById(R.id.players_timers);
+        playerTimers.setHasFixedSize(true);
+        GridLayoutManager gridLayoutManager =
+                new GridLayoutManager(this, 3) {
+                    @Override
+                    public boolean canScrollVertically() {
+                        return false;
+                    }
+                };
+        playerTimers.setLayoutManager(gridLayoutManager);
+        rvAdapterTimerSettings = new
+                RVAdapterTimerSettings(timers, timersOn, isEqual);
+        playerTimers.setAdapter(rvAdapterTimerSettings);
     }
 
     @Override
