@@ -30,7 +30,7 @@
 <!--        app:layout_constraintBottom_toBottomOf="@id/horizontalGuidelineGameActivity1"-->
 <!--        app:layout_constraintTop_toTopOf="@id/horizontalGuidelineGameActivity0" />-->
 
-    <com.example.gogot.ui.game.custom.GameBoardLayout
+    <com.kazakovproduction.gogot.ui.game.custom.GameBoardLayout
         android:id="@+id/layout_game_board"
         android:layout_width="0dp"
         android:layout_height="0dp"
