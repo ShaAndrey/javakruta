@@ -80,7 +80,7 @@ public class RVAdapterTimerSettings extends
         PlayerTimerViewHolder(View itemView) {
             super(itemView);
             playerTimer = itemView.findViewById(R.id.player_timer);
-            playerTextView = itemView.findViewById(R.id.text_view_player);
+            playerTextView = itemView.findViewById(R.id.text_player_timer);
         }
     }
 }

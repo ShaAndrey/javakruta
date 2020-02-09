@@ -46,4 +46,5 @@
     <string name="timer_is_set">Игра с таймером</string>
     <string name="cancel">Отмена</string>
     <string name="music">Музыка</string>
+    <string name="choose_time_for_player">Выберете время для %1$dго игрока</string>
 </resources>

@@ -8,8 +8,8 @@
 
     <TextView
         android:id="@+id/choice_pic_textview"
-        style="@style/TextViewSettingsSmall"
-        android:layout_width="match_parent"
+        style="@style/TextViewSettingsTiny"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/player_picture_choice"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +25,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/choice_pic_textview"
-        app:layout_constraintVertical_weight="4"/>
+        app:layout_constraintVertical_weight="5"/>
 
     <Button
         android:id="@+id/ok_button"
@@ -39,7 +39,6 @@
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/player_picture_choice"
-        app:layout_constraintVertical_weight="1"/>
-
+        app:layout_constraintVertical_weight="2"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

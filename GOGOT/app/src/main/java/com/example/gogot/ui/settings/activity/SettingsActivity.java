@@ -30,19 +30,6 @@ public class SettingsActivity extends AppCompatActivity
     public static final String FILE_NAME = "player_pics.txt";
     private SettingsPresenter presenter;
     private RVAdapterTimerSettings rvAdapterTimerSettings;
-    private Sounds music;
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        music.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        music.onPause();
-    }
 
 
     @Override
@@ -64,11 +51,8 @@ public class SettingsActivity extends AppCompatActivity
                 readPlacesFile(getApplicationContext(),
                         FILE_NAME));
 
-        presenter.setTimers();
-        setCheckBoxes();
-
-        music = new Sounds();
-        music.playSettingsMusic(SettingsActivity.this);
+//        presenter.setTimers();
+//        setCheckBoxes();
     }
 
     void setCheckBoxes() {

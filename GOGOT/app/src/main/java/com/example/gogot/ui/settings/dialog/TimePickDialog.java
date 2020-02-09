@@ -30,9 +30,9 @@ public class TimePickDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_timer_dialog);
-        TextView dialogTextView = findViewById(R.id.choice_pic_textview);
-        dialogTextView.setText(String.format(context.getString
-                        (R.string.choose_picture_for_player),
+        TextView dialogTimerTextView = findViewById(R.id.text_player_timer_dialog);
+        dialogTimerTextView.setText(String.format(context.getString
+                        (R.string.choose_time_for_player),
                 1 + player));
         initDialog();
     }

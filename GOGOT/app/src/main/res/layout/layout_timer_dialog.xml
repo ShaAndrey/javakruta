@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_timer_dialog"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/text_view_player"
+        android:id="@+id/text_player_timer_dialog"
         style="@style/TextViewSettingsSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,7 +24,7 @@
         app:layout_constraintBottom_toTopOf="@id/cancel_button"
         app:layout_constraintEnd_toStartOf="@id/timer_sec"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_view_player"
+        app:layout_constraintTop_toBottomOf="@id/text_player_timer_dialog"
         android:background="@drawable/buttons_background"/>
 
 
@@ -33,14 +32,14 @@
         android:id="@+id/timer_sec"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/ok_button"
+        app:layout_constraintBottom_toTopOf="@id/ok_button_timer_dialog"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/timer_min"
-        app:layout_constraintTop_toBottomOf="@id/text_view_player"
+        app:layout_constraintTop_toBottomOf="@id/text_player_timer_dialog"
         android:background="@drawable/buttons_background"/>
 
     <Button
-        android:id="@+id/ok_button"
+        android:id="@+id/ok_button_timer_dialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/buttons_background"
@@ -60,7 +59,7 @@
         style="@style/TextViewPrimaryCell"
         android:text="@string/cancel"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/ok_button"
+        app:layout_constraintEnd_toStartOf="@id/ok_button_timer_dialog"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timer_sec"/>
