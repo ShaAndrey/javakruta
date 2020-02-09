@@ -134,7 +134,7 @@ public class GameActivity extends AppCompatActivity
             playerHandLayout.setAdapter(adapter);
             adapters.add(adapter);
         }
-        updatePlayersIllumination(amountOfPlayers - 1);
+        updatePlayersIllumination(playerHandLayouts.size() - 1);
     }
 
     private int setPicIdToPlayer(int i) {
@@ -275,7 +275,7 @@ public class GameActivity extends AppCompatActivity
                     break;
             }
         }
-        if(requestCode == SETTINGS) {
+        if (requestCode == SETTINGS) {
             for (int i = 0; i < adapters.size(); i++) {
                 adapters.get(i).updatePlayersPic(setPicIdToPlayer(i));
             }

@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class FileReaderWriter {
 
@@ -37,8 +40,8 @@ public class FileReaderWriter {
         }
     }
 
-    public static int[] readPlacesFile(Context context, String fileName) {
-        int[] result = {0, 1, 2};                              // TODO add flexibility
+    public static int[] readPlacesFile(Context context, String fileName, int[] def) {
+        int[] result = Arrays.copyOf(def, def.length);                          // TODO add flexibility
         try (InputStream inputStream = context.openFileInput(fileName)) {
             int i = 0;
             if (inputStream != null) {

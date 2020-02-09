@@ -13,7 +13,7 @@ public class Sounds {
         return isMusicOn;
     }
 
-    static void setIsMusikOn(boolean isMusikOn) {
+    public static void setIsMusikOn(boolean isMusikOn) {
         Sounds.isMusicOn = isMusikOn;
     }
 

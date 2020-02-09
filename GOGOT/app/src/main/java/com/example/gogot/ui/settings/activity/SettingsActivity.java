@@ -17,17 +17,15 @@ import com.example.gogot.model.settings.Sounds;
 import com.example.gogot.model.settings.gallery.PlayerPictures;
 import com.example.gogot.relation.settings.SettingsMainContract;
 import com.example.gogot.relation.settings.SettingsPresenter;
-import com.example.gogot.ui.game.activity.MainActivity;
 import com.example.gogot.ui.settings.custom.RVAdapterPlayers;
 import com.example.gogot.ui.settings.custom.RVAdapterTimerSettings;
-
-import java.util.Set;
 
 public class SettingsActivity extends AppCompatActivity
         implements SettingsMainContract.SettingsView,
         RVAdapterPlayers.RVAdapterPlayersListener {
 
-    public static final String FILE_NAME = "player_pics.txt";
+    public static final String PLAYER_PICS_TXT = "player_pics.txt";
+    public static final String MUSIC_TXT = "music.txt";
     private SettingsPresenter presenter;
     private RVAdapterTimerSettings rvAdapterTimerSettings;
 
@@ -47,10 +45,10 @@ public class SettingsActivity extends AppCompatActivity
 
         presenter = new SettingsPresenter(this);
         presenter.setPlayersTable();
+        int[] def = {0, 1, 2};
         PlayerPictures.loadPictures(FileReaderWriter.
                 readPlacesFile(getApplicationContext(),
-                        FILE_NAME));
-
+                        PLAYER_PICS_TXT, def));
         presenter.setTimers();
         setCheckBoxes();
     }
@@ -67,9 +65,25 @@ public class SettingsActivity extends AppCompatActivity
             rvAdapterTimerSettings.notifyDataSetChanged();
         });
         CheckBox musicCheckBox = findViewById(R.id.check_box_music);
+        int[] def = {1};
+        if (FileReaderWriter.
+                readPlacesFile(getApplicationContext(),
+                        MUSIC_TXT, def)[0] == 1) {
+            Sounds.setIsMusikOn(true);
+        } else {
+            Sounds.setIsMusikOn(false);
+        }
         musicCheckBox.setChecked(Sounds.getIsMusicOn());
-        musicCheckBox.setOnClickListener(v ->
-                presenter.switchMusic(musicCheckBox.isChecked()));
+        musicCheckBox.setOnClickListener(v -> {
+            presenter.switchMusic(musicCheckBox.isChecked());
+            if(musicCheckBox.isChecked()) {
+                final int[] deff = {1};
+                FileReaderWriter.writeToFile(SettingsActivity.this, MUSIC_TXT, deff);
+            } else {
+                final int[] deff = {0};
+                FileReaderWriter.writeToFile(SettingsActivity.this, MUSIC_TXT, deff);
+            }
+        });
     }
 
     void onDonateButton() {
@@ -103,7 +117,7 @@ public class SettingsActivity extends AppCompatActivity
     @Override
     public void saveConfig(int[] playerPictures) {
         FileReaderWriter.writeToFile(getApplicationContext(),
-                FILE_NAME, playerPictures);
+                PLAYER_PICS_TXT, playerPictures);
     }
 
     @Override
